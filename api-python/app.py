@@ -1,6 +1,6 @@
-from flask import Flask, request, jsonify, send_file, render_template_string
+from flask import Flask, request, jsonify, send_file
 import os
-from playwright.sync_api import sync_playwright
+import pdfkit
 import webbrowser
 
 app = Flask(__name__)
@@ -10,21 +10,16 @@ app = Flask(__name__)
 # ====================
 
 def gerar_html(dados):
-    with open('modelo.html', 'r', encoding='utf-8') as file:
+    with open('templates/curriculo.html', 'r', encoding='utf-8') as file:
         template = file.read()
-
     html = template
     for key, value in dados.items():
         html = html.replace(f'{{{{{key}}}}}', value)
     return html
 
 def gerar_pdf(html_content, output_file):
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        page.set_content(html_content)
-        page.pdf(path=output_file, format="A4")
-        browser.close()
+    # Usa o pdfkit para gerar PDF a partir do HTML
+    pdfkit.from_string(html_content, output_file)
 
 # ====================
 # 🚀 API Endpoint
@@ -32,7 +27,7 @@ def gerar_pdf(html_content, output_file):
 
 @app.route('/')
 def home():
-    return "<h2>🧠 API do Gerador de Currículo IA rodando ✔️</h2>"
+    return "<h2>🧠 API do Gerador de Currículo IA rodando com PDFKit ✔️</h2>"
 
 @app.route('/gerar-curriculo', methods=['POST'])
 def gerar_curriculo():
@@ -117,7 +112,7 @@ if __name__ == '__main__':
 
     if modo == '1':
         print("\n🚀 API rodando em http://localhost:5000")
-        app.run(debug=True)
+        app.run(debug=True, host="0.0.0.0", port=5000)
     elif modo == '2':
         modo_terminal()
     else:
