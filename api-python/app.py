@@ -18,8 +18,8 @@ def gerar_html(dados):
     return html
 
 def gerar_pdf(html_content, output_file):
-    # Usa o pdfkit para gerar PDF a partir do HTML
-    pdfkit.from_string(html_content, output_file)
+    config = pdfkit.configuration(wkhtmltopdf=os.path.join('bin', 'wkhtmltopdf'))
+    pdfkit.from_string(html_content, output_file, configuration=config)
 
 # ====================
 # 🚀 API Endpoint
