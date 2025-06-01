@@ -1,0 +1,1 @@
+const API_URL = 'https://cv-api.onrender.com/gerar-curriculo';
