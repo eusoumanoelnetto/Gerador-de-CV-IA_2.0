@@ -17,16 +17,21 @@ const dadosCurriculo = {
     idiomas: ''
 };
 
+let modoFoto = true;
+let redeEscolhida = '';
+let aguardandoUsername = false;
+
 const perguntas = [
     { chave: 'nome', pergunta: '🧠 Qual seu nome completo?' },
-    { chave: 'foto_url', pergunta: '🖼️ Cole o link da sua foto (URL direta, Instagram, LinkedIn ou Facebook).' },
+    { chave: 'foto_rede', pergunta: '📸 Escolha a rede social da sua foto:\n1️⃣ Instagram\n2️⃣ Facebook\n3️⃣ LinkedIn\n(Digite 1, 2 ou 3)' },
+    { chave: 'foto_username', pergunta: '🔗 Informe seu nome de usuário (sem @).' },
     { chave: 'cargo', pergunta: '💼 Qual seu cargo ou profissão?' },
     { chave: 'email', pergunta: '📧 Informe seu e-mail.' },
     { chave: 'telefone', pergunta: '📱 Informe seu telefone.' },
-    { chave: 'experiencias', pergunta: '🛠️ Descreva suas experiências profissionais. (Ex: Cargo | Empresa | Período | Descrição). Separe cada uma com ponto e vírgula.' },
-    { chave: 'formacoes', pergunta: '🎓 Descreva sua formação acadêmica. (Ex: Curso | Instituição | Período). Separe cada uma com ponto e vírgula.' },
-    { chave: 'hard', pergunta: '🧠 Liste suas Hard Skills (ex.: Python, SQL, IA, etc). Separe por vírgula.' },
-    { chave: 'soft', pergunta: '💡 Liste suas Soft Skills (ex.: Resiliência, Comunicação, Liderança). Separe por vírgula.' },
+    { chave: 'experiencias', pergunta: '🛠️ Descreva suas experiências (Cargo | Empresa | Período | Descrição). Separe cada uma com ponto e vírgula.' },
+    { chave: 'formacoes', pergunta: '🎓 Descreva sua formação acadêmica (Curso | Instituição | Período). Separe por ponto e vírgula.' },
+    { chave: 'hard', pergunta: '🧠 Quais são suas Hard Skills? (Separe por vírgula)' },
+    { chave: 'soft', pergunta: '💡 Quais são suas Soft Skills? (Separe por vírgula)' },
     { chave: 'idiomas', pergunta: '🌍 Quais idiomas você fala? (Separe por vírgula)' }
 ];
 
@@ -48,13 +53,51 @@ function fazerPergunta() {
     }
 }
 
+function gerarLinkFoto(rede, username) {
+    switch (rede) {
+        case '1':
+            return `https://www.instagram.com/${username}/picture`;
+        case '2':
+            return `https://graph.facebook.com/${username}/picture?type=large`;
+        case '3':
+            return `https://www.linkedin.com/in/${username}/picture`;
+        default:
+            return '';
+    }
+}
+
 function handleUserInput() {
     const input = userInput.value.trim();
     if (!input) return;
 
     adicionarMensagem('user', input);
-    const chaveAtual = perguntas[indexPergunta].chave;
-    dadosCurriculo[chaveAtual] = input;
+
+    const perguntaAtual = perguntas[indexPergunta].chave;
+
+    // 🔥 Se for a pergunta da rede social:
+    if (perguntaAtual === 'foto_rede') {
+        if (['1', '2', '3'].includes(input)) {
+            redeEscolhida = input;
+            indexPergunta++;
+            fazerPergunta();
+        } else {
+            adicionarMensagem('bot', '❌ Opção inválida. Digite 1, 2 ou 3.');
+        }
+        userInput.value = '';
+        return;
+    }
+
+    // 🔥 Se for o username da foto:
+    if (perguntaAtual === 'foto_username') {
+        dadosCurriculo['foto_url'] = gerarLinkFoto(redeEscolhida, input);
+        indexPergunta++;
+        userInput.value = '';
+        fazerPergunta();
+        return;
+    }
+
+    // Demais perguntas normais:
+    dadosCurriculo[perguntaAtual] = input;
 
     userInput.value = '';
     indexPergunta++;
