@@ -9,32 +9,32 @@ const dadosCurriculo = {
     cargo: '',
     email: '',
     telefone: '',
+    foto_url: '',
     experiencias: '',
     formacoes: '',
     hard: '',
     soft: '',
-    idiomas: '',
-    foto_url: ''
+    idiomas: ''
 };
 
 const perguntas = [
-    { chave: 'nome', pergunta: 'Qual seu nome completo?' },
-    { chave: 'cargo', pergunta: 'Qual seu cargo ou profissão?' },
-    { chave: 'email', pergunta: 'Qual seu email?' },
-    { chave: 'telefone', pergunta: 'Qual seu telefone?' },
-    { chave: 'foto_url', pergunta: 'Link da sua foto (URL direta da imagem)?' },
-    { chave: 'experiencias', pergunta: 'Descreva suas experiências profissionais (use ponto e vírgula para separar cada experiência).' },
-    { chave: 'formacoes', pergunta: 'Descreva sua formação acadêmica (use ponto e vírgula para separar cada formação).' },
-    { chave: 'hard', pergunta: 'Quais são suas Hard Skills? (Separe por vírgula)' },
-    { chave: 'soft', pergunta: 'Quais são suas Soft Skills? (Separe por vírgula)' },
-    { chave: 'idiomas', pergunta: 'Quais idiomas você fala? (Separe por vírgula)' }
+    { chave: 'nome', pergunta: '🧠 Qual seu nome completo?' },
+    { chave: 'foto_url', pergunta: '🖼️ Cole o link da sua foto (URL direta, Instagram, LinkedIn ou Facebook).' },
+    { chave: 'cargo', pergunta: '💼 Qual seu cargo ou profissão?' },
+    { chave: 'email', pergunta: '📧 Informe seu e-mail.' },
+    { chave: 'telefone', pergunta: '📱 Informe seu telefone.' },
+    { chave: 'experiencias', pergunta: '🛠️ Descreva suas experiências profissionais. (Ex: Cargo | Empresa | Período | Descrição). Separe cada uma com ponto e vírgula.' },
+    { chave: 'formacoes', pergunta: '🎓 Descreva sua formação acadêmica. (Ex: Curso | Instituição | Período). Separe cada uma com ponto e vírgula.' },
+    { chave: 'hard', pergunta: '🧠 Liste suas Hard Skills (ex.: Python, SQL, IA, etc). Separe por vírgula.' },
+    { chave: 'soft', pergunta: '💡 Liste suas Soft Skills (ex.: Resiliência, Comunicação, Liderança). Separe por vírgula.' },
+    { chave: 'idiomas', pergunta: '🌍 Quais idiomas você fala? (Separe por vírgula)' }
 ];
 
 let indexPergunta = 0;
 
-// 👉 Iniciar chat
+// Iniciar o chat
 window.onload = () => {
-    adicionarMensagem('bot', '🧠 Olá! Sou o Gerador de Currículo IA. Bora começar seu currículo?');
+    adicionarMensagem('bot', '🧠 Olá! Eu sou o Gerador de Currículo IA. Bora montar seu currículo juntos!');
     fazerPergunta();
 };
 
@@ -42,7 +42,7 @@ function fazerPergunta() {
     if (indexPergunta < perguntas.length) {
         adicionarMensagem('bot', perguntas[indexPergunta].pergunta);
     } else {
-        adicionarMensagem('bot', 'Perfeito! 🎯 Gerando a preview do seu currículo...');
+        adicionarMensagem('bot', 'Perfeito! Gerando preview do seu currículo... ⏳');
         preencherPreview();
         previewContainer.style.display = 'block';
     }
@@ -59,7 +59,7 @@ function handleUserInput() {
     userInput.value = '';
     indexPergunta++;
 
-    setTimeout(fazerPergunta, 400);
+    setTimeout(fazerPergunta, 500);
 }
 
 function adicionarMensagem(remetente, texto) {
@@ -86,28 +86,24 @@ function preencherPreview() {
     const expList = document.getElementById('exp-placeholder');
     expList.innerHTML = '';
     dadosCurriculo.experiencias.split(';').forEach(item => {
-        if (item.trim()) {
-            const li = document.createElement('li');
-            li.innerText = item.trim();
-            expList.appendChild(li);
-        }
+        const li = document.createElement('li');
+        li.innerText = item.trim();
+        expList.appendChild(li);
     });
 
     // Formações
     const formList = document.getElementById('form-placeholder');
     formList.innerHTML = '';
     dadosCurriculo.formacoes.split(';').forEach(item => {
-        if (item.trim()) {
-            const li = document.createElement('li');
-            li.innerText = item.trim();
-            formList.appendChild(li);
-        }
+        const li = document.createElement('li');
+        li.innerText = item.trim();
+        formList.appendChild(li);
     });
 }
 
 async function baixarPDF() {
     try {
-        adicionarMensagem('bot', 'Gerando PDF... 🛠️');
+        adicionarMensagem('bot', '📄 Gerando seu PDF... ⏳');
 
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -115,7 +111,7 @@ async function baixarPDF() {
             body: JSON.stringify(dadosCurriculo)
         });
 
-        if (!response.ok) throw new Error('Erro ao gerar PDF');
+        if (!response.ok) throw new Error('Erro ao gerar PDF.');
 
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
@@ -128,10 +124,10 @@ async function baixarPDF() {
         a.remove();
 
         window.URL.revokeObjectURL(url);
-        adicionarMensagem('bot', '✔️ PDF gerado com sucesso!');
+        adicionarMensagem('bot', '✔️ PDF gerado e baixado com sucesso!');
 
     } catch (error) {
-        adicionarMensagem('bot', '❌ Erro ao gerar PDF. Verifique os dados e tente novamente.');
+        adicionarMensagem('bot', '❌ Erro ao gerar PDF. Verifique sua conexão com a API.');
         console.error(error);
     }
 }
