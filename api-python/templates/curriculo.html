@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>{{nome}} - Currículo</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body class="w3-light-grey">
+    <div class="w3-content w3-margin-top" style="max-width:1400px;">
+        <div class="w3-row-padding">
+            <!-- Lado esquerdo -->
+            <div class="w3-third">
+                <div class="w3-white w3-text-grey w3-card-4">
+                    <div class="w3-display-container">
+                        <img src="{{foto_url}}" style="width:100%" alt="Avatar">
+                        <div class="w3-display-bottomleft w3-container w3-text-white">
+                            <h2>{{nome}}</h2>
+                        </div>
+                    </div>
+                    <div class="w3-container">
+                        <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>{{cargo}}</p>
+                        <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>{{email}}</p>
+                        <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>{{telefone}}</p>
+                        <hr>
+                        <p><b>Hard Skills:</b> {{hard}}</p>
+                        <p><b>Soft Skills:</b> {{soft}}</p>
+                        <p><b>Idiomas:</b> {{idiomas}}</p>
+                    </div>
+                </div>
+                <br>
+                <div style="margin-top:20px;text-align:center;">
+                    <a href="curriculo.pdf" download class="w3-button w3-black">
+                        <i class="fa fa-download"></i> Baixar PDF
+                    </a>
+                </div>
+            </div>
+            <!-- Lado direito -->
+            <div class="w3-twothird">
+                <div class="w3-container w3-card w3-white w3-margin-bottom">
+                    <h2 class="w3-text-grey w3-padding-16">
+                        <i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Experiência
+                    </h2>
+                    <div class="w3-container">
+                        {{experiencias}}
+                    </div>
+                </div>
+                <div class="w3-container w3-card w3-white">
+                    <h2 class="w3-text-grey w3-padding-16">
+                        <i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Formação
+                    </h2>
+                    <div class="w3-container">
+                        {{formacoes}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
