@@ -17,14 +17,13 @@ const dadosCurriculo = {
     idiomas: ''
 };
 
-let modoFoto = true;
+let etapaFoto = 0;
 let redeEscolhida = '';
-let aguardandoUsername = false;
 
 const perguntas = [
     { chave: 'nome', pergunta: '🧠 Qual seu nome completo?' },
-    { chave: 'foto_rede', pergunta: '📸 Escolha a rede social da sua foto:\n1️⃣ Instagram\n2️⃣ Facebook\n3️⃣ LinkedIn\n(Digite 1, 2 ou 3)' },
-    { chave: 'foto_username', pergunta: '🔗 Informe seu nome de usuário (sem @).' },
+    { chave: 'foto', pergunta: '📸 De onde vem sua foto?\n1️⃣ Instagram\n2️⃣ Facebook\n3️⃣ LinkedIn\n4️⃣ Colar Link Manual\n(Digite 1, 2, 3 ou 4)' },
+    { chave: 'foto_username', pergunta: '🔗 Informe seu nome de usuário (sem @) ou cole o link se escolheu opção 4.' },
     { chave: 'cargo', pergunta: '💼 Qual seu cargo ou profissão?' },
     { chave: 'email', pergunta: '📧 Informe seu e-mail.' },
     { chave: 'telefone', pergunta: '📱 Informe seu telefone.' },
@@ -37,7 +36,6 @@ const perguntas = [
 
 let indexPergunta = 0;
 
-// Iniciar o chat
 window.onload = () => {
     adicionarMensagem('bot', '🧠 Olá! Eu sou o Gerador de Currículo IA. Bora montar seu currículo juntos!');
     fazerPergunta();
@@ -61,6 +59,8 @@ function gerarLinkFoto(rede, username) {
             return `https://graph.facebook.com/${username}/picture?type=large`;
         case '3':
             return `https://www.linkedin.com/in/${username}/picture`;
+        case '4':
+            return username;
         default:
             return '';
     }
@@ -72,23 +72,21 @@ function handleUserInput() {
 
     adicionarMensagem('user', input);
 
-    const perguntaAtual = perguntas[indexPergunta].chave;
+    const chaveAtual = perguntas[indexPergunta].chave;
 
-    // 🔥 Se for a pergunta da rede social:
-    if (perguntaAtual === 'foto_rede') {
-        if (['1', '2', '3'].includes(input)) {
+    if (chaveAtual === 'foto') {
+        if (['1', '2', '3', '4'].includes(input)) {
             redeEscolhida = input;
             indexPergunta++;
             fazerPergunta();
         } else {
-            adicionarMensagem('bot', '❌ Opção inválida. Digite 1, 2 ou 3.');
+            adicionarMensagem('bot', '❌ Opção inválida. Digite 1, 2, 3 ou 4.');
         }
         userInput.value = '';
         return;
     }
 
-    // 🔥 Se for o username da foto:
-    if (perguntaAtual === 'foto_username') {
+    if (chaveAtual === 'foto_username') {
         dadosCurriculo['foto_url'] = gerarLinkFoto(redeEscolhida, input);
         indexPergunta++;
         userInput.value = '';
@@ -96,8 +94,7 @@ function handleUserInput() {
         return;
     }
 
-    // Demais perguntas normais:
-    dadosCurriculo[perguntaAtual] = input;
+    dadosCurriculo[chaveAtual] = input;
 
     userInput.value = '';
     indexPergunta++;
@@ -125,7 +122,6 @@ function preencherPreview() {
     document.getElementById('soft-placeholder').innerText = dadosCurriculo.soft;
     document.getElementById('idiomas-placeholder').innerText = dadosCurriculo.idiomas;
 
-    // Experiências
     const expList = document.getElementById('exp-placeholder');
     expList.innerHTML = '';
     dadosCurriculo.experiencias.split(';').forEach(item => {
@@ -134,7 +130,6 @@ function preencherPreview() {
         expList.appendChild(li);
     });
 
-    // Formações
     const formList = document.getElementById('form-placeholder');
     formList.innerHTML = '';
     dadosCurriculo.formacoes.split(';').forEach(item => {
