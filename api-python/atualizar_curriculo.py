@@ -4,6 +4,9 @@ import requests
 from playwright.sync_api import sync_playwright
 import instaloader
 import shutil
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
 
 def input_nonempty(prompt):
     while True:
@@ -158,6 +161,20 @@ def escolher_acao_pos_gerar(html_name):
             print(f"🗂️ '{pdf_name}' pronto.")
             break
         print("Opcão inválida, tenta de novo.")
+
+@app.route('/foto-perfil', methods=['POST'])
+def foto_perfil():
+    data = request.json
+    username = data.get('username')
+
+    if not username:
+        return jsonify({'error': 'Campo "username" é obrigatório.'}), 400
+
+    try:
+        foto_url = baixar_perfil_instagram(username)
+        return jsonify({'foto_url': foto_url})
+    except Exception as e:
+        return jsonify({"erro": str(e)}), 500
 
 def main():
     print("=== 🧠 Atualizador de Currículo ===")

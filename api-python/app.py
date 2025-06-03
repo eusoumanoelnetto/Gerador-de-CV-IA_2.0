@@ -156,21 +156,4 @@ def modo_terminal():
 # ====================
 
 if __name__ == '__main__':
-    if 'RENDER' in os.environ or 'RAILWAY_STATIC_URL' in os.environ:
-        # 🚀 Ambiente de Nuvem → roda API automaticamente
-        print("🌐 Rodando API no ambiente de produção (Render/Railway)")
-        app.run(host="0.0.0.0", port=5000)
-    elif sys.stdin.isatty():
-        # 🖥️ Ambiente local → pergunta o modo
-        modo = input("\nEscolha o modo:\n1️⃣ API Flask\n2️⃣ Terminal\n→ Digite 1 ou 2: ")
-
-        if modo == '1':
-            print("\n🚀 API rodando em http://localhost:5000")
-            app.run(debug=True, host="0.0.0.0", port=5000)
-        elif modo == '2':
-            modo_terminal()
-        else:
-            print("❌ Opção inválida. Encerrando...")
-    else:
-        # ✅ Ambiente sem terminal (ex.: Render) → roda API
-        app.run(host="0.0.0.0", port=5000)
+    app.run(debug=True)
