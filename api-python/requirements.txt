@@ -4,3 +4,4 @@ requests
 flask_cors
 instaloader
 playwright
+gunicorn
