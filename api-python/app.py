@@ -52,9 +52,9 @@ def baixar_perfil_instagram(username):
 # 🚀 API Endpoint
 # ====================
 
-@app.route('/')
+@app.route("/")
 def home():
-    return "<h2>🧠 API do Gerador de Currículo IA rodando com PDFKit ✔️</h2>"
+    return "API do Gerador de CV IA está online! 🚀"
 
 @app.route('/gerar-curriculo', methods=['POST'])
 def gerar_curriculo():
