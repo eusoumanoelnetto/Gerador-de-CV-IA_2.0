@@ -22,7 +22,10 @@ let redeEscolhida = '';
 
 const perguntas = [
     { chave: 'nome', pergunta: '🧠 Qual seu nome completo?' },
-    { chave: 'foto', pergunta: '📸 De onde vem sua foto?\n1️⃣ Instagram\n2️⃣ Facebook\n3️⃣ LinkedIn\n4️⃣ Colar Link Manual\n(Digite 1, 2, 3 ou 4)' },
+    { 
+        chave: 'foto', 
+        pergunta: '📸 De onde vem sua foto?\n(Digite 1, 2, 3 ou 4)\n\n1️⃣ Instagram\n2️⃣ Facebook\n3️⃣ LinkedIn\n4️⃣ Enviar Foto do Computador' 
+    },
     { chave: 'foto_username', pergunta: '🔗 Informe seu nome de usuário (sem @) ou cole o link se escolheu opção 4.' },
     { chave: 'cargo', pergunta: '💼 Qual seu cargo ou profissão?' },
     { chave: 'email', pergunta: '📧 Informe seu e-mail.' },
@@ -66,6 +69,62 @@ function gerarLinkFoto(rede, username) {
     }
 }
 
+function mostrarInputUploadNoChat() {
+    const botBubble = document.createElement('div');
+    botBubble.className = "message bot upload-bubble";
+    botBubble.innerHTML = `
+        <div id="preview-img-wrapper" class="preview-img-wrapper" style="display:none;">
+            <img id="preview-img" />
+        </div>
+        <div class="upload-label">
+            <span>🏠 Envie a foto do seu computador:</span>
+        </div>
+        <div class="upload-btn-wrapper">
+            <label class="custom-file-upload" id="upload-btn">
+                <input type="file" accept="image/*" id="chat-file-input">
+                <span id="upload-btn-text">📁 Selecionar foto</span>
+            </label>
+        </div>
+        <div id="upload-success" style="display:none;"></div>
+    `;
+    chat.appendChild(botBubble);
+    chat.scrollTop = chat.scrollHeight;
+
+    const fileInput = botBubble.querySelector('#chat-file-input');
+    const uploadBtn = botBubble.querySelector('#upload-btn');
+    const uploadBtnText = botBubble.querySelector('#upload-btn-text');
+    const uploadSuccess = botBubble.querySelector('#upload-success');
+    const previewImgWrapper = botBubble.querySelector('#preview-img-wrapper');
+    const previewImg = botBubble.querySelector('#preview-img');
+
+    fileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                previewImgWrapper.style.display = 'flex';
+                previewImg.style.display = 'block';
+                dadosCurriculo['foto_url'] = e.target.result;
+
+                // Remove o botão após upload
+                uploadBtn.style.display = "none";
+
+                // Mensagem visual de sucesso centralizada
+                uploadSuccess.style.display = "flex";
+                uploadSuccess.innerHTML = `<span class="success-upload"><span class="success-icon">✅</span> Foto enviada!</span>`;
+
+                // Após upload, pula direto para próxima pergunta (sem pedir username)
+                setTimeout(() => {
+                    indexPergunta += 2;
+                    fazerPergunta();
+                }, 1200);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
 function handleUserInput() {
     const input = userInput.value.trim();
     if (!input) return;
@@ -77,8 +136,15 @@ function handleUserInput() {
     if (chaveAtual === 'foto') {
         if (['1', '2', '3', '4'].includes(input)) {
             redeEscolhida = input;
-            indexPergunta++;
-            fazerPergunta();
+            if (input === '4') {
+                mostrarInputUploadNoChat();
+                userInput.value = '';
+                // NÃO incrementa indexPergunta, nem faz a próxima pergunta aqui!
+                return;
+            } else {
+                indexPergunta++;
+                fazerPergunta();
+            }
         } else {
             adicionarMensagem('bot', '❌ Opção inválida. Digite 1, 2, 3 ou 4.');
         }
@@ -87,11 +153,16 @@ function handleUserInput() {
     }
 
     if (chaveAtual === 'foto_username') {
-        dadosCurriculo['foto_url'] = gerarLinkFoto(redeEscolhida, input);
-        indexPergunta++;
-        userInput.value = '';
-        fazerPergunta();
-        return;
+        if (redeEscolhida === '4') {
+            // Não faz nada, já está esperando upload. Não mostra essa pergunta.
+            return;
+        } else {
+            dadosCurriculo['foto_url'] = gerarLinkFoto(redeEscolhida, input);
+            indexPergunta++;
+            userInput.value = '';
+            fazerPergunta();
+            return;
+        }
     }
 
     dadosCurriculo[chaveAtual] = input;
@@ -105,7 +176,12 @@ function handleUserInput() {
 function adicionarMensagem(remetente, texto) {
     const div = document.createElement('div');
     div.classList.add('message', remetente);
-    div.innerText = texto;
+    // Permite HTML para mensagens especiais
+    if (texto.startsWith('<span class="success-upload">')) {
+        div.innerHTML = texto;
+    } else {
+        div.innerText = texto;
+    }
     chat.appendChild(div);
     chat.scrollTop = chat.scrollHeight;
 }
@@ -149,7 +225,9 @@ async function baixarPDF() {
             body: JSON.stringify(dadosCurriculo)
         });
 
-        if (!response.ok) throw new Error('Erro ao gerar PDF.');
+        // LOGS para debug
+        console.log(response);
+        console.log(await response.text()); // Só para ver se está vindo HTML de erro
 
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
@@ -188,4 +266,21 @@ function reiniciarChat() {
     previewContainer.style.display = 'none';
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
+}
+
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    document.getElementById('file-name').textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const preview = document.getElementById('preview-img');
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+      // Se quiser salvar no objeto dadosCurriculo:
+      dadosCurriculo['foto_url'] = e.target.result;
+    }
+    reader.readAsDataURL(file);
+    // Aqui você pode enviar o arquivo pro backend se desejar
+  }
 }

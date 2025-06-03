@@ -255,3 +255,141 @@ ul {
 .restart-button:hover {
     background-color: #0072a1;
 }
+
+.bot-message {
+  background: #fffbe6;
+  color: #222;
+  align-self: flex-start;
+  border-radius: 20px 20px 20px 8px;
+  border: 1px solid #f2e6bb;
+  margin: 8px 0;
+  padding: 13px 18px;
+  max-width: 80%;
+  box-shadow: 0 2px 6px 0 rgba(220, 208, 160, 0.09);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Complemento para upload */
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  padding: 13px 32px;
+  background: #f23e49;
+  color: #fff;
+  border-radius: 7px;
+  font-weight: 700;
+  font-size: 1.12em;
+  margin: 0 auto;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 6px 0 rgba(242,62,73,0.09);
+  width: 180px;
+  text-align: center;
+}
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+.custom-file-upload.uploaded,
+.custom-file-upload.uploaded:hover {
+  background: #3cba4b;
+  color: #fff;
+}
+.custom-file-upload:hover {
+  background: #a31925;
+}
+
+/* Preview da imagem centralizado e estilizado */
+.preview-container-img img {
+    display: block;
+    margin: 0 auto 14px auto;
+    max-width: 130px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #0002;
+    background: #fff;
+}
+
+.upload-bubble {
+  background: #fffbe9;
+  border-radius: 16px;
+  padding: 18px 20px 16px 20px;
+  margin: 12px 0;
+  max-width: 84%;
+  box-shadow: 0 2px 8px #0001;
+  font-size: 1em;
+  /* O segredo: */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.upload-label {
+  margin: 0 0 18px 0;
+  font-size: 1.1em;
+  color: #4c4c4c;
+}
+.upload-btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.custom-file-upload {
+  cursor: pointer;
+  padding: 16px 0;
+  width: 190px;
+  background: #f23e49;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.08em;
+  text-align: center;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 6px 0 rgba(242,62,73,0.07);
+  display: block;
+}
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+.custom-file-upload.uploaded,
+.custom-file-upload.uploaded:hover {
+  background: #3cba4b;
+  color: #fff;
+}
+.custom-file-upload:hover {
+  background: #a31925;
+}
+.preview-img-wrapper {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 15px auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px #0001;
+  background: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.preview-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.success-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e3fae3;
+    color: #267b37;
+    border-radius: 14px;
+    padding: 14px 28px;
+    margin: 18px auto 0 auto;
+    font-size: 1.09rem;
+    gap: 10px;
+    font-weight: bold;
+    max-width: 70%;
+    /* Centraliza dentro do balão */
+}
