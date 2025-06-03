@@ -24,10 +24,12 @@
 
 <!-- 📄 Preview do Currículo -->
 <div class="preview-container" id="preview-container" style="display: none;">
+    <div id="curriculo-container"></div>
     <div class="curriculo">
         <!-- 🔹 Sidebar -->
         <div class="sidebar">
-            <img src="assets/default-avatar.jpg" class="profile-img">
+            <img src="{{FOTO_URL}}" class="profile-img" alt="Avatar"
+                 onerror="this.onerror=null;this.src='assets/default-avatar.jpg';">
             <h2 id="nome-placeholder">Nome</h2>
             <p id="cargo-placeholder">Cargo</p>
             <p id="email-placeholder">Email</p>

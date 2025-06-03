@@ -3,6 +3,7 @@ import os
 import requests
 from playwright.sync_api import sync_playwright
 import instaloader
+import shutil
 
 def input_nonempty(prompt):
     while True:
@@ -42,6 +43,22 @@ def obter_foto_instagram(username):
     except Exception as e:
         print(f"❌ Erro ao buscar a foto no Instagram: {e}")
         return None
+
+def baixar_perfil_instagram(username):
+    L = instaloader.Instaloader(dirname_pattern="assets", save_metadata=False, download_videos=False)
+    profile = instaloader.Profile.from_username(L.context, username)
+    # Baixa a foto do perfil (salva como .jpg ou .png na pasta assets/username/)
+    L.download_profilepic(profile)
+    pasta = f"assets/{username}"
+    # Procura o arquivo baixado (pode ser .jpg ou .png)
+    for ext in ['.jpg', '.jpeg', '.png']:
+        foto_path = os.path.join(pasta, f"{username}{ext}")
+        if os.path.exists(foto_path):
+            destino = f"assets/{username}.jpg"
+            shutil.move(foto_path, destino)
+            shutil.rmtree(pasta, ignore_errors=True)
+            return f"/assets/{username}.jpg"
+    return None
 
 def obter_foto_url():
     while True:
@@ -145,14 +162,24 @@ def escolher_acao_pos_gerar(html_name):
 def main():
     print("=== 🧠 Atualizador de Currículo ===")
     nome = input_nonempty("Nome completo: ")
-    foto_url = obter_foto_url()
+    # foto_url = obter_foto_url()
     cargo = input_nonempty("Cargo / profissão: ")
     email = input_nonempty("Email: ")
     telefone = input_nonempty("Telefone: ")
     experiencias = coletar_experiencias()
     formacoes = coletar_formacoes()
     habilidades = coletar_habilidades()
-    d = {"nome": nome, "foto_url": foto_url, "cargo": cargo, "email": email, "telefone": telefone, "experiencias": experiencias, "formacoes": formacoes, "habilidades": habilidades}
+    d = {"nome": nome, "foto_url": "", "cargo": cargo, "email": email, "telefone": telefone, "experiencias": experiencias, "formacoes": formacoes, "habilidades": habilidades}
+    # fetch('https://gerador-de-cv-ia-2-0.onrender.com/foto-perfil', {
+    #     method: 'POST',
+    #     headers: { 'Content-Type': 'application/json' },
+    #     body: JSON.stringify({ username: 'manoelccoelho' })
+    # })
+    # .then(res => res.json())
+    # .then(data => {
+    #     dadosCurriculo.foto_url = "https://gerador-de-cv-ia-2-0.onrender.com" + data.foto_url;
+    #     // continue o fluxo normalmente...
+    # });
     if input_yes_no("\nDeseja atualizar o currículo (s/n):"):
         html_file = 'curriculo.html'
         with open(html_file, 'w', encoding='utf-8') as f:

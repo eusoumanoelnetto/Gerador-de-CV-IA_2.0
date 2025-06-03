@@ -9,7 +9,7 @@ const dadosCurriculo = {
     cargo: '',
     email: '',
     telefone: '',
-    foto_url: '',
+    foto_url: 'assets/default-avatar.jpg',
     experiencias: '',
     formacoes: '',
     hard: '',
@@ -49,23 +49,8 @@ function fazerPergunta() {
         adicionarMensagem('bot', perguntas[indexPergunta].pergunta);
     } else {
         adicionarMensagem('bot', 'Perfeito! Gerando preview do seu currículo... ⏳');
-        preencherPreview();
+        gerarCurriculoPreview(dadosCurriculo); // Mostra o currículo no container
         previewContainer.style.display = 'block';
-    }
-}
-
-function gerarLinkFoto(rede, username) {
-    switch (rede) {
-        case '1':
-            return `https://www.instagram.com/${username}/picture`;
-        case '2':
-            return `https://graph.facebook.com/${username}/picture?type=large`;
-        case '3':
-            return `https://www.linkedin.com/in/${username}/picture`;
-        case '4':
-            return username;
-        default:
-            return '';
     }
 }
 
@@ -105,7 +90,7 @@ function mostrarInputUploadNoChat() {
                 previewImg.src = e.target.result;
                 previewImgWrapper.style.display = 'flex';
                 previewImg.style.display = 'block';
-                dadosCurriculo['foto_url'] = e.target.result;
+                dadosCurriculo['foto_url'] = e.target.result; // base64 do FileReader
 
                 // Remove o botão após upload
                 uploadBtn.style.display = "none";
@@ -152,24 +137,41 @@ function handleUserInput() {
         return;
     }
 
+    // Novo fluxo: busca foto via backend!
     if (chaveAtual === 'foto_username') {
         if (redeEscolhida === '4') {
             // Não faz nada, já está esperando upload. Não mostra essa pergunta.
             return;
         } else {
-            dadosCurriculo['foto_url'] = gerarLinkFoto(redeEscolhida, input);
-            indexPergunta++;
+            adicionarMensagem('bot', '⏳ Baixando sua foto de perfil...');
+            fetch('https://gerador-de-cv-ia-2-0.onrender.com/foto-perfil', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: input })
+            })
+            .then(r => r.json())
+            .then(data => {
+                // Sempre monta a URL completa!
+                dadosCurriculo.foto_url = 'https://gerador-de-cv-ia-2-0.onrender.com' + data.foto_url;
+                adicionarMensagem('bot', '📥 Foto de perfil encontrada!');
+                indexPergunta++;
+                fazerPergunta();
+            })
+            .catch(err => {
+                adicionarMensagem('bot', '❌ Erro ao obter foto. Usando avatar padrão.');
+                dadosCurriculo.foto_url = 'assets/default-avatar.jpg';
+                indexPergunta++;
+                fazerPergunta();
+            });
+
             userInput.value = '';
-            fazerPergunta();
             return;
         }
     }
 
     dadosCurriculo[chaveAtual] = input;
-
     userInput.value = '';
     indexPergunta++;
-
     setTimeout(fazerPergunta, 500);
 }
 
@@ -186,49 +188,64 @@ function adicionarMensagem(remetente, texto) {
     chat.scrollTop = chat.scrollHeight;
 }
 
-function preencherPreview() {
-    document.getElementById('nome-placeholder').innerText = dadosCurriculo.nome;
-    document.getElementById('nome-placeholder2').innerText = dadosCurriculo.nome;
-    document.getElementById('cargo-placeholder').innerText = dadosCurriculo.cargo;
-    document.getElementById('email-placeholder').innerText = dadosCurriculo.email;
-    document.getElementById('telefone-placeholder').innerText = dadosCurriculo.telefone;
-    document.querySelector('.profile-img').src = dadosCurriculo.foto_url;
+const templateCurriculo = `
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+  <div class="curriculo">
+    <!-- 🔹 Sidebar -->
+    <div class="sidebar">
+        <img src="{{FOTO_URL}}" class="profile-img" alt="Avatar" onerror="this.onerror=null;this.src='assets/default-avatar.jpg';">
+        <h2 id="nome-placeholder">{{NOME}}</h2>
+        <p id="cargo-placeholder">{{CARGO}}</p>
+        <p id="email-placeholder">{{EMAIL}}</p>
+        <p id="telefone-placeholder">{{TELEFONE}}</p>
+        <h3>Habilidades</h3>
+        <p><b>Hard Skills:</b> <span id="hard-placeholder">{{HARD}}</span></p>
+        <p><b>Soft Skills:</b> <span id="soft-placeholder">{{SOFT}}</span></p>
+        <p><b>Idiomas:</b> <span id="idiomas-placeholder">{{IDIOMAS}}</span></p>
+    </div>
+    <!-- 🔸 Conteúdo -->
+    <div class="content">
+        <h1>Currículo <span id="nome-placeholder2">{{NOME}}</span></h1>
+        <h2>Experiência</h2>
+        <ul id="exp-placeholder">{{EXPERIENCIAS}}</ul>
+        <h2>Formação</h2>
+        <ul id="form-placeholder">{{FORMACOES}}</ul>
+    </div>
+  </div>
+</div>
+`;
 
-    document.getElementById('hard-placeholder').innerText = dadosCurriculo.hard;
-    document.getElementById('soft-placeholder').innerText = dadosCurriculo.soft;
-    document.getElementById('idiomas-placeholder').innerText = dadosCurriculo.idiomas;
+function gerarCurriculoPreview(dadosCurriculo) {
+  let html = templateCurriculo
+    .replace(/{{FOTO_URL}}/g, dadosCurriculo.foto_url)
+    .replace(/{{NOME}}/g, dadosCurriculo.nome || '')
+    .replace(/{{CARGO}}/g, dadosCurriculo.cargo || '')
+    .replace(/{{EMAIL}}/g, dadosCurriculo.email || '')
+    .replace(/{{TELEFONE}}/g, dadosCurriculo.telefone || '')
+    .replace(/{{HARD}}/g, dadosCurriculo.hard || '')
+    .replace(/{{SOFT}}/g, dadosCurriculo.soft || '')
+    .replace(/{{IDIOMAS}}/g, dadosCurriculo.idiomas || '')
+    .replace(/{{EXPERIENCIAS}}/g, dadosCurriculo.experiencias
+      ? dadosCurriculo.experiencias.split(';').map(e => `<li>${e.trim()}</li>`).join('')
+      : '')
+    .replace(/{{FORMACOES}}/g, dadosCurriculo.formacoes
+      ? dadosCurriculo.formacoes.split(';').map(f => `<li>${f.trim()}</li>`).join('')
+      : '');
 
-    const expList = document.getElementById('exp-placeholder');
-    expList.innerHTML = '';
-    dadosCurriculo.experiencias.split(';').forEach(item => {
-        const li = document.createElement('li');
-        li.innerText = item.trim();
-        expList.appendChild(li);
-    });
-
-    const formList = document.getElementById('form-placeholder');
-    formList.innerHTML = '';
-    dadosCurriculo.formacoes.split(';').forEach(item => {
-        const li = document.createElement('li');
-        li.innerText = item.trim();
-        formList.appendChild(li);
-    });
+  // Limpa o container antes de inserir o novo currículo
+  const container = document.getElementById('curriculo-container');
+  container.innerHTML = '';
+  container.innerHTML = html;
 }
 
 async function baixarPDF() {
     try {
         adicionarMensagem('bot', '📄 Gerando seu PDF... ⏳');
-
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dadosCurriculo)
         });
-
-        // LOGS para debug
-        console.log(response);
-        console.log(await response.text()); // Só para ver se está vindo HTML de erro
-
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
 
@@ -241,7 +258,6 @@ async function baixarPDF() {
 
         window.URL.revokeObjectURL(url);
         adicionarMensagem('bot', '✔️ PDF gerado e baixado com sucesso!');
-
     } catch (error) {
         adicionarMensagem('bot', '❌ Erro ao gerar PDF. Verifique sua conexão com a API.');
         console.error(error);
@@ -266,21 +282,4 @@ function reiniciarChat() {
     previewContainer.style.display = 'none';
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
-}
-
-function handleFileUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    document.getElementById('file-name').textContent = file.name;
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const preview = document.getElementById('preview-img');
-      preview.src = e.target.result;
-      preview.style.display = 'block';
-      // Se quiser salvar no objeto dadosCurriculo:
-      dadosCurriculo['foto_url'] = e.target.result;
-    }
-    reader.readAsDataURL(file);
-    // Aqui você pode enviar o arquivo pro backend se desejar
-  }
 }
