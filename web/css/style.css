@@ -239,3 +239,19 @@ ul {
     border-radius: 20px 20px 8px 20px;
     border: 1px solid #b9d4ce;
 }
+
+.restart-button {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.restart-button:hover {
+    background-color: #0072a1;
+}

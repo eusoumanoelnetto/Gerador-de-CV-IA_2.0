@@ -169,3 +169,23 @@ async function baixarPDF() {
         console.error(error);
     }
 }
+
+function mostrarBotaoReiniciar() {
+    const botao = document.createElement('button');
+    botao.innerText = '🔄 Reiniciar Chat';
+    botao.classList.add('restart-button');
+    botao.onclick = reiniciarChat;
+    chat.appendChild(botao);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function reiniciarChat() {
+    indexPergunta = 0;
+    for (let chave in dadosCurriculo) {
+        dadosCurriculo[chave] = '';
+    }
+    chat.innerHTML = '';
+    previewContainer.style.display = 'none';
+    adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
+    fazerPergunta();
+}
