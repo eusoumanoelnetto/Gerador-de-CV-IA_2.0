@@ -94,10 +94,8 @@ def gerar_curriculo():
 def foto_perfil():
     data = request.json
     username = data.get('username')
-
     if not username:
-        return jsonify({'error': 'Campo "username" é obrigatório.'}), 400
-
+        return jsonify({"erro": "Username obrigatório"}), 400
     try:
         foto_url = baixar_perfil_instagram(username)
         return jsonify({'foto_url': foto_url})
