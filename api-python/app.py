@@ -7,10 +7,7 @@ import instaloader
 import sys
 
 app = Flask(__name__)
-CORS(app)  # Libera CORS para todo mundo
-
-# OU, para liberar só para seu domínio (mais seguro):
-# CORS(app, origins=["https://eusoumanoelnetto.github.io"])
+CORS(app, origins=["https://eusoumanoelnetto.github.io"])
 
 # Garante que a pasta 'assets' existe
 if not os.path.exists('assets'):
@@ -154,4 +151,4 @@ def modo_terminal():
 # ====================
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000, debug=True)
