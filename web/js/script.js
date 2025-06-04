@@ -148,7 +148,8 @@ function handleUserInput() {
             })
             .then(r => r.json())
             .then(data => {
-                dadosCurriculo.foto_url = 'https://gerador-de-cv-ia-2-0.onrender.com' + data.foto_url;
+                // Salva exatamente o valor retornado pelo backend
+                dadosCurriculo.foto_url = data.foto_url;
                 adicionarMensagem('bot', '📥 Foto de perfil encontrada!');
                 indexPergunta++;
                 fazerPergunta();
@@ -287,6 +288,12 @@ function preencherPreview() {
     document.getElementById('hard-placeholder').innerText = dadosCurriculo.hard;
     document.getElementById('soft-placeholder').innerText = dadosCurriculo.soft;
     document.getElementById('idiomas-placeholder').innerText = dadosCurriculo.idiomas;
+
+    // Atualiza a foto de perfil no preview
+    const img = document.querySelector('.profile-img');
+    if (img) {
+        img.src = dadosCurriculo.foto_url || "assets/default-avatar.jpg";
+    }
 
     // Preencher experiências
     const expPlaceholder = document.getElementById('exp-placeholder');
