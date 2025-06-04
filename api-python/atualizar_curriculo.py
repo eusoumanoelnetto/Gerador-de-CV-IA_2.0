@@ -64,36 +64,53 @@ def baixar_perfil_instagram(username):
     return None
 
 def obter_foto_url():
-    while True:
-        print("\nEscolha a rede social para foto de perfil:")
-        print("1) Instagram (username)")
-        print("2) Facebook (username)")
-        print("3) LinkedIn (username)")
-        escolha = input_nonempty("Digite 1, 2 ou 3: ")
+    print("\nEscolha de foto de perfil:")
+    print("1) Instagram (username)")
+    print("2) Facebook (username)")
+    print("3) LinkedIn (username)")
+    print("4) Colar link direto da foto")
+    opcao = input("Digite 1, 2, 3 ou 4: ").strip()
 
-        username = input_nonempty("Digite seu nome de usuário (sem @): ")
-
-        if escolha == "1":
+    if opcao in ['1', '2', '3']:
+        username = input("Digite seu nome de usuário (sem @): ").strip()
+        if opcao == '1':
             url = obter_foto_instagram(username)
             if url:
-                local = f"assets/{username}.jpg"
-                if baixar_imagem(url, local):
-                    return local
+                caminho = f"assets/{username}.jpg"
+                if baixar_imagem(url, caminho):
+                    print(f"📥 Imagem salva em {caminho}")
+                    return caminho
                 else:
                     print("Usando URL remota em fallback.")
                     return url
             else:
-                if input_yes_no("Deseja colar link direto ou tentar outra rede? [s=link/n=outra]"):
-                    link = input_nonempty("Cole o link completo da imagem: ")
-                    return link
-                else:
-                    continue
-        elif escolha == "2":
-            return f"https://graph.facebook.com/{username}/picture?type=large"
-        elif escolha == "3":
-            return f"https://www.linkedin.com/in/{username}/picture"
-        else:
-            print("Opção inválida. Tente novamente.")
+                print("Não foi possível obter a foto do Instagram.")
+                return "assets/default-avatar.jpg"
+        elif opcao == '2':
+            url = f"https://graph.facebook.com/{username}/picture?type=large"
+            caminho = f"assets/{username}.jpg"
+            if baixar_imagem(url, caminho):
+                print(f"📥 Imagem salva em {caminho}")
+                return caminho
+            else:
+                print("Usando URL remota em fallback.")
+                return url
+        elif opcao == '3':
+            url = f"https://www.linkedin.com/in/{username}/picture"
+            caminho = f"assets/{username}.jpg"
+            if baixar_imagem(url, caminho):
+                print(f"📥 Imagem salva em {caminho}")
+                return caminho
+            else:
+                print("Usando URL remota em fallback.")
+                return url
+    elif opcao == '4':
+        url = input("Cole o link direto da foto: ").strip()
+        print(f"🔗 Usando link direto: {url}")
+        return url
+    else:
+        print("Opção inválida, usando avatar padrão.")
+        return "assets/default-avatar.jpg"
 
 def coletar_experiencias():
     exps = []
@@ -179,24 +196,23 @@ def foto_perfil():
 def main():
     print("=== 🧠 Atualizador de Currículo ===")
     nome = input_nonempty("Nome completo: ")
-    # foto_url = obter_foto_url()
+    foto_url = obter_foto_url()   # <- Restaurado do antigo!
     cargo = input_nonempty("Cargo / profissão: ")
     email = input_nonempty("Email: ")
     telefone = input_nonempty("Telefone: ")
     experiencias = coletar_experiencias()
     formacoes = coletar_formacoes()
     habilidades = coletar_habilidades()
-    d = {"nome": nome, "foto_url": "", "cargo": cargo, "email": email, "telefone": telefone, "experiencias": experiencias, "formacoes": formacoes, "habilidades": habilidades}
-    # fetch('https://gerador-de-cv-ia-2-0.onrender.com/foto-perfil', {
-    #     method: 'POST',
-    #     headers: { 'Content-Type': 'application/json' },
-    #     body: JSON.stringify({ username: 'manoelccoelho' })
-    # })
-    # .then(res => res.json())
-    # .then(data => {
-    #     dadosCurriculo.foto_url = "https://gerador-de-cv-ia-2-0.onrender.com" + data.foto_url;
-    #     // continue o fluxo normalmente...
-    # });
+    d = {
+        "nome": nome,
+        "foto_url": foto_url,
+        "cargo": cargo,
+        "email": email,
+        "telefone": telefone,
+        "experiencias": experiencias,
+        "formacoes": formacoes,
+        "habilidades": habilidades
+    }
     if input_yes_no("\nDeseja atualizar o currículo (s/n):"):
         html_file = 'curriculo.html'
         with open(html_file, 'w', encoding='utf-8') as f:
