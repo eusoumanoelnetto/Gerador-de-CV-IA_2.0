@@ -24,38 +24,22 @@
 
 <!-- 📄 Preview do Currículo -->
 <div class="preview-container" id="preview-container" style="display: none;">
-    <div id="curriculo-container"></div>
-    <div class="curriculo">
-        <!-- 🔹 Sidebar -->
-        <div class="sidebar">
-            <img src="{{FOTO_URL}}" class="profile-img" alt="Avatar"
-                 onerror="this.onerror=null;this.src='assets/default-avatar.jpg';">
-            <h2 id="nome-placeholder">Nome</h2>
-            <p id="cargo-placeholder">Cargo</p>
-            <p id="email-placeholder">Email</p>
-            <p id="telefone-placeholder">Telefone</p>
-            <h3>Habilidades</h3>
-            <p><b>Hard Skills:</b> <span id="hard-placeholder"></span></p>
-            <p><b>Soft Skills:</b> <span id="soft-placeholder"></span></p>
-            <p><b>Idiomas:</b> <span id="idiomas-placeholder"></span></p>
-        </div>
-
-        <!-- 🔸 Conteúdo -->
-        <div class="content">
-            <h1>Currículo <span id="nome-placeholder2"></span></h1>
-
-            <h2>Experiência</h2>
-            <ul id="exp-placeholder"></ul>
-
-            <h2>Formação</h2>
-            <ul id="form-placeholder"></ul>
-        </div>
-    </div>
-
-    <button onclick="baixarPDF()">📄 Baixar PDF</button>
+   <!-- A preview do currículo aparece aqui -->
+   <div id="preview">
+      <h2 id="nome-placeholder">{{NOME}}</h2>
+      <p id="cargo-placeholder">{{CARGO}}</p>
+      <p id="email-placeholder">{{EMAIL}}</p>
+      <p id="telefone-placeholder">{{TELEFONE}}</p>
+      <p><b>Hard Skills:</b> <span id="hard-placeholder">{{HARD}}</span></p>
+      <p><b>Soft Skills:</b> <span id="soft-placeholder">{{SOFT}}</span></p>
+      <p><b>Idiomas:</b> <span id="idiomas-placeholder">{{IDIOMAS}}</span></p>
+      <ul id="exp-placeholder">{{EXPERIENCIAS}}</ul>
+      <ul id="form-placeholder">{{FORMACOES}}</ul>
+   </div>
+   <button onclick="baixarPDF()">📄 Baixar PDF</button>
 </div>
 
-<!-- 🔗 Scripts -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="js/script.js"></script>
 

@@ -17,7 +17,6 @@ const dadosCurriculo = {
     idiomas: ''
 };
 
-let etapaFoto = 0;
 let redeEscolhida = '';
 
 const perguntas = [
@@ -28,13 +27,13 @@ const perguntas = [
     },
     { chave: 'foto_username', pergunta: '🔗 Informe seu nome de usuário (sem @) ou cole o link se escolheu opção 4.' },
     { chave: 'cargo', pergunta: '💼 Qual seu cargo ou profissão?' },
-    { chave: 'email', pergunta: '📧 Informe seu e-mail.' },
-    { chave: 'telefone', pergunta: '📱 Informe seu telefone.' },
-    { chave: 'experiencias', pergunta: '🛠️ Descreva suas experiências (Cargo | Empresa | Período | Descrição). Separe cada uma com ponto e vírgula.' },
-    { chave: 'formacoes', pergunta: '🎓 Descreva sua formação acadêmica (Curso | Instituição | Período). Separe por ponto e vírgula.' },
-    { chave: 'hard', pergunta: '🧠 Quais são suas Hard Skills? (Separe por vírgula)' },
-    { chave: 'soft', pergunta: '💡 Quais são suas Soft Skills? (Separe por vírgula)' },
-    { chave: 'idiomas', pergunta: '🌍 Quais idiomas você fala? (Separe por vírgula)' }
+    { chave: 'email', pergunta: '📧 Qual seu email?' },
+    { chave: 'telefone', pergunta: '📱 Qual seu telefone?' },
+    { chave: 'experiencias', pergunta: '🧰 Descreva suas experiências profissionais (use ";" para separar).' },
+    { chave: 'formacoes', pergunta: '🎓 Descreva sua formação acadêmica (use ";" para separar).' },
+    { chave: 'hard', pergunta: '💪 Quais são suas Hard Skills? (separadas por vírgula)' },
+    { chave: 'soft', pergunta: '🧠 Quais são suas Soft Skills? (separadas por vírgula)' },
+    { chave: 'idiomas', pergunta: '🌎 Quais idiomas você fala? (separados por vírgula)' }
 ];
 
 let indexPergunta = 0;
@@ -49,8 +48,8 @@ function fazerPergunta() {
         adicionarMensagem('bot', perguntas[indexPergunta].pergunta);
     } else {
         adicionarMensagem('bot', 'Perfeito! Gerando preview do seu currículo... ⏳');
-        gerarCurriculoPreview(dadosCurriculo); // Mostra o currículo no container
-        previewContainer.style.display = 'block';
+        gerarCurriculoPreview(dadosCurriculo);
+        previewContainer.style.display = 'block'; // <-- Torna o preview visível
     }
 }
 
@@ -124,7 +123,6 @@ function handleUserInput() {
             if (input === '4') {
                 mostrarInputUploadNoChat();
                 userInput.value = '';
-                // NÃO incrementa indexPergunta, nem faz a próxima pergunta aqui!
                 return;
             } else {
                 indexPergunta++;
@@ -137,10 +135,9 @@ function handleUserInput() {
         return;
     }
 
-    // Novo fluxo: busca foto via backend!
     if (chaveAtual === 'foto_username') {
         if (redeEscolhida === '4') {
-            // Não faz nada, já está esperando upload. Não mostra essa pergunta.
+            // Não faz nada, já está esperando upload.
             return;
         } else {
             adicionarMensagem('bot', '⏳ Baixando sua foto de perfil...');
@@ -151,7 +148,6 @@ function handleUserInput() {
             })
             .then(r => r.json())
             .then(data => {
-                // Sempre monta a URL completa!
                 dadosCurriculo.foto_url = 'https://gerador-de-cv-ia-2-0.onrender.com' + data.foto_url;
                 adicionarMensagem('bot', '📥 Foto de perfil encontrada!');
                 indexPergunta++;
@@ -232,10 +228,9 @@ function gerarCurriculoPreview(dadosCurriculo) {
       ? dadosCurriculo.formacoes.split(';').map(f => `<li>${f.trim()}</li>`).join('')
       : '');
 
-  // Limpa o container antes de inserir o novo currículo
-  const container = document.getElementById('curriculo-container');
-  container.innerHTML = '';
-  container.innerHTML = html;
+  const preview = document.getElementById('preview');
+  preview.innerHTML = '';
+  preview.innerHTML = html;
 }
 
 async function baixarPDF() {
@@ -283,3 +278,42 @@ function reiniciarChat() {
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
 }
+
+function preencherPreview() {
+    document.getElementById('nome-placeholder').innerText = dadosCurriculo.nome;
+    document.getElementById('cargo-placeholder').innerText = dadosCurriculo.cargo;
+    document.getElementById('email-placeholder').innerText = dadosCurriculo.email;
+    document.getElementById('telefone-placeholder').innerText = dadosCurriculo.telefone;
+    document.getElementById('hard-placeholder').innerText = dadosCurriculo.hard;
+    document.getElementById('soft-placeholder').innerText = dadosCurriculo.soft;
+    document.getElementById('idiomas-placeholder').innerText = dadosCurriculo.idiomas;
+
+    // Preencher experiências
+    const expPlaceholder = document.getElementById('exp-placeholder');
+    expPlaceholder.innerHTML = '';
+    if (dadosCurriculo.experiencias) {
+        const experiencias = dadosCurriculo.experiencias.split(';');
+        experiencias.forEach(exp => {
+            const li = document.createElement('li');
+            li.innerText = exp.trim();
+            expPlaceholder.appendChild(li);
+        });
+    }
+
+    // Preencher formações
+    const formPlaceholder = document.getElementById('form-placeholder');
+    formPlaceholder.innerHTML = '';
+    if (dadosCurriculo.formacoes) {
+        const formacoes = dadosCurriculo.formacoes.split(';');
+        formacoes.forEach(form => {
+            const li = document.createElement('li');
+            li.innerText = form.trim();
+            formPlaceholder.appendChild(li);
+        });
+    }
+}
+
+document.getElementById('preview').innerHTML = '';
+// Agora insira o novo conteúdo preenchido
+document.getElementById('preview').innerHTML = preenchido;
+document.getElementById('preview-container').style.display = 'block';
