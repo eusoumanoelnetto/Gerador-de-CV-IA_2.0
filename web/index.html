@@ -27,23 +27,18 @@
 
 <!-- 📄 Preview do Currículo -->
 <div class="preview-container" id="preview-container" style="display: none;">
-   <!-- A preview do currículo aparece aqui -->
-   <div id="preview">
-      <h2 id="nome-placeholder">{{NOME}}</h2>
-      <p id="cargo-placeholder">{{CARGO}}</p>
-      <p id="email-placeholder">{{EMAIL}}</p>
-      <p id="telefone-placeholder">{{TELEFONE}}</p>
-      <p><b>Hard Skills:</b> <span id="hard-placeholder">{{HARD}}</span></p>
-      <p><b>Soft Skills:</b> <span id="soft-placeholder">{{SOFT}}</span></p>
-      <p><b>Idiomas:</b> <span id="idiomas-placeholder">{{IDIOMAS}}</span></p>
-      <ul id="exp-placeholder">{{EXPERIENCIAS}}</ul>
-      <ul id="form-placeholder">{{FORMACOES}}</ul>
-   </div>
-   <button onclick="baixarPDF()">📄 Baixar PDF</button>
+  <div class="cv-preview-center">
+    <div class="cv-preview-row">
+      <div class="cv-sidebar">
+        <!-- Sidebar será inserida pelo JS -->
+      </div>
+      <div class="cv-main">
+        <!-- Experiência + Formação será inserido pelo JS -->
+      </div>
+    </div>
+    <button id="baixarPDF" onclick="baixarPDF()" style="display:none">📄 Baixar PDF</button>
+  </div>
 </div>
-
-<!-- Novo container para o currículo gerado dinamicamente -->
-<div id="curriculo-container"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="js/script.js"></script>

@@ -47,9 +47,11 @@ function fazerPergunta() {
     if (indexPergunta < perguntas.length) {
         adicionarMensagem('bot', perguntas[indexPergunta].pergunta);
     } else {
+        // Loga a URL da foto antes do preview
+        console.log("URL DA FOTO:", dadosCurriculo.foto_url);
         adicionarMensagem('bot', 'Perfeito! Gerando preview do seu currículo... ⏳');
         gerarCurriculoPreview(dadosCurriculo);
-        previewContainer.style.display = 'block'; // <-- Torna o preview visível
+        previewContainer.style.display = 'block';
     }
 }
 
@@ -221,7 +223,7 @@ function gerarCurriculoPreview(dadosCurriculo) {
             <div class="w3-display-container">
               <img src="${dadosCurriculo.foto_url || 'assets/default-avatar.jpg'}" style="width:100%" alt="Avatar">
               <div class="w3-display-bottomleft w3-container w3-text-white">
-                <h2>${dadosCurriculo.nome || ''}</h2>
+                <h2>${dadosCurriculo.nome}</h2>
               </div>
             </div>
             <div class="w3-container">
@@ -263,6 +265,10 @@ function gerarCurriculoPreview(dadosCurriculo) {
     </div>
   `;
   document.getElementById('curriculo-container').innerHTML = html;
+
+  // Agora sim, exibe o botão PDF!
+  const btn = document.getElementById('baixarPDF');
+  if (btn) btn.style.display = 'block';
 }
 
 async function baixarPDF() {
@@ -291,6 +297,21 @@ async function baixarPDF() {
     }
 }
 
+function mostrarBotaoPDF() {
+  // Evita duplicar botão
+  if (document.getElementById('baixarPDF')) return;
+  const btn = document.createElement('button');
+  btn.id = 'baixarPDF';
+  btn.innerText = '📄 Baixar PDF';
+  btn.onclick = baixarPDF;
+  btn.style.margin = '32px auto 0 auto';
+  document.getElementById('preview-container').appendChild(btn);
+}
+
+// Após gerar o preview:
+gerarCurriculoPreview(dadosCurriculo);
+mostrarBotaoPDF();
+
 function mostrarBotaoReiniciar() {
     const botao = document.createElement('button');
     botao.innerText = '🔄 Reiniciar Chat';
@@ -307,6 +328,8 @@ function reiniciarChat() {
     }
     chat.innerHTML = '';
     previewContainer.style.display = 'none';
+    // Esconde o botão PDF novamente
+    document.getElementById('baixarPDF').style.display = 'none';
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
 }

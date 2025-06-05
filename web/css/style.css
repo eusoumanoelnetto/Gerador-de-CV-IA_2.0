@@ -393,3 +393,59 @@ ul {
     max-width: 380px;
     box-sizing: border-box;
 }
+
+.preview-container {
+  width: 100%;
+  max-width: 850px;
+  margin: 32px auto 0 auto;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+#curriculo-container {
+  width: 100%;
+  /* Remove width fixa em 33% dos cards internos */
+}
+
+#baixarPDF {
+  margin: 32px auto 0 auto;
+  padding: 15px 36px;
+  background: #00796b;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 2px 8px #0001;
+  display: block;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#baixarPDF:hover {
+  background: #00897b;
+}
+
+.w3-content {
+  width: 100% !important;
+  max-width: 850px !important;
+}
+
+.w3-row-padding {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.w3-third {
+  width: 280px !important;
+  min-width: 260px;
+  flex: 0 0 280px;
+}
+
+.w3-twothird {
+  flex: 1 1 420px;
+  min-width: 320px;
+}
