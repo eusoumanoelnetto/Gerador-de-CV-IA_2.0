@@ -5,43 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Currículo IA</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/style.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Orbitron:wght@800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-
-<!-- 🔥 Chatbot -->
-<div class="chat-container">
-    <div class="chat-header">
-        <img src="assets/avatar.gif" alt="Bot" width="60px" height="50px">
-        <h2>GERADOR DE CV IA</h2>
+<div class="main-layout">
+  <div class="chat-container">
+    <!-- 🔥 Chatbot -->
+    <div class="chat-header tech-glass">
+      <div class="chat-logo-circle">
+        <img src="assets/avatar.gif" alt="Logo" width="48" height="48" />
+      </div>
+      <div class="chat-header-text">
+        <span class="header-main">Gerador <span class="highlight">IA CV</span></span>
+        <span class="header-sub">Powered by Jarvis</span>
+      </div>
     </div>
     <div id="chat" class="chat-window"></div>
     <div class="input-area">
         <input type="text" id="userInput" placeholder="Digite aqui...">
         <button onclick="handleUserInput()">Enviar</button>
     </div>
-</div>
-
-<!-- 📄 Preview do Currículo -->
-<div class="preview-container" id="preview-container" style="display: none;">
-  <div class="cv-preview-center">
-    <div class="cv-preview-row">
-      <div class="cv-sidebar">
-        <!-- Sidebar será inserida pelo JS -->
-      </div>
-      <div class="cv-main">
-        <!-- Experiência + Formação será inserido pelo JS -->
-      </div>
+  </div>
+  <div class="preview-bloco">
+    <!-- 📄 Preview do Currículo -->
+    <div class="cv-titulo-main">Seu Currículo</div>
+    <div class="preview-container" id="preview-container" style="display:none;">
+      <!-- ... preview aqui ... -->
     </div>
-    <button id="baixarPDF" onclick="baixarPDF()" style="display:none">📄 Baixar PDF</button>
+    <button id="baixarPDF" onclick="baixarPDF()" style="display: none;">⬇️ Baixar PDF</button>
   </div>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="js/script.js"></script>
-
 </body>
 </html>

@@ -1,11 +1,185 @@
-body {
-    background: #ece8da;
-    color: #222;
-    font-family: 'Segoe UI', sans-serif;
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    justify-content: flex-start;
+body, html {
+  min-height: 100vh;
+  height: 100%;
+  background: #ece8da;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ====== CONTAINER CENTRAL DO PREVIEW ====== */
+#preview-container {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 10px 32px 0 rgba(60,60,100,0.14);
+  padding: 40px 36px 32px 36px;
+  margin: 32px auto 0 auto;
+  max-width: 970px;
+  min-width: 340px;
+  display: flex;
+  flex-direction: row;
+  gap: 38px;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Centraliza na página toda */
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 64px;
+  margin-top: 32px;
+}
+
+/* ===== SIDEBAR DO CV ===== */
+.w3-third {
+  min-width: 310px !important;
+  max-width: 320px !important;
+  background: #fff;
+  border-radius: 18px 18px 12px 12px;
+  box-shadow: 0 8px 24px #0001;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.w3-display-container {
+  border-radius: 18px 18px 0 0;
+  overflow: hidden;
+}
+
+.w3-display-container img {
+  border-radius: 18px 18px 0 0;
+  width: 100%;
+  min-height: 185px;
+  max-height: 200px;
+  object-fit: cover;
+  background: #f7f7f7;
+}
+
+/* Conteúdo da Sidebar */
+.w3-container {
+  padding: 28px 28px 20px 28px !important;
+  text-align: left;
+}
+
+.w3-container h2, .w3-container .w3-text-white h2 {
+  font-size: 1.52rem;
+  font-weight: bold;
+  color: #00897B;
+  margin: 16px 0 10px 0;
+}
+
+.w3-container p, .w3-container .w3-large, .w3-container b {
+  font-size: 1.12rem;
+  color: #444;
+}
+
+/* ====== CARDS DO CURRÍCULO ====== */
+.w3-twothird {
+  min-width: 350px !important;
+  max-width: 550px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-left: 0 !important;
+}
+
+.w3-container.w3-card.w3-white {
+  margin-bottom: 0;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px 0 rgba(0,0,0,0.08);
+  min-width: 320px;
+  padding: 24px 32px;
+}
+
+/* Ícones maiores e alinhados */
+.w3-text-teal, .fa-fw {
+  color: #00897B !important;
+  font-size: 1.6em !important;
+  margin-right: 12px !important;
+}
+
+/* ===== BOTÃO PDF CENTRALIZADO ===== */
+#baixarPDF {
+  display: block;
+  margin: 44px auto 0 auto;
+  background: #009688;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 16px 36px;
+  border: none;
+  font-size: 1.13rem;
+  box-shadow: 0 4px 16px 0 rgba(60,60,100,0.08);
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+#baixarPDF:hover {
+  background: #007e71;
+}
+
+/* ===== RESPONSIVIDADE E ROLAGEM ===== */
+@media (max-width: 1200px) {
+  #preview-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 24px 2vw;
+    max-width: 98vw;
+    min-width: 0;
+  }
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 700px) {
+  .w3-third, .w3-twothird {
+    min-width: 98vw !important;
+    max-width: 98vw !important;
+    width: 98vw !important;
+    border-radius: 12px !important;
+    padding: 0 !important;
+  }
+  .w3-container.w3-card.w3-white {
+    min-width: 0;
+    width: 98vw !important;
+    padding: 16px 7vw;
+  }
+  #preview-container {
+    padding: 6vw 0 0 0;
+    margin: 0;
+  }
+  #baixarPDF {
+    margin: 26px auto 0 auto;
+    width: 95vw;
+    min-width: 0;
+  }
+}
+
+/* ===== SCROLL PARA TUDO QUE ULTRAPASSAR ===== */
+html, body {
+  overflow-x: auto !important;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 48px;         /* Espaço entre chat e preview */
+  margin-top: 32px;  /* Espaço do topo */
 }
 
 /* Chatbot */
@@ -30,6 +204,15 @@ body {
     border-top-left-radius: 24px;
     border-top-right-radius: 24px;
     border-bottom: 1px solid #f5eccd;
+}
+
+.chat-header-title {
+  font-family: 'Montserrat', 'Poppins', 'Inter', Arial, sans-serif;
+  font-size: 1.38rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #234;
+  margin-left: 8px;
 }
 
 .chat-window {
@@ -410,22 +593,46 @@ ul {
   /* Remove width fixa em 33% dos cards internos */
 }
 
-#baixarPDF {
+#preview-container {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 10px 32px 0 rgba(60,60,100,0.14);
+  padding: 40px 36px 32px 36px;
   margin: 32px auto 0 auto;
-  padding: 15px 36px;
-  background: #00796b;
+  max-width: 970px;
+  min-width: 340px;
+  display: flex;
+  flex-direction: row;
+  gap: 38px;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: auto;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 980px) {
+  #preview-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 4px;
+  }
+}
+#baixarPDF {
+  display: none; /* Muda para block só após gerar preview */
+  margin: 32px auto 0 auto;
+  background: #009688;
   color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 12px 32px;
   border: none;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 1.25rem;
-  box-shadow: 0 2px 8px #0001;
-  display: block;
+  box-shadow: 0 2px 10px 0 rgba(60,60,100,0.08);
   cursor: pointer;
   transition: background 0.2s;
 }
 #baixarPDF:hover {
-  background: #00897b;
+  background: #00665a;
 }
 
 .w3-content {
@@ -433,19 +640,210 @@ ul {
   max-width: 850px !important;
 }
 
+/* Deixa o container principal flexível */
 .w3-row-padding {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
+  display: flex !important;
+  align-items: flex-start;
+  gap: 24px;
 }
 
+/* Sidebar colada à esquerda */
 .w3-third {
-  width: 280px !important;
-  min-width: 260px;
-  flex: 0 0 280px;
+  min-width: 310px !important;
+  max-width: 320px !important;
+  background: #fff;
+  border-radius: 18px 18px 12px 12px;
+  box-shadow: 0 8px 24px #0001;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
+/* Coluna dos cards ao lado */
 .w3-twothird {
-  flex: 1 1 420px;
+  min-width: 350px !important;
+  max-width: 550px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-left: 0 !important;
+}
+
+/* Ajuste dos cards */
+.w3-container.w3-card.w3-white {
+  margin-bottom: 0;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px 0 rgba(0,0,0,0.08);
   min-width: 320px;
+  padding: 24px 32px;
+}
+
+/* Centraliza o botão abaixo dos cards */
+.cv-actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.cv-preview-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.cv-preview-row {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.cv-sidebar {
+  width: 250px;
+  min-width: 250px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px #0001;
+  padding: 0;
+}
+
+.cv-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: flex-start;
+}
+
+.cv-main > .cv-section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0001;
+  padding: 22px 32px;
+  min-width: 400px;
+  margin-bottom: 0;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 700px) {
+  .cv-preview-row {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+  .cv-main > .cv-section {
+    min-width: 0;
+    width: 100%;
+    padding: 16px 8px;
+  }
+  .cv-sidebar {
+    width: 100%;
+    min-width: 0;
+    margin-bottom: 18px;
+  }
+}
+
+/* Nome do usuário destacado */
+.nome-bg {
+  background: linear-gradient(90deg, #F23E49 0%, #FE866B 100%);
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1.5em;
+  padding: 7px 28px 7px 24px;
+  border-radius: 0 28px 16px 0;
+  display: inline-block;
+  box-shadow: 0 4px 12px #0002, 0 2px 8px #f23e4944;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 2;
+  margin-top: 6px;
+  margin-left: -10px;
+  text-shadow: 0 1px 7px #b52c36a8;
+  border-left: 7px solid #FE866B;
+}
+
+/* Título principal acima do preview (fora do papel branco) */
+.cv-titulo-main {
+  font-family: 'Montserrat', 'Poppins', 'Inter', Arial, sans-serif;
+  font-size: 2.7rem;
+  font-weight: 800;
+  color: #224;
+  letter-spacing: 0.08em;
+  text-align: center;
+  margin-bottom: 14px;
+  margin-top: 30px;
+  background: linear-gradient(90deg, #009688 0%, #22c1c3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 6px 18px #00c0d521;
+  /* Pode ajustar sombra se quiser mais destaque */
+}
+
+/* Glassmorphism tech style header */
+.tech-glass {
+  background: rgba(245,245,255,0.80);
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 6px 36px 0 rgba(30,180,200,0.12);
+  border-bottom: 1.5px solid #e4eefb;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 24px;
+  backdrop-filter: blur(4px);
+  position: relative;
+}
+
+/* Logo em círculo com sombra */
+.chat-logo-circle {
+  background: linear-gradient(135deg, #22c1c3 0%, #009688 85%);
+  border-radius: 50%;
+  box-shadow: 0 2px 12px #00e1ff1c;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.chat-logo-circle img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.chat-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.header-main {
+  font-family: 'Orbitron', 'Montserrat', 'Poppins', Arial, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  color: #16213e;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.header-main .highlight {
+  background: linear-gradient(90deg, #009688 20%, #22c1c3 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.header-sub {
+  font-family: 'Inter', 'Montserrat', Arial, sans-serif;
+  font-size: 0.93rem;
+  font-weight: 400;
+  color: #37b5ba;
+  opacity: 0.84;
+  margin-top: -1.5px;
+  letter-spacing: 0.11em;
 }

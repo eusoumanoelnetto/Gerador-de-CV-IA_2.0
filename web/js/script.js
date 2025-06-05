@@ -3,6 +3,7 @@ const API_URL = 'https://gerador-de-cv-ia-2-0.onrender.com/gerar-curriculo';
 const chat = document.getElementById('chat');
 const userInput = document.getElementById('userInput');
 const previewContainer = document.getElementById('preview-container');
+const btnBaixarPDF = document.getElementById('baixarPDF');
 
 const dadosCurriculo = {
     nome: '',
@@ -41,17 +42,18 @@ let indexPergunta = 0;
 window.onload = () => {
     adicionarMensagem('bot', '🧠 Olá! Eu sou o Gerador de Currículo IA. Bora montar seu currículo juntos!');
     fazerPergunta();
+    previewContainer.style.display = 'none';
+    btnBaixarPDF.style.display = 'none';
 };
 
 function fazerPergunta() {
     if (indexPergunta < perguntas.length) {
         adicionarMensagem('bot', perguntas[indexPergunta].pergunta);
     } else {
-        // Loga a URL da foto antes do preview
-        console.log("URL DA FOTO:", dadosCurriculo.foto_url);
         adicionarMensagem('bot', 'Perfeito! Gerando preview do seu currículo... ⏳');
-        gerarCurriculoPreview(dadosCurriculo);
-        previewContainer.style.display = 'block';
+        gerarCurriculoPreview(dadosCurriculo); // Gera o HTML do currículo
+        previewContainer.style.display = 'flex';
+        btnBaixarPDF.style.display = "block";
     }
 }
 
@@ -91,16 +93,12 @@ function mostrarInputUploadNoChat() {
                 previewImg.src = e.target.result;
                 previewImgWrapper.style.display = 'flex';
                 previewImg.style.display = 'block';
-                dadosCurriculo['foto_url'] = e.target.result; // base64 do FileReader
+                dadosCurriculo['foto_url'] = e.target.result;
 
-                // Remove o botão após upload
                 uploadBtn.style.display = "none";
-
-                // Mensagem visual de sucesso centralizada
                 uploadSuccess.style.display = "flex";
                 uploadSuccess.innerHTML = `<span class="success-upload"><span class="success-icon">✅</span> Foto enviada!</span>`;
 
-                // Após upload, pula direto para próxima pergunta (sem pedir username)
                 setTimeout(() => {
                     indexPergunta += 2;
                     fazerPergunta();
@@ -139,7 +137,6 @@ function handleUserInput() {
 
     if (chaveAtual === 'foto_username') {
         if (redeEscolhida === '4') {
-            // Não faz nada, já está esperando upload.
             return;
         } else {
             adicionarMensagem('bot', '⏳ Baixando sua foto de perfil...');
@@ -150,7 +147,6 @@ function handleUserInput() {
             })
             .then(r => r.json())
             .then(data => {
-                // Salva exatamente o valor retornado pelo backend
                 dadosCurriculo.foto_url = data.foto_url;
                 adicionarMensagem('bot', '📥 Foto de perfil encontrada!');
                 indexPergunta++;
@@ -177,7 +173,6 @@ function handleUserInput() {
 function adicionarMensagem(remetente, texto) {
     const div = document.createElement('div');
     div.classList.add('message', remetente);
-    // Permite HTML para mensagens especiais
     if (texto.startsWith('<span class="success-upload">')) {
         div.innerHTML = texto;
     } else {
@@ -187,43 +182,17 @@ function adicionarMensagem(remetente, texto) {
     chat.scrollTop = chat.scrollHeight;
 }
 
-const templateCurriculo = `
-<div class="w3-content w3-margin-top" style="max-width:1400px;">
-  <div class="curriculo">
-    <!-- 🔹 Sidebar -->
-    <div class="sidebar">
-        <img src="{{FOTO_URL}}" class="profile-img" alt="Avatar" onerror="this.onerror=null;this.src='assets/default-avatar.jpg';">
-        <h2 id="nome-placeholder">{{NOME}}</h2>
-        <p id="cargo-placeholder">{{CARGO}}</p>
-        <p id="email-placeholder">{{EMAIL}}</p>
-        <p id="telefone-placeholder">{{TELEFONE}}</p>
-        <h3>Habilidades</h3>
-        <p><b>Hard Skills:</b> <span id="hard-placeholder">{{HARD}}</span></p>
-        <p><b>Soft Skills:</b> <span id="soft-placeholder">{{SOFT}}</span></p>
-        <p><b>Idiomas:</b> <span id="idiomas-placeholder">{{IDIOMAS}}</span></p>
-    </div>
-    <!-- 🔸 Conteúdo -->
-    <div class="content">
-        <h1>Currículo <span id="nome-placeholder2">{{NOME}}</span></h1>
-        <h2>Experiência</h2>
-        <ul id="exp-placeholder">{{EXPERIENCIAS}}</ul>
-        <h2>Formação</h2>
-        <ul id="form-placeholder">{{FORMACOES}}</ul>
-    </div>
-  </div>
-</div>
-`;
-
+// -------- PREVIEW DO CURRÍCULO --------
 function gerarCurriculoPreview(dadosCurriculo) {
-  let html = `
+    let html = `
     <div class="w3-content w3-margin-top" style="max-width:1400px;">
       <div class="w3-row-padding">
         <div class="w3-third">
           <div class="w3-white w3-text-grey w3-card-4">
             <div class="w3-display-container">
-              <img src="${dadosCurriculo.foto_url || 'assets/default-avatar.jpg'}" style="width:100%" alt="Avatar">
+              <img src="${dadosCurriculo.foto_url || 'assets/default-avatar.jpg'}" style="width:100%;object-fit:cover;min-height:180px;max-height:220px;" alt="Avatar">
               <div class="w3-display-bottomleft w3-container w3-text-white">
-                <h2>${dadosCurriculo.nome}</h2>
+                <h2 class="nome-bg">${dadosCurriculo.nome || ''}</h2>
               </div>
             </div>
             <div class="w3-container">
@@ -263,12 +232,13 @@ function gerarCurriculoPreview(dadosCurriculo) {
         </div>
       </div>
     </div>
-  `;
-  document.getElementById('curriculo-container').innerHTML = html;
-
-  // Agora sim, exibe o botão PDF!
-  const btn = document.getElementById('baixarPDF');
-  if (btn) btn.style.display = 'block';
+    `;
+    const container = document.getElementById('curriculo-container');
+    if (container) {
+        container.innerHTML = html;
+    } else {
+        console.error("Elemento 'curriculo-container' não encontrado!");
+    }
 }
 
 async function baixarPDF() {
@@ -297,21 +267,6 @@ async function baixarPDF() {
     }
 }
 
-function mostrarBotaoPDF() {
-  // Evita duplicar botão
-  if (document.getElementById('baixarPDF')) return;
-  const btn = document.createElement('button');
-  btn.id = 'baixarPDF';
-  btn.innerText = '📄 Baixar PDF';
-  btn.onclick = baixarPDF;
-  btn.style.margin = '32px auto 0 auto';
-  document.getElementById('preview-container').appendChild(btn);
-}
-
-// Após gerar o preview:
-gerarCurriculoPreview(dadosCurriculo);
-mostrarBotaoPDF();
-
 function mostrarBotaoReiniciar() {
     const botao = document.createElement('button');
     botao.innerText = '🔄 Reiniciar Chat';
@@ -328,53 +283,7 @@ function reiniciarChat() {
     }
     chat.innerHTML = '';
     previewContainer.style.display = 'none';
-    // Esconde o botão PDF novamente
-    document.getElementById('baixarPDF').style.display = 'none';
+    btnBaixarPDF.style.display = 'none';
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
 }
-
-function preencherPreview() {
-    document.getElementById('nome-placeholder').innerText = dadosCurriculo.nome;
-    document.getElementById('cargo-placeholder').innerText = dadosCurriculo.cargo;
-    document.getElementById('email-placeholder').innerText = dadosCurriculo.email;
-    document.getElementById('telefone-placeholder').innerText = dadosCurriculo.telefone;
-    document.getElementById('hard-placeholder').innerText = dadosCurriculo.hard;
-    document.getElementById('soft-placeholder').innerText = dadosCurriculo.soft;
-    document.getElementById('idiomas-placeholder').innerText = dadosCurriculo.idiomas;
-
-    // Atualiza a foto de perfil no preview
-    const img = document.querySelector('.profile-img');
-    if (img) {
-        img.src = dadosCurriculo.foto_url || "assets/default-avatar.jpg";
-    }
-
-    // Preencher experiências
-    const expPlaceholder = document.getElementById('exp-placeholder');
-    expPlaceholder.innerHTML = '';
-    if (dadosCurriculo.experiencias) {
-        const experiencias = dadosCurriculo.experiencias.split(';');
-        experiencias.forEach(exp => {
-            const li = document.createElement('li');
-            li.innerText = exp.trim();
-            expPlaceholder.appendChild(li);
-        });
-    }
-
-    // Preencher formações
-    const formPlaceholder = document.getElementById('form-placeholder');
-    formPlaceholder.innerHTML = '';
-    if (dadosCurriculo.formacoes) {
-        const formacoes = dadosCurriculo.formacoes.split(';');
-        formacoes.forEach(form => {
-            const li = document.createElement('li');
-            li.innerText = form.trim();
-            formPlaceholder.appendChild(li);
-        });
-    }
-}
-
-document.getElementById('preview').innerHTML = '';
-// Agora insira o novo conteúdo preenchido
-document.getElementById('preview').innerHTML = preenchido;
-document.getElementById('preview-container').style.display = 'block';
