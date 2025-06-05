@@ -168,6 +168,133 @@ body, html {
   }
 }
 
+/* --- Responsividade do Preview e Sidebar --- */
+@media (max-width: 800px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .preview-container {
+    padding: 10px 0 !important;
+    margin: 12px auto 0 auto !important;
+    box-shadow: none !important;
+    max-width: 100vw !important;
+  }
+
+  #curriculo-container {
+    min-width: unset !important;
+    max-width: 98vw !important;
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-row-padding {
+    flex-direction: column !important;
+    gap: 0 !important;
+    align-items: center;
+  }
+
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    padding: 0 !important;
+  }
+
+  .sidebar {
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    gap: 18px !important;
+    padding: 0 !important;
+  }
+
+  .w3-container.w3-card.w3-white,
+  .cv-main > .cv-section {
+    margin: 12px 0 !important;
+    min-width: 0 !important;
+    width: 96vw !important;
+    border-radius: 18px !important;
+    padding: 18px 10px !important;
+    box-sizing: border-box;
+  }
+
+  .profile-img {
+    width: 84px !important;
+    margin: 0 auto 10px auto;
+    display: block;
+  }
+
+  .cv-nome-badge {
+    position: absolute;
+    top: 40%;
+    left: 24px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
+    color: #fff;
+    padding: 8px 28px;
+    border-radius: 16px;
+    font-size: 1.4em;
+    font-family: 'Poller One', Arial, sans-serif;
+    font-weight: 400;
+    box-shadow: 0 2px 12px #0001;
+    letter-spacing: 1px;
+    z-index: 10;
+    text-shadow: 0 1px 12px #0004;
+    max-width: 70vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: none;
+    margin-bottom: 0;
+    display: inline-block;
+    transition: font-size 0.3s, left 0.3s, padding 0.3s;
+  }
+
+  @media (max-width: 800px) {
+    .cv-nome-badge {
+      left: 8vw;
+      font-size: 1.1em;
+      padding: 6px 18px;
+      max-width: 80vw;
+    }
+  }
+
+  #baixarPDF {
+    width: 95vw !important;
+    max-width: 400px !important;
+    font-size: 1.2em !important;
+    margin: 22px auto 16px auto !important;
+    display: block !important;
+  }
+
+  /* Chat: ocupar mais espaço no mobile */
+  .chat-container {
+    width: 98vw !important;
+    max-width: 480px !important;
+    min-width: unset !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Extra: título do currículo responsivo no mobile */
+@media (max-width: 600px) {
+  .cv-title, .curriculo-title {
+    font-size: 1.5em !important;
+    text-align: center !important;
+    margin: 0 auto 16px auto !important;
+    max-width: 96vw !important;
+    display: block !important;
+  }
+}
+
 /* ===== SCROLL PARA TUDO QUE ULTRAPASSAR ===== */
 html, body {
   overflow-x: auto !important;
