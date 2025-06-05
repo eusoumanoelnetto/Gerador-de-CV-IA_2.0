@@ -809,9 +809,9 @@ ul {
 }
 
 .chat-logo-circle img {
-  width: 38px;
-  height: 38px;
-  object-fit: contain;
+    /* width: 38px; */
+    /* height: 38px; */
+    object-fit: contain;
 }
 
 .chat-header-text {
@@ -846,4 +846,19 @@ ul {
   opacity: 0.84;
   margin-top: -1.5px;
   letter-spacing: 0.11em;
+}
+
+.cv-title {
+  font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  margin-bottom: 28px;
+  margin-left: 32px;
+  margin-top: 18px;
+  background: linear-gradient(90deg, #12cbc4 0%, #00b894 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #00b894;
+  display: block;
 }

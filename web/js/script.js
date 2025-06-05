@@ -287,3 +287,19 @@ function reiniciarChat() {
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
 }
+
+function mostrarPreviewCV() {
+    document.getElementById('preview-container').style.display = 'block';
+    document.getElementById('titulo-cv').style.display = 'block';
+}
+
+function esconderPreviewCV() {
+    document.getElementById('preview-container').style.display = 'none';
+    document.getElementById('titulo-cv').style.display = 'none';
+}
+
+// Exemplo de uso após gerar o preview:
+// document.getElementById('titulo-cv').style.display = 'block';
+
+// Exemplo ao resetar/reiniciar o chat:
+// document.getElementById('titulo-cv').style.display = 'none';
