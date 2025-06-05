@@ -4,6 +4,8 @@ const chat = document.getElementById('chat');
 const userInput = document.getElementById('userInput');
 const previewContainer = document.getElementById('preview-container');
 const btnBaixarPDF = document.getElementById('baixarPDF');
+const tituloCV = document.getElementById('cv-title');
+const btnEnviar = document.getElementById('btnEnviar');
 
 const dadosCurriculo = {
     nome: '',
@@ -39,11 +41,19 @@ const perguntas = [
 
 let indexPergunta = 0;
 
+// ONSUBMIT DO BOTÃO (e também libera função global pro HTML!)
+window.handleUserInput = handleUserInput;
+
+if (btnEnviar) {
+    btnEnviar.onclick = handleUserInput;
+}
+
 window.onload = () => {
     adicionarMensagem('bot', '🧠 Olá! Eu sou o Gerador de Currículo IA. Bora montar seu currículo juntos!');
     fazerPergunta();
     previewContainer.style.display = 'none';
     btnBaixarPDF.style.display = 'none';
+    tituloCV.style.display = 'none';
 };
 
 function fazerPergunta() {
@@ -51,9 +61,10 @@ function fazerPergunta() {
         adicionarMensagem('bot', perguntas[indexPergunta].pergunta);
     } else {
         adicionarMensagem('bot', 'Perfeito! Gerando preview do seu currículo... ⏳');
-        gerarCurriculoPreview(dadosCurriculo); // Gera o HTML do currículo
+        gerarCurriculoPreview(dadosCurriculo);
         previewContainer.style.display = 'flex';
         btnBaixarPDF.style.display = "block";
+        tituloCV.style.display = 'block'; // Mostra o título
     }
 }
 
@@ -284,22 +295,7 @@ function reiniciarChat() {
     chat.innerHTML = '';
     previewContainer.style.display = 'none';
     btnBaixarPDF.style.display = 'none';
+    tituloCV.style.display = 'none';
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
 }
-
-function mostrarPreviewCV() {
-    document.getElementById('preview-container').style.display = 'block';
-    document.getElementById('titulo-cv').style.display = 'block';
-}
-
-function esconderPreviewCV() {
-    document.getElementById('preview-container').style.display = 'none';
-    document.getElementById('titulo-cv').style.display = 'none';
-}
-
-// Exemplo de uso após gerar o preview:
-// document.getElementById('titulo-cv').style.display = 'block';
-
-// Exemplo ao resetar/reiniciar o chat:
-// document.getElementById('titulo-cv').style.display = 'none';

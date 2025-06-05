@@ -6,7 +6,7 @@
     <title>Gerador de Currículo IA</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Orbitron:wght@800&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Orbitron:wght@800&family=Inter:wght@400;700&family=Poller+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -25,20 +25,21 @@
     </div>
     <div id="chat" class="chat-window"></div>
     <div class="input-area">
-        <input type="text" id="userInput" placeholder="Digite aqui...">
-        <button onclick="handleUserInput()">Enviar</button>
+        <input type="text" id="userInput" placeholder="Digite aqui..." onkeydown="if(event.key==='Enter'){handleUserInput();}">
+        <button id="btnEnviar" type="button">Enviar</button>
     </div>
   </div>
   <div class="preview-bloco">
-    <!-- 📄 Preview do Currículo -->
-    <div class="cv-titulo-main">Seu Currículo</div>
+    <!-- Título principal só aparece depois que o currículo for gerado -->
+    <h2 class="cv-title" id="cv-title" style="display:none;">Seu Currículo</h2>
     <div class="preview-container" id="preview-container" style="display:none;">
-      <!-- ... preview aqui ... -->
+      <div id="curriculo-container"></div>
     </div>
-    <button id="baixarPDF" onclick="baixarPDF()" style="display: none;">⬇️ Baixar PDF</button>
+    <button id="baixarPDF" onclick="baixarPDF()" style="display:none;">Baixar PDF</button>
   </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script src="js/script.js"></script>
 </body>
 </html>
