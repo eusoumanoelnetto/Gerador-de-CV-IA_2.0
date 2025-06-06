@@ -30,14 +30,12 @@
     </div>
   </div>
   <div class="preview-bloco">
-    <!-- Título principal só aparece depois que o currículo for gerado -->
-    <h2 class="cv-title" id="cv-title" style="display:none;">Seu Currículo</h2>
-    <div class="preview-container" id="preview-container" style="display:none;">
+    <div class="preview-container" id="preview-container" style="display: none;">
+      <h2 class="cv-title" id="cv-title">Seu Currículo</h2>
       <div id="curriculo-container"></div>
+      <button id="baixarPDF" onclick="baixarPDF()" style="display:none;">Baixar PDF</button>
     </div>
-    <button id="baixarPDF" onclick="baixarPDF()" style="display:none;">Baixar PDF</button>
   </div>
-  <div class="cv-nome-badge" style="display:none;">Nome Aqui</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>

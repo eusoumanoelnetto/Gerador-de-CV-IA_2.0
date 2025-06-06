@@ -41,7 +41,7 @@ const perguntas = [
 
 let indexPergunta = 0;
 
-// ONSUBMIT DO BOTÃO (e também libera função global pro HTML!)
+// ONSUBMIT DO BOTÃO
 window.handleUserInput = handleUserInput;
 
 if (btnEnviar) {
@@ -51,9 +51,10 @@ if (btnEnviar) {
 window.onload = () => {
     adicionarMensagem('bot', '🧠 Olá! Eu sou o Gerador de Currículo IA. Bora montar seu currículo juntos!');
     fazerPergunta();
+    // Esconde tudo ao iniciar ou reiniciar
+    tituloCV.style.display = 'none';
     previewContainer.style.display = 'none';
     btnBaixarPDF.style.display = 'none';
-    tituloCV.style.display = 'none';
 };
 
 function fazerPergunta() {
@@ -62,9 +63,9 @@ function fazerPergunta() {
     } else {
         adicionarMensagem('bot', 'Perfeito! Gerando preview do seu currículo... ⏳');
         gerarCurriculoPreview(dadosCurriculo);
-        previewContainer.style.display = 'flex';
-        btnBaixarPDF.style.display = "block";
-        tituloCV.style.display = 'block'; // Mostra o título
+        document.getElementById('preview-container').style.display = 'block';
+        document.getElementById('cv-title').style.display = 'block';
+        document.getElementById('baixarPDF').style.display = 'block';
     }
 }
 
@@ -159,6 +160,7 @@ function handleUserInput() {
             .then(r => r.json())
             .then(data => {
                 dadosCurriculo.foto_url = data.foto_url;
+                console.log('URL da foto recebida:', dadosCurriculo.foto_url);
                 adicionarMensagem('bot', '📥 Foto de perfil encontrada!');
                 indexPergunta++;
                 fazerPergunta();
@@ -213,9 +215,9 @@ function gerarCurriculoPreview(dadosCurriculo) {
               <hr>
               <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Hard Skills</b></p>
               <p>${dadosCurriculo.hard || ''}</p>
-              <p class="w3-large"><b><i class="fa fa-user fa-fw w3-margin-right w3-text-teal"></i>Soft Skills</b></p>
+              <p class="w3-large"><b><i class="fa fa-user fa-fw w3-margin-right w3-large w3-text-teal"></i>Soft Skills</b></p>
               <p>${dadosCurriculo.soft || ''}</p>
-              <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-teal"></i>Idiomas</b></p>
+              <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-large w3-text-teal"></i>Idiomas</b></p>
               <p>${dadosCurriculo.idiomas || ''}</p>
               <br>
             </div>
@@ -247,6 +249,9 @@ function gerarCurriculoPreview(dadosCurriculo) {
     const container = document.getElementById('curriculo-container');
     if (container) {
         container.innerHTML = html;
+        previewContainer.style.display = 'block';
+        tituloCV.style.display = 'block';
+        btnBaixarPDF.style.display = 'block';
     } else {
         console.error("Elemento 'curriculo-container' não encontrado!");
     }
@@ -298,9 +303,9 @@ function reiniciarChat() {
         dadosCurriculo[chave] = '';
     }
     chat.innerHTML = '';
+    tituloCV.style.display = 'none';
     previewContainer.style.display = 'none';
     btnBaixarPDF.style.display = 'none';
-    tituloCV.style.display = 'none';
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
 }
