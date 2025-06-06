@@ -7,7 +7,12 @@ import instaloader
 import sys
 
 app = Flask(__name__)
-CORS(app, origins=["https://eusoumanoelnetto.github.io"])
+CORS(app, origins=[
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+    "https://eusoumanoelnetto.github.io",
+    "https://eusoumanoelnetto.github.io/Gerador-de-CV-IA_2.0"
+], methods=['GET', 'POST', 'OPTIONS'])
 
 # Garante que a pasta 'assets' existe
 if not os.path.exists('assets'):

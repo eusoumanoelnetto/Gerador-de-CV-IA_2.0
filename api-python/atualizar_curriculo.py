@@ -5,8 +5,15 @@ from playwright.sync_api import sync_playwright
 import instaloader
 import shutil
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins=[
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+    "https://eusoumanoelnetto.github.io",
+    "https://eusoumanoelnetto.github.io/Gerador-de-CV-IA_2.0"
+], methods=['GET', 'POST', 'OPTIONS'])
 
 def input_nonempty(prompt):
     while True:
