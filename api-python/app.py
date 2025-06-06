@@ -88,9 +88,44 @@ def gerar_curriculo():
     with open('preview.html', 'w', encoding='utf-8') as f:
         f.write(html_content)
 
-    gerar_pdf(html_content, 'curriculo.pdf')
+    pdf_path = 'curriculo.pdf'
+    gerar_pdf(html_content, pdf_path)
 
-    return send_file('curriculo.pdf', as_attachment=True)
+    return send_file(pdf_path, mimetype='application/pdf', as_attachment=True, download_name='curriculo.pdf')
+
+@app.route('/gerar-pdf', methods=['POST'])
+def gerar_pdf_endpoint():
+    data = request.json
+
+    required_fields = ['nome', 'cargo', 'email', 'telefone', 'experiencias', 'formacoes', 'hard', 'soft', 'idiomas', 'foto_url']
+    for field in required_fields:
+        if field not in data:
+            return jsonify({'error': f'Campo {field} faltando'}), 400
+
+    dados = {
+        'nome': data['nome'],
+        'cargo': data['cargo'],
+        'email': data['email'],
+        'telefone': data['telefone'],
+        'experiencias': data['experiencias'],
+        'formacoes': data['formacoes'],
+        'hard': data['hard'],
+        'soft': data['soft'],
+        'idiomas': data['idiomas'],
+        'foto_url': data['foto_url']
+    }
+
+    html_content = gerar_html(dados)
+
+    pdf_file = 'curriculo_gerado.pdf'
+    gerar_pdf(html_content, pdf_file)
+
+    import os
+
+    if not os.path.exists(pdf_file) or os.path.getsize(pdf_file) == 0:
+        return jsonify({'erro': 'PDF não gerado corretamente.'}), 500
+
+    return send_file(pdf_file, mimetype='application/pdf', as_attachment=True, download_name='curriculo.pdf')
 
 @app.route('/foto-perfil', methods=['POST'])
 def foto_perfil():

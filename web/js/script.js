@@ -254,12 +254,17 @@ function gerarCurriculoPreview(dadosCurriculo) {
 
 async function baixarPDF() {
     try {
-        adicionarMensagem('bot', '📄 Gerando seu PDF... ⏳');
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dadosCurriculo)
         });
+        const contentType = response.headers.get('Content-Type');
+        if (!response.ok || !contentType.includes('pdf')) {
+            const text = await response.text();
+            alert('Erro ao gerar PDF:\n' + text);
+            return; // Não tenta baixar se deu erro!
+        }
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
 

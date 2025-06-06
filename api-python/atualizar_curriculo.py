@@ -4,7 +4,7 @@ import requests
 from playwright.sync_api import sync_playwright
 import instaloader
 import shutil
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -199,6 +199,47 @@ def foto_perfil():
         return jsonify({'foto_url': foto_url})
     except Exception as e:
         return jsonify({"erro": str(e)}), 500
+
+@app.route('/gerar-pdf', methods=['POST'])
+def gerar_pdf_endpoint():
+    data = request.json
+    nome = data.get('nome')
+    foto_url = data.get('foto_url')
+    cargo = data.get('cargo')
+    email = data.get('email')
+    telefone = data.get('telefone')
+    experiencias = data.get('experiencias', [])
+    formacoes = data.get('formacoes', [])
+    habilidades = data.get('habilidades', {})
+
+    d = {
+        "nome": nome,
+        "foto_url": foto_url,
+        "cargo": cargo,
+        "email": email,
+        "telefone": telefone,
+        "experiencias": experiencias,
+        "formacoes": formacoes,
+        "habilidades": habilidades
+    }
+
+    html_content = gerar_html(d)
+    html_file = 'curriculo_temp.html'
+    pdf_file = 'curriculo.pdf'
+
+    with open(html_file, 'w', encoding='utf-8') as f:
+        f.write(html_content)
+
+    gerar_pdf(html_file, pdf_file)
+
+    os.remove(html_file)  # Remove o arquivo HTML temporário
+
+    import os
+
+    if not os.path.exists(pdf_file) or os.path.getsize(pdf_file) == 0:
+        return jsonify({'erro': 'PDF não gerado corretamente.'}), 500
+
+    return send_file(pdf_file, mimetype='application/pdf', as_attachment=True, download_name='curriculo.pdf')
 
 def main():
     print("=== 🧠 Atualizador de Currículo ===")
