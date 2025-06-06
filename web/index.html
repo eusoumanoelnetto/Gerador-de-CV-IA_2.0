@@ -9,36 +9,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Orbitron:wght@800&family=Inter:wght@400;700&family=Poller+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#ece8da">
 </head>
-<body>
-<div class="main-layout">
-  <div class="chat-container">
-    <!-- 🔥 Chatbot -->
-    <div class="chat-header tech-glass">
-      <div class="chat-logo-circle">
-        <img src="assets/bot-2.gif" alt="Logo" width="150px" height="50px" />
+<body class="full-vh">
+  <div class="main-layout">
+    <div class="chat-container">
+      <!-- 🔥 Chatbot -->
+      <div class="chat-header tech-glass">
+        <div class="chat-logo-circle">
+          <img src="assets/bot-2.gif" alt="Logo" width="150px" height="50px" />
+        </div>
+        <div class="chat-header-text">
+          <span class="header-main">Gerador <span class="highlight">IA CV</span></span>
+          <span class="header-sub">Powered by Jarvis</span>
+        </div>
       </div>
-      <div class="chat-header-text">
-        <span class="header-main">Gerador <span class="highlight">IA CV</span></span>
-        <span class="header-sub">Powered by Jarvis</span>
+      <div id="chat" class="chat-window"></div>
+      <div class="input-area">
+          <input type="text" id="userInput" placeholder="Digite aqui..." onkeydown="if(event.key==='Enter'){handleUserInput();}">
+          <button id="btnEnviar" type="button">Enviar</button>
       </div>
     </div>
-    <div id="chat" class="chat-window"></div>
-    <div class="input-area">
-        <input type="text" id="userInput" placeholder="Digite aqui..." onkeydown="if(event.key==='Enter'){handleUserInput();}">
-        <button id="btnEnviar" type="button">Enviar</button>
+    <div class="preview-bloco">
+      <div class="preview-container" id="preview-container" style="display: none;">
+        <h2 class="cv-title" id="cv-title">Seu Currículo</h2>
+        <div id="curriculo-container"></div>
+        <button id="baixarPDF" onclick="baixarPDF()" style="display:none;">Baixar PDF</button>
+      </div>
     </div>
   </div>
-  <div class="preview-bloco">
-    <div class="preview-container" id="preview-container" style="display: none;">
-      <h2 class="cv-title" id="cv-title">Seu Currículo</h2>
-      <div id="curriculo-container"></div>
-      <button id="baixarPDF" onclick="baixarPDF()" style="display:none;">Baixar PDF</button>
-    </div>
-  </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-<script src="js/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
