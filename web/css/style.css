@@ -3820,3 +3820,77 @@ ul {
     background: #fffbe6;
   }
 }
+@media (min-width: 601px) {
+  body, html {
+    min-height: 100vh;
+    height: 100vh;
+    margin: 0;
+    background: #ece8da;
+  }
+  .main-layout {
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  .chat-container {
+    width: 410px;
+    min-height: 560px;
+    max-height: 92vh;
+    height: 84vh;
+    margin: 32px;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.13);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #fffbe6;
+  }
+  .chat-header {
+    border-radius: 24px 24px 0 0;
+    margin: 0;
+  }
+  .chat-window {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 18px 10px 0 10px;
+  }
+  .input-area {
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    padding: 14px 14px 16px 14px;
+  }
+}
+@media (min-width: 601px) {
+  .main-layout {
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  .chat-container {
+    width: 420px;
+    min-height: 550px;
+    max-height: 90vh;
+    height: 80vh; /* Ocupa quase a tela toda */
+    margin: 36px;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .chat-window {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    max-height: none;
+    padding-bottom: 0 !important;
+  }
+  .input-area {
+    padding: 14px 18px 16px 14px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+  }
+}
