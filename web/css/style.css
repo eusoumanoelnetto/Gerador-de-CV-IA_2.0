@@ -23,6 +23,12 @@ body, html {
   overflow-x: auto;
   position: relative;
   z-index: 1;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+#preview-container.mostrar {
+  opacity: 1;
 }
 
 /* Centraliza na página toda */
@@ -490,171 +496,101 @@ body, html {
   }
 }
 
-@media (max-width: 600px) {
-  html, body {
-    width: 100vw;
-    height: 100vh;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    background: #ece8da;
-    overflow-x: hidden;
-  }
-
-  .main-layout,
-  .chat-container {
-    width: 100vw !important;
-    min-width: 100vw !important;
-    max-width: 100vw !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-  }
-
-  .chat-header {
-    border-radius: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .chat-window {
-    padding: 18px 10px 0 10px;
-  }
-
-  .input-area {
-    border-radius: 0 0 0 0 !important;
-    box-shadow: none !important;
-  }
-
-  .chat-container {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-  }
-  .input-area {
-    padding: 10px 8px 18px 8px !important;
-    box-sizing: border-box;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-  }
-  .input-area input {
-    font-size: 1.08rem;
-    border-radius: 10px;
-    padding: 12px 15px;
-    width: 70vw !important;
-    max-width: 76vw !important;
-    min-width: 0;
-    margin-right: 7px;
-  }
-  .input-area button {
-    font-size: 1.1rem;
-    border-radius: 10px;
-    padding: 12px 16px;
-    width: auto;
-    min-width: 70px;
-    max-width: 100px;
-    margin-left: 0;
-  }
-}
-
-/* --- Fim do CSS --- */
-
-/* Ajuste para containers do preview: use max-width e width: 100% no mobile */
-
-/* Desktop: limite a largura máxima */
-#preview-container,
-.w3-content,
-.w3-row-padding,
-.cv-preview-center,
-.cv-main {
-    max-width: 970px;
-    width: 100%;
-    min-width: 0 !important;
-    box-sizing: border-box;
-}
-
-
-/* Mobile: ocupa toda a largura da tela */
-@media (max-width: 800px) {
-    #preview-container,
-    .w3-content,
-    .w3-row-padding,
-    .cv-preview-center,
-    .cv-main {
-        max-width: 100vw !important;
-        width: 100vw !important;
-        min-width: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-}
-
-/* RESPONSIVIDADE PARA MOBILE */
-
-@media (max-width: 900px) {
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    margin-top: 12px;
-  }
-  #preview-container {
-    max-width: 98vw;
-    min-width: unset;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 2vw;
-    margin: 16px auto 0 auto;
-    box-sizing: border-box;
-    overflow-x: auto;
-  }
-  .cv-preview-row,
-  .w3-row-padding {
-    flex-direction: column !important;
-    gap: 16px !important;
-    align-items: center !important;
-    width: 100% !important;
-  }
-  .cv-sidebar,
-  .w3-third {
-    width: 95vw !important;
-    min-width: unset !important;
-    margin: 0 auto 18px auto !important;
-  }
-  .cv-main,
-  .w3-twothird {
-    width: 95vw !important;
-    min-width: unset !important;
-    margin-left: 0 !important;
-  }
-  .cv-main > .cv-section,
-  .w3-container.w3-card.w3-white {
-    width: 100% !important;
-    min-width: unset !important;
-    padding: 12px 2vw;
-  }
-  #baixarPDF {
-    margin-bottom: 32px;
-    width: 95vw;
-    max-width: 350px;
-    display: block;
-  }
-  /* Garante que tudo fique visível */
+@media (max-width: 700px) {
   body, html {
     overflow-x: hidden;
   }
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  #preview-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 10px 2px !important;
+    max-width: 99vw !important;
+    min-width: 0 !important;
+    width: 100vw !important;
+    box-sizing: border-box;
+  }
+  .w3-content, .w3-row-padding {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+  }
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    box-sizing: border-box;
+  }
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+  .cv-main > .cv-section, .w3-container.w3-card.w3-white {
+    width: 100% !important;
+    min-width: unset !important;
+    padding: 8px 4px !important;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+  }
+  #baixarPDF {
+    margin: 12px auto 12px auto !important;
+    width: 96vw !important;
+    min-width: 0 !important;
+    max-width: 98vw !important;
+    box-sizing: border-box;
+    font-size: 1rem !important;
+    display: block !important;
+  }
 }
 
+/* Avatar no chat */
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  vertical-align: middle;
+  background: #fff;
+  box-shadow: 0 2px 8px #0001;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.message.user .chat-avatar {
+  margin-left: 10px;
+  margin-right: 0;
+}
+
+.message span {
+  display: inline-block;
+  max-width: 80%;
+  word-break: break-word;
+}
+
+/* --- Responsividade do Preview e Sidebar --- */
 @media (max-width: 800px) {
   .main-layout {
     flex-direction: column;
@@ -832,743 +768,6 @@ body, html {
 }
 
 /* --- Responsividade do Preview e Sidebar --- */
-@media (max-width: 800px) {
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .preview-container {
-    padding: 10px 0 !important;
-    margin: 12px auto 0 auto !important;
-    box-shadow: none !important;
-    max-width: 100vw !important;
-  }
-
-  #curriculo-container {
-    min-width: unset !important;
-    max-width: 98vw !important;
-    width: 100vw !important;
-    padding: 0 !important;
-  }
-
-  .w3-row-padding {
-    flex-direction: column !important;
-    gap: 0 !important;
-    align-items: center;
-  }
-
-  .w3-third, .cv-sidebar {
-    min-width: 0 !important;
-    width: 100vw !important;
-    max-width: 98vw !important;
-    padding: 0 !important;
-  }
-
-  .sidebar {
-    width: 100vw !important;
-    padding: 0 !important;
-  }
-
-  .w3-twothird, .cv-main {
-    min-width: 0 !important;
-    width: 100vw !important;
-    max-width: 98vw !important;
-    gap: 18px !important;
-    padding: 0 !important;
-  }
-
-  .w3-container.w3-card.w3-white,
-  .cv-main > .cv-section {
-    margin: 12px 0 !important;
-    min-width: 0 !important;
-    width: 96vw !important;
-    border-radius: 18px !important;
-    padding: 18px 10px !important;
-    box-sizing: border-box;
-  }
-
-  .profile-img {
-    width: 84px !important;
-    margin: 0 auto 10px auto;
-    display: block;
-  }
-
-  .cv-nome-badge {
-    position: absolute;
-    top: 40%;
-    left: 24px;
-    transform: translateY(-50%);
-    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
-    color: #fff;
-    padding: 8px 28px;
-    border-radius: 16px;
-    font-size: 1.4em;
-    font-family: 'Poller One', Arial, sans-serif;
-    font-weight: 400;
-    box-shadow: 0 2px 12px #0001;
-    letter-spacing: 1px;
-    z-index: 10;
-    text-shadow: 0 1px 12px #0004;
-    max-width: 70vw;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    border: none;
-    margin-bottom: 0;
-    display: inline-block;
-    transition: font-size 0.3s, left 0.3s, padding 0.3s;
-  }
-
-  @media (max-width: 800px) {
-    .cv-nome-badge {
-      left: 8vw;
-      font-size: 1.1em;
-      padding: 6px 18px;
-      max-width: 80vw;
-    }
-  }
-
-  #baixarPDF {
-    width: 95vw !important;
-    max-width: 400px !important;
-    font-size: 1.2em !important;
-    margin: 22px auto 16px auto !important;
-    display: block !important;
-  }
-
-  /* Chat: ocupar mais espaço no mobile */
-  .chat-container {
-    width: 98vw !important;
-    max-width: 480px !important;
-    min-width: unset !important;
-    margin: 0 auto !important;
-  }
-}
-
-@media (max-width: 600px) {
-  html, body {
-    width: 100vw;
-    height: 100vh;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    background: #ece8da;
-    overflow-x: hidden;
-  }
-
-  .main-layout,
-  .chat-container {
-    width: 100vw !important;
-    min-width: 100vw !important;
-    max-width: 100vw !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-  }
-
-  .chat-header {
-    border-radius: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .chat-window {
-    padding: 18px 10px 0 10px;
-  }
-
-  .input-area {
-    border-radius: 0 0 0 0 !important;
-    box-shadow: none !important;
-  }
-
-  .chat-container {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-  }
-  .input-area {
-    padding: 10px 8px 18px 8px !important;
-    box-sizing: border-box;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-  }
-  .input-area input {
-    font-size: 1.08rem;
-    border-radius: 10px;
-    padding: 12px 15px;
-    width: 70vw !important;
-    max-width: 76vw !important;
-    min-width: 0;
-    margin-right: 7px;
-  }
-  .input-area button {
-    font-size: 1.1rem;
-    border-radius: 10px;
-    padding: 12px 16px;
-    width: auto;
-    min-width: 70px;
-    max-width: 100px;
-    margin-left: 0;
-  }
-}
-
-/* --- Fim do CSS --- */
-
-/* Ajuste para containers do preview: use max-width e width: 100% no mobile */
-
-/* Desktop: limite a largura máxima */
-#preview-container,
-.w3-content,
-.w3-row-padding,
-.cv-preview-center,
-.cv-main {
-    max-width: 970px;
-    width: 100%;
-    min-width: 0 !important;
-    box-sizing: border-box;
-}
-
-
-/* Mobile: ocupa toda a largura da tela */
-@media (max-width: 800px) {
-    #preview-container,
-    .w3-content,
-    .w3-row-padding,
-    .cv-preview-center,
-    .cv-main {
-        max-width: 100vw !important;
-        width: 100vw !important;
-        min-width: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-}
-
-/* RESPONSIVIDADE PARA MOBILE */
-
-@media (max-width: 900px) {
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    margin-top: 12px;
-  }
-  #preview-container {
-    max-width: 98vw;
-    min-width: unset;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 2vw;
-    margin: 16px auto 0 auto;
-    box-sizing: border-box;
-    overflow-x: auto;
-  }
-  .cv-preview-row,
-  .w3-row-padding {
-    flex-direction: column !important;
-    gap: 16px !important;
-    align-items: center !important;
-    width: 100% !important;
-  }
-  .cv-sidebar,
-  .w3-third {
-    width: 95vw !important;
-    min-width: unset !important;
-    margin: 0 auto 18px auto !important;
-  }
-  .cv-main,
-  .w3-twothird {
-    width: 95vw !important;
-    min-width: unset !important;
-    margin-left: 0 !important;
-  }
-  .cv-main > .cv-section,
-  .w3-container.w3-card.w3-white {
-    width: 100% !important;
-    min-width: unset !important;
-    padding: 12px 2vw;
-  }
-  #baixarPDF {
-    margin-bottom: 32px;
-    width: 95vw;
-    max-width: 350px;
-    display: block;
-  }
-  /* Garante que tudo fique visível */
-  body, html {
-    overflow-x: hidden;
-  }
-}
-
-@media (max-width: 800px) {
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .preview-container {
-    padding: 10px 0 !important;
-    margin: 12px auto 0 auto !important;
-    box-shadow: none !important;
-    max-width: 100vw !important;
-  }
-
-  #curriculo-container {
-    min-width: unset !important;
-    max-width: 98vw !important;
-    width: 100vw !important;
-    padding: 0 !important;
-  }
-
-  .w3-row-padding {
-    flex-direction: column !important;
-    gap: 0 !important;
-    align-items: center;
-  }
-
-  .w3-third, .cv-sidebar {
-    min-width: 0 !important;
-    width: 100vw !important;
-    max-width: 98vw !important;
-    padding: 0 !important;
-  }
-
-  .sidebar {
-    width: 100vw !important;
-    padding: 0 !important;
-  }
-
-  .w3-twothird, .cv-main {
-    min-width: 0 !important;
-    width: 100vw !important;
-    max-width: 98vw !important;
-    gap: 18px !important;
-    padding: 0 !important;
-  }
-
-  .w3-container.w3-card.w3-white,
-  .cv-main > .cv-section {
-    margin: 12px 0 !important;
-    min-width: 0 !important;
-    width: 96vw !important;
-    border-radius: 18px !important;
-    padding: 18px 10px !important;
-    box-sizing: border-box;
-  }
-
-  .profile-img {
-    width: 84px !important;
-    margin: 0 auto 10px auto;
-    display: block;
-  }
-
-  .cv-nome-badge {
-    position: absolute;
-    top: 40%;
-    left: 24px;
-    transform: translateY(-50%);
-    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
-    color: #fff;
-    padding: 8px 28px;
-    border-radius: 16px;
-    font-size: 1.4em;
-    font-family: 'Poller One', Arial, sans-serif;
-    font-weight: 400;
-    box-shadow: 0 2px 12px #0001;
-    letter-spacing: 1px;
-    z-index: 10;
-    text-shadow: 0 1px 12px #0004;
-    max-width: 70vw;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    border: none;
-    margin-bottom: 0;
-    display: inline-block;
-    transition: font-size 0.3s, left 0.3s, padding 0.3s;
-  }
-
-  @media (max-width: 800px) {
-    .cv-nome-badge {
-      left: 8vw;
-      font-size: 1.1em;
-      padding: 6px 18px;
-      max-width: 80vw;
-    }
-  }
-
-  #baixarPDF {
-    width: 95vw !important;
-    max-width: 400px !important;
-    font-size: 1.2em !important;
-    margin: 22px auto 16px auto !important;
-    display: block !important;
-  }
-
-  /* Chat: ocupar mais espaço no mobile */
-  .chat-container {
-    width: 98vw !important;
-    max-width: 480px !important;
-    min-width: unset !important;
-    margin: 0 auto !important;
-  }
-}
-
-@media (max-width: 700px) {
-  body, html {
-    overflow-x: hidden;
-  }
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin-top: 16px;
-  }
-  #preview-container {
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 16px !important;
-    padding: 10px 2px !important;
-    max-width: 99vw !important;
-    min-width: 0 !important;
-    width: 100vw !important;
-    box-sizing: border-box;
-  }
-  .w3-content, .w3-row-padding {
-    max-width: 100vw !important;
-    width: 100vw !important;
-    min-width: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    box-sizing: border-box;
-  }
-  .w3-third, .cv-sidebar {
-    min-width: 0 !important;
-    width: 96vw !important;
-    max-width: 98vw !important;
-    margin: 0 auto 12px auto !important;
-    box-sizing: border-box;
-  }
-  .w3-twothird, .cv-main {
-    min-width: 0 !important;
-    width: 96vw !important;
-    max-width: 98vw !important;
-    margin: 0 auto 12px auto !important;
-    gap: 8px;
-    box-sizing: border-box;
-  }
-  .cv-main > .cv-section, .w3-container.w3-card.w3-white {
-    width: 100% !important;
-    min-width: unset !important;
-    padding: 8px 4px !important;
-    margin-bottom: 8px;
-    box-sizing: border-box;
-  }
-  #baixarPDF {
-    margin: 12px auto 12px auto !important;
-    width: 96vw !important;
-    min-width: 0 !important;
-    max-width: 98vw !important;
-    box-sizing: border-box;
-    font-size: 1rem !important;
-    display: block !important;
-  }
-}
-
-/* --- Responsividade do Preview e Sidebar --- */
-@media (max-width: 800px) {
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .preview-container {
-    padding: 10px 0 !important;
-    margin: 12px auto 0 auto !important;
-    box-shadow: none !important;
-    max-width: 100vw !important;
-  }
-
-  #curriculo-container {
-    min-width: unset !important;
-    max-width: 98vw !important;
-    width: 100vw !important;
-    padding: 0 !important;
-  }
-
-  .w3-row-padding {
-    flex-direction: column !important;
-    gap: 0 !important;
-    align-items: center;
-  }
-
-  .w3-third, .cv-sidebar {
-    min-width: 0 !important;
-    width: 100vw !important;
-    max-width: 98vw !important;
-    padding: 0 !important;
-  }
-
-  .sidebar {
-    width: 100vw !important;
-    padding: 0 !important;
-  }
-
-  .w3-twothird, .cv-main {
-    min-width: 0 !important;
-    width: 100vw !important;
-    max-width: 98vw !important;
-    gap: 18px !important;
-    padding: 0 !important;
-  }
-
-  .w3-container.w3-card.w3-white,
-  .cv-main > .cv-section {
-    margin: 12px 0 !important;
-    min-width: 0 !important;
-    width: 96vw !important;
-    border-radius: 18px !important;
-    padding: 18px 10px !important;
-    box-sizing: border-box;
-  }
-
-  .profile-img {
-    width: 84px !important;
-    margin: 0 auto 10px auto;
-    display: block;
-  }
-
-  .cv-nome-badge {
-    position: absolute;
-    top: 40%;
-    left: 24px;
-    transform: translateY(-50%);
-    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
-    color: #fff;
-    padding: 8px 28px;
-    border-radius: 16px;
-    font-size: 1.4em;
-    font-family: 'Poller One', Arial, sans-serif;
-    font-weight: 400;
-    box-shadow: 0 2px 12px #0001;
-    letter-spacing: 1px;
-    z-index: 10;
-    text-shadow: 0 1px 12px #0004;
-    max-width: 70vw;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    border: none;
-    margin-bottom: 0;
-    display: inline-block;
-    transition: font-size 0.3s, left 0.3s, padding 0.3s;
-  }
-
-  @media (max-width: 800px) {
-    .cv-nome-badge {
-      left: 8vw;
-      font-size: 1.1em;
-      padding: 6px 18px;
-      max-width: 80vw;
-    }
-  }
-
-  #baixarPDF {
-    width: 95vw !important;
-    max-width: 400px !important;
-    font-size: 1.2em !important;
-    margin: 22px auto 16px auto !important;
-    display: block !important;
-  }
-
-  /* Chat: ocupar mais espaço no mobile */
-  .chat-container {
-    width: 98vw !important;
-    max-width: 480px !important;
-    min-width: unset !important;
-    margin: 0 auto !important;
-  }
-}
-
-@media (max-width: 600px) {
-  html, body {
-    width: 100vw;
-    height: 100vh;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    background: #ece8da;
-    overflow-x: hidden;
-  }
-
-  .main-layout,
-  .chat-container {
-    width: 100vw !important;
-    min-width: 100vw !important;
-    max-width: 100vw !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-  }
-
-  .chat-header {
-    border-radius: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .chat-window {
-    padding: 18px 10px 0 10px;
-  }
-
-  .input-area {
-    border-radius: 0 0 0 0 !important;
-    box-shadow: none !important;
-  }
-
-  .chat-container {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-  }
-  .input-area {
-    padding: 10px 8px 18px 8px !important;
-    box-sizing: border-box;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-  }
-  .input-area input {
-    font-size: 1.08rem;
-    border-radius: 10px;
-    padding: 12px 15px;
-    width: 70vw !important;
-    max-width: 76vw !important;
-    min-width: 0;
-    margin-right: 7px;
-  }
-  .input-area button {
-    font-size: 1.1rem;
-    border-radius: 10px;
-    padding: 12px 16px;
-    width: auto;
-    min-width: 70px;
-    max-width: 100px;
-    margin-left: 0;
-  }
-}
-
-/* --- Fim do CSS --- */
-
-/* Ajuste para containers do preview: use max-width e width: 100% no mobile */
-
-/* Desktop: limite a largura máxima */
-#preview-container,
-.w3-content,
-.w3-row-padding,
-.cv-preview-center,
-.cv-main {
-    max-width: 970px;
-    width: 100%;
-    min-width: 0 !important;
-    box-sizing: border-box;
-}
-
-
-/* Mobile: ocupa toda a largura da tela */
-@media (max-width: 800px) {
-    #preview-container,
-    .w3-content,
-    .w3-row-padding,
-    .cv-preview-center,
-    .cv-main {
-        max-width: 100vw !important;
-        width: 100vw !important;
-        min-width: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-}
-
-/* RESPONSIVIDADE PARA MOBILE */
-
-@media (max-width: 900px) {
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    margin-top: 12px;
-  }
-  #preview-container {
-    max-width: 98vw;
-    min-width: unset;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 2vw;
-    margin: 16px auto 0 auto;
-    box-sizing: border-box;
-    overflow-x: auto;
-  }
-  .cv-preview-row,
-  .w3-row-padding {
-    flex-direction: column !important;
-    gap: 16px !important;
-    align-items: center !important;
-    width: 100% !important;
-  }
-  .cv-sidebar,
-  .w3-third {
-    width: 95vw !important;
-    min-width: unset !important;
-    margin: 0 auto 18px auto !important;
-  }
-  .cv-main,
-  .w3-twothird {
-    width: 95vw !important;
-    min-width: unset !important;
-    margin-left: 0 !important;
-  }
-  .cv-main > .cv-section,
-  .w3-container.w3-card.w3-white {
-    width: 100% !important;
-    min-width: unset !important;
-    padding: 12px 2vw;
-  }
-  #baixarPDF {
-    margin-bottom: 32px;
-    width: 95vw;
-    max-width: 350px;
-    display: block;
-  }
-  /* Garante que tudo fique visível */
-  body, html {
-    overflow-x: hidden;
-  }
-}
-
 @media (max-width: 800px) {
   .main-layout {
     flex-direction: column;
@@ -2713,287 +1912,40 @@ ul {
   }
 }
 
+/* Avatar no chat */
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  vertical-align: middle;
+  background: #fff;
+  box-shadow: 0 2px 8px #0001;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.message.user .chat-avatar {
+  margin-left: 10px;
+  margin-right: 0;
+}
+
+.message span {
+  display: inline-block;
+  max-width: 80%;
+  word-break: break-word;
+}
+
 /* --- Responsividade do Preview e Sidebar --- */
-@media (max-width: 800px) {
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .preview-container {
-    padding: 10px 0 !important;
-    margin: 12px auto 0 auto !important;
-    box-shadow: none !important;
-    max-width: 100vw !important;
-  }
-
-  #curriculo-container {
-    min-width: unset !important;
-    max-width: 98vw !important;
-    width: 100vw !important;
-    padding: 0 !important;
-  }
-
-  .w3-row-padding {
-    flex-direction: column !important;
-    gap: 0 !important;
-    align-items: center;
-  }
-
-  .w3-third, .cv-sidebar {
-    min-width: 0 !important;
-    width: 100vw !important;
-    max-width: 98vw !important;
-    padding: 0 !important;
-  }
-
-  .sidebar {
-    width: 100vw !important;
-    padding: 0 !important;
-  }
-
-  .w3-twothird, .cv-main {
-    min-width: 0 !important;
-    width: 100vw !important;
-    max-width: 98vw !important;
-    gap: 18px !important;
-    padding: 0 !important;
-  }
-
-  .w3-container.w3-card.w3-white,
-  .cv-main > .cv-section {
-    margin: 12px 0 !important;
-    min-width: 0 !important;
-    width: 96vw !important;
-    border-radius: 18px !important;
-    padding: 18px 10px !important;
-    box-sizing: border-box;
-  }
-
-  .profile-img {
-    width: 84px !important;
-    margin: 0 auto 10px auto;
-    display: block;
-  }
-
-  .cv-nome-badge {
-    position: absolute;
-    top: 40%;
-    left: 24px;
-    transform: translateY(-50%);
-    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
-    color: #fff;
-    padding: 8px 28px;
-    border-radius: 16px;
-    font-size: 1.4em;
-    font-family: 'Poller One', Arial, sans-serif;
-    font-weight: 400;
-    box-shadow: 0 2px 12px #0001;
-    letter-spacing: 1px;
-    z-index: 10;
-    text-shadow: 0 1px 12px #0004;
-    max-width: 70vw;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    border: none;
-    margin-bottom: 0;
-    display: inline-block;
-    transition: font-size 0.3s, left 0.3s, padding 0.3s;
-  }
-
-  @media (max-width: 800px) {
-    .cv-nome-badge {
-      left: 8vw;
-      font-size: 1.1em;
-      padding: 6px 18px;
-      max-width: 80vw;
-    }
-  }
-
-  #baixarPDF {
-    width: 95vw !important;
-    max-width: 400px !important;
-    font-size: 1.2em !important;
-    margin: 22px auto 16px auto !important;
-    display: block !important;
-  }
-
-  /* Chat: ocupar mais espaço no mobile */
-  .chat-container {
-    width: 98vw !important;
-    max-width: 480px !important;
-    min-width: unset !important;
-    margin: 0 auto !important;
-  }
-}
-
-@media (max-width: 600px) {
-  html, body {
-    width: 100vw;
-    height: 100vh;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    background: #ece8da;
-    overflow-x: hidden;
-  }
-
-  .main-layout,
-  .chat-container {
-    width: 100vw !important;
-    min-width: 100vw !important;
-    max-width: 100vw !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-  }
-
-  .chat-header {
-    border-radius: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .chat-window {
-    padding: 18px 10px 0 10px;
-  }
-
-  .input-area {
-    border-radius: 0 0 0 0 !important;
-    box-shadow: none !important;
-  }
-
-  .chat-container {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-  }
-  .input-area {
-    padding: 10px 8px 18px 8px !important;
-    box-sizing: border-box;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-  }
-  .input-area input {
-    font-size: 1.08rem;
-    border-radius: 10px;
-    padding: 12px 15px;
-    width: 70vw !important;
-    max-width: 76vw !important;
-    min-width: 0;
-    margin-right: 7px;
-  }
-  .input-area button {
-    font-size: 1.1rem;
-    border-radius: 10px;
-    padding: 12px 16px;
-    width: auto;
-    min-width: 70px;
-    max-width: 100px;
-    margin-left: 0;
-  }
-}
-
-/* --- Fim do CSS --- */
-
-/* Ajuste para containers do preview: use max-width e width: 100% no mobile */
-
-/* Desktop: limite a largura máxima */
-#preview-container,
-.w3-content,
-.w3-row-padding,
-.cv-preview-center,
-.cv-main {
-    max-width: 970px;
-    width: 100%;
-    min-width: 0 !important;
-    box-sizing: border-box;
-}
-
-
-/* Mobile: ocupa toda a largura da tela */
-@media (max-width: 800px) {
-    #preview-container,
-    .w3-content,
-    .w3-row-padding,
-    .cv-preview-center,
-    .cv-main {
-        max-width: 100vw !important;
-        width: 100vw !important;
-        min-width: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-}
-
-/* RESPONSIVIDADE PARA MOBILE */
-
-@media (max-width: 900px) {
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    margin-top: 12px;
-  }
-  #preview-container {
-    max-width: 98vw;
-    min-width: unset;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 2vw;
-    margin: 16px auto 0 auto;
-    box-sizing: border-box;
-    overflow-x: auto;
-  }
-  .cv-preview-row,
-  .w3-row-padding {
-    flex-direction: column !important;
-    gap: 16px !important;
-    align-items: center !important;
-    width: 100% !important;
-  }
-  .cv-sidebar,
-  .w3-third {
-    width: 95vw !important;
-    min-width: unset !important;
-    margin: 0 auto 18px auto !important;
-  }
-  .cv-main,
-  .w3-twothird {
-    width: 95vw !important;
-    min-width: unset !important;
-    margin-left: 0 !important;
-  }
-  .cv-main > .cv-section,
-  .w3-container.w3-card.w3-white {
-    width: 100% !important;
-    min-width: unset !important;
-    padding: 12px 2vw;
-  }
-  #baixarPDF {
-    margin-bottom: 32px;
-    width: 95vw;
-    max-width: 350px;
-    display: block;
-  }
-  /* Garante que tudo fique visível */
-  body, html {
-    overflow-x: hidden;
-  }
-}
-
 @media (max-width: 800px) {
   .main-layout {
     flex-direction: column;
@@ -3171,286 +2123,6 @@ ul {
 }
 
 /* --- Responsividade do Preview e Sidebar --- */
-@media (max-width: 800px) {
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .preview-container {
-    padding: 10px 0 !important;
-    margin: 12px auto 0 auto !important;
-    box-shadow: none !important;
-    max-width: 100vw !important;
-  }
-
-  #curriculo-container {
-    min-width: unset !important;
-    max-width: 98vw !important;
-    width: 100vw !important;
-    padding: 0 !important;
-  }
-
-  .w3-row-padding {
-    flex-direction: column !important;
-    gap: 0 !important;
-    align-items: center;
-  }
-
-  .w3-third, .cv-sidebar {
-    min-width: 0 !important;
-    width: 100vw !important;
-    max-width: 98vw !important;
-    padding: 0 !important;
-  }
-
-  .sidebar {
-    width: 100vw !important;
-    padding: 0 !important;
-  }
-
-  .w3-twothird, .cv-main {
-    min-width: 0 !important;
-    width: 100vw !important;
-    max-width: 98vw !important;
-    gap: 18px !important;
-    padding: 0 !important;
-  }
-
-  .w3-container.w3-card.w3-white,
-  .cv-main > .cv-section {
-    margin: 12px 0 !important;
-    min-width: 0 !important;
-    width: 96vw !important;
-    border-radius: 18px !important;
-    padding: 18px 10px !important;
-    box-sizing: border-box;
-  }
-
-  .profile-img {
-    width: 84px !important;
-    margin: 0 auto 10px auto;
-    display: block;
-  }
-
-  .cv-nome-badge {
-    position: absolute;
-    top: 40%;
-    left: 24px;
-    transform: translateY(-50%);
-    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
-    color: #fff;
-    padding: 8px 28px;
-    border-radius: 16px;
-    font-size: 1.4em;
-    font-family: 'Poller One', Arial, sans-serif;
-    font-weight: 400;
-    box-shadow: 0 2px 12px #0001;
-    letter-spacing: 1px;
-    z-index: 10;
-    text-shadow: 0 1px 12px #0004;
-    max-width: 70vw;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    border: none;
-    margin-bottom: 0;
-    display: inline-block;
-    transition: font-size 0.3s, left 0.3s, padding 0.3s;
-  }
-
-  @media (max-width: 800px) {
-    .cv-nome-badge {
-      left: 8vw;
-      font-size: 1.1em;
-      padding: 6px 18px;
-      max-width: 80vw;
-    }
-  }
-
-  #baixarPDF {
-    width: 95vw !important;
-    max-width: 400px !important;
-    font-size: 1.2em !important;
-    margin: 22px auto 16px auto !important;
-    display: block !important;
-  }
-
-  /* Chat: ocupar mais espaço no mobile */
-  .chat-container {
-    width: 98vw !important;
-    max-width: 480px !important;
-    min-width: unset !important;
-    margin: 0 auto !important;
-  }
-}
-
-@media (max-width: 600px) {
-  html, body {
-    width: 100vw;
-    height: 100vh;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    background: #ece8da;
-    overflow-x: hidden;
-  }
-
-  .main-layout,
-  .chat-container {
-    width: 100vw !important;
-    min-width: 100vw !important;
-    max-width: 100vw !important;
-    height: 100vh !important;
-    min-height: 100vh !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-  }
-
-  .chat-header {
-    border-radius: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .chat-window {
-    padding: 18px 10px 0 10px;
-  }
-
-  .input-area {
-    border-radius: 0 0 0 0 !important;
-    box-shadow: none !important;
-  }
-
-  .chat-container {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-shadow: none !important;
-  }
-  .input-area {
-    padding: 10px 8px 18px 8px !important;
-    box-sizing: border-box;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 0 !important;
-  }
-  .input-area input {
-    font-size: 1.08rem;
-    border-radius: 10px;
-    padding: 12px 15px;
-    width: 70vw !important;
-    max-width: 76vw !important;
-    min-width: 0;
-    margin-right: 7px;
-  }
-  .input-area button {
-    font-size: 1.1rem;
-    border-radius: 10px;
-    padding: 12px 16px;
-    width: auto;
-    min-width: 70px;
-    max-width: 100px;
-    margin-left: 0;
-  }
-}
-
-/* --- Fim do CSS --- */
-
-/* Ajuste para containers do preview: use max-width e width: 100% no mobile */
-
-/* Desktop: limite a largura máxima */
-#preview-container,
-.w3-content,
-.w3-row-padding,
-.cv-preview-center,
-.cv-main {
-    max-width: 970px;
-    width: 100%;
-    min-width: 0 !important;
-    box-sizing: border-box;
-}
-
-
-/* Mobile: ocupa toda a largura da tela */
-@media (max-width: 800px) {
-    #preview-container,
-    .w3-content,
-    .w3-row-padding,
-    .cv-preview-center,
-    .cv-main {
-        max-width: 100vw !important;
-        width: 100vw !important;
-        min-width: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-}
-
-/* RESPONSIVIDADE PARA MOBILE */
-
-@media (max-width: 900px) {
-  .main-layout {
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-    margin-top: 12px;
-  }
-  #preview-container {
-    max-width: 98vw;
-    min-width: unset;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 2vw;
-    margin: 16px auto 0 auto;
-    box-sizing: border-box;
-    overflow-x: auto;
-  }
-  .cv-preview-row,
-  .w3-row-padding {
-    flex-direction: column !important;
-    gap: 16px !important;
-    align-items: center !important;
-    width: 100% !important;
-  }
-  .cv-sidebar,
-  .w3-third {
-    width: 95vw !important;
-    min-width: unset !important;
-    margin: 0 auto 18px auto !important;
-  }
-  .cv-main,
-  .w3-twothird {
-    width: 95vw !important;
-    min-width: unset !important;
-    margin-left: 0 !important;
-  }
-  .cv-main > .cv-section,
-  .w3-container.w3-card.w3-white {
-    width: 100% !important;
-    min-width: unset !important;
-    padding: 12px 2vw;
-  }
-  #baixarPDF {
-    margin-bottom: 32px;
-    width: 95vw;
-    max-width: 350px;
-    display: block;
-  }
-  /* Garante que tudo fique visível */
-  body, html {
-    overflow-x: hidden;
-  }
-}
-
 @media (max-width: 800px) {
   .main-layout {
     flex-direction: column;
@@ -3893,4 +2565,1364 @@ ul {
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;
   }
+}
+
+/* --- Fim do CSS --- */
+
+/* Ajuste para containers do preview: use max-width e width: 100% no mobile */
+
+/* Desktop: limite a largura máxima */
+#preview-container,
+.w3-content,
+.w3-row-padding,
+.cv-preview-center,
+.cv-main {
+    max-width: 970px;
+    width: 100%;
+    min-width: 0 !important;
+    box-sizing: border-box;
+}
+
+
+/* Mobile: ocupa toda a largura da tela */
+@media (max-width: 800px) {
+    #preview-container,
+    .w3-content,
+    .w3-row-padding,
+    .cv-preview-center,
+    .cv-main {
+        max-width: 100vw !important;
+        width: 100vw !important;
+        min-width: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+/* RESPONSIVIDADE PARA MOBILE */
+
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: 12px;
+  }
+  #preview-container {
+    max-width: 98vw;
+    min-width: unset;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 2vw;
+    margin: 16px auto 0 auto;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+  .cv-preview-row,
+  .w3-row-padding {
+    flex-direction: column !important;
+    gap: 16px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .cv-sidebar,
+  .w3-third {
+    width: 95vw !important;
+    min-width: unset !important;
+    margin: 0 auto 18px auto !important;
+  }
+  .cv-main,
+  .w3-twothird {
+    width: 95vw !important;
+    min-width: unset !important;
+    margin-left: 0 !important;
+  }
+  .cv-main > .cv-section,
+  .w3-container.w3-card.w3-white {
+    width: 100% !important;
+    min-width: unset !important;
+    padding: 12px 2vw;
+  }
+  #baixarPDF {
+    margin-bottom: 32px;
+    width: 95vw;
+    max-width: 350px;
+    display: block;
+  }
+  /* Garante que tudo fique visível */
+  body, html {
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 800px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .preview-container {
+    padding: 10px 0 !important;
+    margin: 12px auto 0 auto !important;
+    box-shadow: none !important;
+    max-width: 100vw !important;
+  }
+
+  #curriculo-container {
+    min-width: unset !important;
+    max-width: 98vw !important;
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-row-padding {
+    flex-direction: column !important;
+    gap: 0 !important;
+    align-items: center;
+  }
+
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    padding: 0 !important;
+  }
+
+  .sidebar {
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    gap: 18px !important;
+    padding: 0 !important;
+  }
+
+  .w3-container.w3-card.w3-white,
+  .cv-main > .cv-section {
+    margin: 12px 0 !important;
+    min-width: 0 !important;
+    width: 96vw !important;
+    border-radius: 18px !important;
+    padding: 18px 10px !important;
+    box-sizing: border-box;
+  }
+
+  .profile-img {
+    width: 84px !important;
+    margin: 0 auto 10px auto;
+    display: block;
+  }
+
+  .cv-nome-badge {
+    position: absolute;
+    top: 40%;
+    left: 24px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
+    color: #fff;
+    padding: 8px 28px;
+    border-radius: 16px;
+    font-size: 1.4em;
+    font-family: 'Poller One', Arial, sans-serif;
+    font-weight: 400;
+    box-shadow: 0 2px 12px #0001;
+    letter-spacing: 1px;
+    z-index: 10;
+    text-shadow: 0 1px 12px #0004;
+    max-width: 70vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: none;
+    margin-bottom: 0;
+    display: inline-block;
+    transition: font-size 0.3s, left 0.3s, padding 0.3s;
+  }
+
+  @media (max-width: 800px) {
+    .cv-nome-badge {
+      left: 8vw;
+      font-size: 1.1em;
+      padding: 6px 18px;
+      max-width: 80vw;
+    }
+  }
+
+  #baixarPDF {
+    width: 95vw !important;
+    max-width: 400px !important;
+    font-size: 1.2em !important;
+    margin: 22px auto 16px auto !important;
+    display: block !important;
+  }
+
+  /* Chat: ocupar mais espaço no mobile */
+  .chat-container {
+    width: 98vw !important;
+    max-width: 480px !important;
+    min-width: unset !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 700px) {
+  body, html {
+    overflow-x: hidden;
+  }
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  #preview-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 10px 2px !important;
+    max-width: 99vw !important;
+    min-width: 0 !important;
+    width: 100vw !important;
+    box-sizing: border-box;
+  }
+  .w3-content, .w3-row-padding {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+  }
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    box-sizing: border-box;
+  }
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+  .cv-main > .cv-section, .w3-container.w3-card.w3-white {
+    width: 100% !important;
+    min-width: unset !important;
+    padding: 8px 4px !important;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+  }
+  #baixarPDF {
+    margin: 12px auto 12px auto !important;
+    width: 96vw !important;
+    min-width: 0 !important;
+    max-width: 98vw !important;
+    box-sizing: border-box;
+    font-size: 1rem !important;
+    display: block !important;
+  }
+}
+
+/* --- Responsividade do Preview e Sidebar --- */
+@media (max-width: 800px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .preview-container {
+    padding: 10px 0 !important;
+    margin: 12px auto 0 auto !important;
+    box-shadow: none !important;
+    max-width: 100vw !important;
+  }
+
+  #curriculo-container {
+    min-width: unset !important;
+    max-width: 98vw !important;
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-row-padding {
+    flex-direction: column !important;
+    gap: 0 !important;
+    align-items: center;
+  }
+
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    padding: 0 !important;
+  }
+
+  .sidebar {
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    gap: 18px !important;
+    padding: 0 !important;
+  }
+
+  .w3-container.w3-card.w3-white,
+  .cv-main > .cv-section {
+    margin: 12px 0 !important;
+    min-width: 0 !important;
+    width: 96vw !important;
+    border-radius: 18px !important;
+    padding: 18px 10px !important;
+    box-sizing: border-box;
+  }
+
+  .profile-img {
+    width: 84px !important;
+    margin: 0 auto 10px auto;
+    display: block;
+  }
+
+  .cv-nome-badge {
+    position: absolute;
+    top: 40%;
+    left: 24px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
+    color: #fff;
+    padding: 8px 28px;
+    border-radius: 16px;
+    font-size: 1.4em;
+    font-family: 'Poller One', Arial, sans-serif;
+    font-weight: 400;
+    box-shadow: 0 2px 12px #0001;
+    letter-spacing: 1px;
+    z-index: 10;
+    text-shadow: 0 1px 12px #0004;
+    max-width: 70vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: none;
+    margin-bottom: 0;
+    display: inline-block;
+    transition: font-size 0.3s, left 0.3s, padding 0.3s;
+  }
+
+  @media (max-width: 800px) {
+    .cv-nome-badge {
+      left: 8vw;
+      font-size: 1.1em;
+      padding: 6px 18px;
+      max-width: 80vw;
+    }
+  }
+
+  #baixarPDF {
+    width: 95vw !important;
+    max-width: 400px !important;
+    font-size: 1.2em !important;
+    margin: 22px auto 16px auto !important;
+    display: block !important;
+  }
+
+  /* Chat: ocupar mais espaço no mobile */
+  .chat-container {
+    width: 98vw !important;
+    max-width: 480px !important;
+    min-width: unset !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 700px) {
+  body, html {
+    overflow-x: hidden;
+  }
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  #preview-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 10px 2px !important;
+    max-width: 99vw !important;
+    min-width: 0 !important;
+    width: 100vw !important;
+    box-sizing: border-box;
+  }
+  .w3-content, .w3-row-padding {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+  }
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    box-sizing: border-box;
+  }
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+  .cv-main > .cv-section, .w3-container.w3-card.w3-white {
+    width: 100% !important;
+    min-width: unset !important;
+    padding: 8px 4px !important;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+  }
+  #baixarPDF {
+    margin: 12px auto 12px auto !important;
+    width: 96vw !important;
+    min-width: 0 !important;
+    max-width: 98vw !important;
+    box-sizing: border-box;
+    font-size: 1rem !important;
+    display: block !important;
+  }
+}
+
+/* --- Responsividade do Preview e Sidebar --- */
+@media (max-width: 800px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .preview-container {
+    padding: 10px 0 !important;
+    margin: 12px auto 0 auto !important;
+    box-shadow: none !important;
+    max-width: 100vw !important;
+  }
+
+  #curriculo-container {
+    min-width: unset !important;
+    max-width: 98vw !important;
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-row-padding {
+    flex-direction: column !important;
+    gap: 0 !important;
+    align-items: center;
+  }
+
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    padding: 0 !important;
+  }
+
+  .sidebar {
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    gap: 18px !important;
+    padding: 0 !important;
+  }
+
+  .w3-container.w3-card.w3-white,
+  .cv-main > .cv-section {
+    margin: 12px 0 !important;
+    min-width: 0 !important;
+    width: 96vw !important;
+    border-radius: 18px !important;
+    padding: 18px 10px !important;
+    box-sizing: border-box;
+  }
+
+  .profile-img {
+    width: 84px !important;
+    margin: 0 auto 10px auto;
+    display: block;
+  }
+
+  .cv-nome-badge {
+    position: absolute;
+    top: 40%;
+    left: 24px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
+    color: #fff;
+    padding: 8px 28px;
+    border-radius: 16px;
+    font-size: 1.4em;
+    font-family: 'Poller One', Arial, sans-serif;
+    font-weight: 400;
+    box-shadow: 0 2px 12px #0001;
+    letter-spacing: 1px;
+    z-index: 10;
+    text-shadow: 0 1px 12px #0004;
+    max-width: 70vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: none;
+    margin-bottom: 0;
+    display: inline-block;
+    transition: font-size 0.3s, left 0.3s, padding 0.3s;
+  }
+
+  @media (max-width: 800px) {
+    .cv-nome-badge {
+      left: 8vw;
+      font-size: 1.1em;
+      padding: 6px 18px;
+      max-width: 80vw;
+    }
+  }
+
+  #baixarPDF {
+    width: 95vw !important;
+    max-width: 400px !important;
+    font-size: 1.2em !important;
+    margin: 22px auto 16px auto !important;
+    display: block !important;
+  }
+
+  /* Chat: ocupar mais espaço no mobile */
+  .chat-container {
+    width: 98vw !important;
+    max-width: 480px !important;
+    min-width: unset !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 700px) {
+  body, html {
+    overflow-x: hidden;
+  }
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  #preview-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 10px 2px !important;
+    max-width: 99vw !important;
+    min-width: 0 !important;
+    width: 100vw !important;
+    box-sizing: border-box;
+  }
+  .w3-content, .w3-row-padding {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+  }
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    box-sizing: border-box;
+  }
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+  .cv-main > .cv-section, .w3-container.w3-card.w3-white {
+    width: 100% !important;
+    min-width: unset !important;
+    padding: 8px 4px !important;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+  }
+  #baixarPDF {
+    margin: 12px auto 12px auto !important;
+    width: 96vw !important;
+    min-width: 0 !important;
+    max-width: 98vw !important;
+    box-sizing: border-box;
+    font-size: 1rem !important;
+    display: block !important;
+  }
+}
+
+/* --- Responsividade do Preview e Sidebar --- */
+@media (max-width: 800px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .preview-container {
+    padding: 10px 0 !important;
+    margin: 12px auto 0 auto !important;
+    box-shadow: none !important;
+    max-width: 100vw !important;
+  }
+
+  #curriculo-container {
+    min-width: unset !important;
+    max-width: 98vw !important;
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-row-padding {
+    flex-direction: column !important;
+    gap: 0 !important;
+    align-items: center;
+  }
+
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    padding: 0 !important;
+  }
+
+  .sidebar {
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    gap: 18px !important;
+    padding: 0 !important;
+  }
+
+  .w3-container.w3-card.w3-white,
+  .cv-main > .cv-section {
+    margin: 12px 0 !important;
+    min-width: 0 !important;
+    width: 96vw !important;
+    border-radius: 18px !important;
+    padding: 18px 10px !important;
+    box-sizing: border-box;
+  }
+
+  .profile-img {
+    width: 84px !important;
+    margin: 0 auto 10px auto;
+    display: block;
+  }
+
+  .cv-nome-badge {
+    position: absolute;
+    top: 40%;
+    left: 24px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
+    color: #fff;
+    padding: 8px 28px;
+    border-radius: 16px;
+    font-size: 1.4em;
+    font-family: 'Poller One', Arial, sans-serif;
+    font-weight: 400;
+    box-shadow: 0 2px 12px #0001;
+    letter-spacing: 1px;
+    z-index: 10;
+    text-shadow: 0 1px 12px #0004;
+    max-width: 70vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: none;
+    margin-bottom: 0;
+    display: inline-block;
+    transition: font-size 0.3s, left 0.3s, padding 0.3s;
+  }
+
+  @media (max-width: 800px) {
+    .cv-nome-badge {
+      left: 8vw;
+      font-size: 1.1em;
+      padding: 6px 18px;
+      max-width: 80vw;
+    }
+  }
+
+  #baixarPDF {
+    width: 95vw !important;
+    max-width: 400px !important;
+    font-size: 1.2em !important;
+    margin: 22px auto 16px auto !important;
+    display: block !important;
+  }
+
+  /* Chat: ocupar mais espaço no mobile */
+  .chat-container {
+    width: 98vw !important;
+    max-width: 480px !important;
+    min-width: unset !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 700px) {
+  body, html {
+    overflow-x: hidden;
+  }
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  #preview-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 10px 2px !important;
+    max-width: 99vw !important;
+    min-width: 0 !important;
+    width: 100vw !important;
+    box-sizing: border-box;
+  }
+  .w3-content, .w3-row-padding {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+  }
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    box-sizing: border-box;
+  }
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+  .cv-main > .cv-section, .w3-container.w3-card.w3-white {
+    width: 100% !important;
+    min-width: unset !important;
+    padding: 8px 4px !important;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+  }
+  #baixarPDF {
+    margin: 12px auto 12px auto !important;
+    width: 96vw !important;
+    min-width: 0 !important;
+    max-width: 98vw !important;
+    box-sizing: border-box;
+    font-size: 1rem !important;
+    display: block !important;
+  }
+}
+
+/* --- Responsividade do Preview e Sidebar --- */
+@media (max-width: 800px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .preview-container {
+    padding: 10px 0 !important;
+    margin: 12px auto 0 auto !important;
+    box-shadow: none !important;
+    max-width: 100vw !important;
+  }
+
+  #curriculo-container {
+    min-width: unset !important;
+    max-width: 98vw !important;
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-row-padding {
+    flex-direction: column !important;
+    gap: 0 !important;
+    align-items: center;
+  }
+
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    padding: 0 !important;
+  }
+
+  .sidebar {
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    gap: 18px !important;
+    padding: 0 !important;
+  }
+
+  .w3-container.w3-card.w3-white,
+  .cv-main > .cv-section {
+    margin: 12px 0 !important;
+    min-width: 0 !important;
+    width: 96vw !important;
+    border-radius: 18px !important;
+    padding: 18px 10px !important;
+    box-sizing: border-box;
+  }
+
+  .profile-img {
+    width: 84px !important;
+    margin: 0 auto 10px auto;
+    display: block;
+  }
+
+  .cv-nome-badge {
+    position: absolute;
+    top: 40%;
+    left: 24px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
+    color: #fff;
+    padding: 8px 28px;
+    border-radius: 16px;
+    font-size: 1.4em;
+    font-family: 'Poller One', Arial, sans-serif;
+    font-weight: 400;
+    box-shadow: 0 2px 12px #0001;
+    letter-spacing: 1px;
+    z-index: 10;
+    text-shadow: 0 1px 12px #0004;
+    max-width: 70vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: none;
+    margin-bottom: 0;
+    display: inline-block;
+    transition: font-size 0.3s, left 0.3s, padding 0.3s;
+  }
+
+  @media (max-width: 800px) {
+    .cv-nome-badge {
+      left: 8vw;
+      font-size: 1.1em;
+      padding: 6px 18px;
+      max-width: 80vw;
+    }
+  }
+
+  #baixarPDF {
+    width: 95vw !important;
+    max-width: 400px !important;
+    font-size: 1.2em !important;
+    margin: 22px auto 16px auto !important;
+    display: block !important;
+  }
+
+  /* Chat: ocupar mais espaço no mobile */
+  .chat-container {
+    width: 98vw !important;
+    max-width: 480px !important;
+    min-width: unset !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 600px) {
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: #ece8da;
+    overflow-x: hidden;
+  }
+
+  .main-layout,
+  .chat-container {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .chat-header {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .chat-window {
+    padding: 18px 10px 0 10px;
+  }
+
+  .input-area {
+    border-radius: 0 0 0 0 !important;
+    box-shadow: none !important;
+  }
+
+  .chat-container {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    min-width: 0 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+}
+@media (max-width: 600px) {
+  .input-area input {
+    width: 70vw !important;
+    max-width: 75vw !important;
+    min-width: 0 !important;
+    margin-right: 7px;
+    border-radius: 10px;
+    font-size: 1.1em;
+    padding: 12px 15px;
+  }
+  .input-area button {
+    border-radius: 10px;
+    font-size: 1.1em;
+    padding: 12px 16px;
+    width: auto;
+    min-width: 78px;
+    max-width: 110px;
+  }
+}
+@media (max-width: 600px) {
+  .input-area {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    z-index: 51;
+    background: #fffbe6;
+  }
+}
+@media (min-width: 601px) {
+  body, html {
+    min-height: 100vh;
+    height: 100vh;
+    margin: 0;
+    background: #ece8da;
+  }
+  .main-layout {
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  .chat-container {
+    width: 410px;
+    min-height: 560px;
+    max-height: 92vh;
+    height: 84vh;
+    margin: 32px;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.13);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #fffbe6;
+  }
+  .chat-header {
+    border-radius: 24px 24px 0 0;
+    margin: 0;
+  }
+  .chat-window {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    padding: 18px 10px 0 10px;
+  }
+  .input-area {
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    padding: 14px 14px 16px 14px;
+  }
+}
+@media (min-width: 601px) {
+  .main-layout {
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+  .chat-container {
+    width: 420px;
+    min-height: 550px;
+    max-height: 90vh;
+    height: 80vh; /* Ocupa quase a tela toda */
+    margin: 36px;
+    border-radius: 24px;
+    box-shadow: 0 4px 24px 0 rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .chat-window {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0;
+    max-height: none;
+    padding-bottom: 0 !important;
+  }
+  .input-area {
+    padding: 14px 18px 16px 14px;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+  }
+}
+
+/* --- Fim do CSS --- */
+
+/* Ajuste para containers do preview: use max-width e width: 100% no mobile */
+
+/* Desktop: limite a largura máxima */
+#preview-container,
+.w3-content,
+.w3-row-padding,
+.cv-preview-center,
+.cv-main {
+    max-width: 970px;
+    width: 100%;
+    min-width: 0 !important;
+    box-sizing: border-box;
+}
+
+
+/* Mobile: ocupa toda a largura da tela */
+@media (max-width: 800px) {
+    #preview-container,
+    .w3-content,
+    .w3-row-padding,
+    .cv-preview-center,
+    .cv-main {
+        max-width: 100vw !important;
+        width: 100vw !important;
+        min-width: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
+/* RESPONSIVIDADE PARA MOBILE */
+
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: 12px;
+  }
+  #preview-container {
+    max-width: 98vw;
+    min-width: unset;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 2vw;
+    margin: 16px auto 0 auto;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+  .cv-preview-row,
+  .w3-row-padding {
+    flex-direction: column !important;
+    gap: 16px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .cv-sidebar,
+  .w3-third {
+    width: 95vw !important;
+    min-width: unset !important;
+    margin: 0 auto 18px auto !important;
+  }
+  .cv-main,
+  .w3-twothird {
+    width: 95vw !important;
+    min-width: unset !important;
+    margin-left: 0 !important;
+  }
+  .cv-main > .cv-section,
+  .w3-container.w3-card.w3-white {
+    width: 100% !important;
+    min-width: unset !important;
+    padding: 12px 2vw;
+  }
+  #baixarPDF {
+    margin-bottom: 32px;
+    width: 95vw;
+    max-width: 350px;
+    display: block;
+  }
+  /* Garante que tudo fique visível */
+  body, html {
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 800px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .preview-container {
+    padding: 10px 0 !important;
+    margin: 12px auto 0 auto !important;
+    box-shadow: none !important;
+    max-width: 100vw !important;
+  }
+
+  #curriculo-container {
+    min-width: unset !important;
+    max-width: 98vw !important;
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-row-padding {
+    flex-direction: column !important;
+    gap: 0 !important;
+    align-items: center;
+  }
+
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    padding: 0 !important;
+  }
+
+  .sidebar {
+    width: 100vw !important;
+    padding: 0 !important;
+  }
+
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 100vw !important;
+    max-width: 98vw !important;
+    gap: 18px !important;
+    padding: 0 !important;
+  }
+
+  .w3-container.w3-card.w3-white,
+  .cv-main > .cv-section {
+    margin: 12px 0 !important;
+    min-width: 0 !important;
+    width: 96vw !important;
+    border-radius: 18px !important;
+    padding: 18px 10px !important;
+    box-sizing: border-box;
+  }
+
+  .profile-img {
+    width: 84px !important;
+    margin: 0 auto 10px auto;
+    display: block;
+  }
+
+  .cv-nome-badge {
+    position: absolute;
+    top: 40%;
+    left: 24px;
+    transform: translateY(-50%);
+    background: linear-gradient(90deg, #ff7267 50%, #ff586e 100%);
+    color: #fff;
+    padding: 8px 28px;
+    border-radius: 16px;
+    font-size: 1.4em;
+    font-family: 'Poller One', Arial, sans-serif;
+    font-weight: 400;
+    box-shadow: 0 2px 12px #0001;
+    letter-spacing: 1px;
+    z-index: 10;
+    text-shadow: 0 1px 12px #0004;
+    max-width: 70vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: none;
+    margin-bottom: 0;
+    display: inline-block;
+    transition: font-size 0.3s, left 0.3s, padding 0.3s;
+  }
+
+  @media (max-width: 800px) {
+    .cv-nome-badge {
+      left: 8vw;
+      font-size: 1.1em;
+      padding: 6px 18px;
+      max-width: 80vw;
+    }
+  }
+
+  #baixarPDF {
+    width: 95vw !important;
+    max-width: 400px !important;
+    font-size: 1.2em !important;
+    margin: 22px auto 16px auto !important;
+    display: block !important;
+  }
+
+  /* Chat: ocupar mais espaço no mobile */
+  .chat-container {
+    width: 98vw !important;
+    max-width: 480px !important;
+    min-width: unset !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 700px) {
+  body, html {
+    overflow-x: hidden;
+  }
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  #preview-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 10px 2px !important;
+    max-width: 99vw !important;
+    min-width: 0 !important;
+    width: 100vw !important;
+    box-sizing: border-box;
+  }
+  .w3-content, .w3-row-padding {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+  }
+  .w3-third, .cv-sidebar {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    box-sizing: border-box;
+  }
+  .w3-twothird, .cv-main {
+    min-width: 0 !important;
+    width: 96vw !important;
+    max-width: 98vw !important;
+    margin: 0 auto 12px auto !important;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+  .cv-main > .cv-section, .w3-container.w3-card.w3-white {
+    width: 100% !important;
+    min-width: unset !important;
+    padding: 8px 4px !important;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+  }
+  #baixarPDF {
+    margin: 12px auto 12px auto !important;
+    width: 96vw !important;
+    min-width: 0 !important;
+    max-width: 98vw !important;
+    box-sizing: border-box;
+    font-size: 1rem !important;
+    display: block !important;
+  }
+}
+
+/* Avatar no chat */
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+  vertical-align: middle;
+  background: #fff;
+  box-shadow: 0 2px 8px #0001;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.message.user .chat-avatar {
+  margin-left: 10px;
+  margin-right: 0;
+}
+
+.message span {
+  display: inline-block;
+  max-width: 80%;
+  word-break: break-word;
 }

@@ -28,7 +28,7 @@ const perguntas = [
         chave: 'foto', 
         pergunta: '📸 De onde vem sua foto?\n(Digite 1, 2, 3 ou 4)\n\n1️⃣ Instagram\n2️⃣ Facebook\n3️⃣ LinkedIn\n4️⃣ Enviar Foto' 
     },
-    { chave: 'foto_username', pergunta: '🔗 Informe seu nome de usuário (sem @) ou cole o link se escolheu opção 4.' },
+    { chave: 'foto_username', pergunta: '🔗 Informe seu nome de usuário (sem @)' },
     { chave: 'cargo', pergunta: '💼 Qual seu cargo ou profissão?' },
     { chave: 'email', pergunta: '📧 Qual seu email?' },
     { chave: 'telefone', pergunta: '📱 Qual seu telefone?' },
@@ -174,22 +174,22 @@ function handleUserInput() {
             .then(r => r.json())
             .then(data => {
                 let fotoUrl = data.foto_url;
-                // Garante URL absoluta
+                if (!fotoUrl || data.privado) {
+                    adicionarMensagem('bot', '❌ Não foi possível baixar a foto (perfil privado ou não encontrado). Por favor, envie a foto do seu computador.');
+                    mostrarInputUploadNoChat();
+                    // Não avança para a próxima pergunta!
+                    return;
+                }
                 if (fotoUrl && !fotoUrl.startsWith('http')) {
                     fotoUrl = 'https://gerador-de-cv-ia-2-0.onrender.com' + fotoUrl;
                 }
-                // Atualiza estado global
                 dadosCurriculo.foto_url = fotoUrl;
-                // Atualiza localStorage para preview.html
                 localStorage.setItem('dadosCurriculo', JSON.stringify(dadosCurriculo));
-                // Atualiza a imagem do preview imediatamente
                 gerarCurriculoPreview(dadosCurriculo);
-                // Atualiza diretamente o src da imagem do preview, se já existir
                 const previewImgTag = document.querySelector('.w3-display-container img');
                 if (previewImgTag && fotoUrl) {
                     previewImgTag.src = fotoUrl;
                 }
-                // Garante que o PDF será gerado com a foto correta
                 window.dadosCurriculo = dadosCurriculo;
                 adicionarMensagem('bot', '📥 Foto de perfil encontrada!');
                 indexPergunta++;
@@ -202,7 +202,6 @@ function handleUserInput() {
                 indexPergunta++;
                 fazerPergunta();
             });
-
             userInput.value = '';
             return;
         }
@@ -217,13 +216,72 @@ function handleUserInput() {
 function adicionarMensagem(remetente, texto) {
     const div = document.createElement('div');
     div.classList.add('message', remetente);
-    if (texto.startsWith('<span class="success-upload">')) {
-        div.innerHTML = texto;
-    } else {
-        div.innerText = texto;
+
+    // Avatar fora do balão, estilo qikify Chatbot
+    if (remetente === 'bot') {
+        const avatar = document.createElement('img');
+        avatar.className = 'chat-avatar bot-avatar';
+        avatar.src = 'assets/bot-2.gif';
+        avatar.alt = 'Bot';
+        div.appendChild(avatar);
     }
-    chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
+
+    // Conteúdo da mensagem
+    const content = document.createElement('span');
+    // Efeito de digitação para o bot, exceto para o balão de opções de foto
+    if (
+        remetente === 'bot' &&
+        typeof texto === 'string' &&
+        !texto.startsWith('<span class="success-upload">') &&
+        texto.trim() !== perguntas[1].pergunta.trim()
+    ) {
+        content.innerHTML = '<span class="typing-dot">•</span><span class="typing-dot">•</span><span class="typing-dot">•</span>';
+        div.appendChild(content);
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+        setTimeout(() => {
+            let i = 0;
+            content.innerHTML = '';
+            function typeChar() {
+                if (i < texto.length) {
+                    content.innerHTML += texto[i] === '\n' ? '<br>' : texto[i];
+                    i++;
+                    chat.scrollTop = chat.scrollHeight;
+                    setTimeout(typeChar, 12 + Math.random() * 30);
+                } else {
+                    if (texto === perguntas[1].pergunta) {
+                        content.innerHTML = texto.replace(/\n/g, '<br>');
+                    } else {
+                        content.textContent = texto;
+                    }
+                }
+            }
+            typeChar();
+        }, 500);
+    } else if (texto.startsWith('<span class="success-upload">')) {
+        content.innerHTML = texto;
+        div.appendChild(content);
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+    } else {
+        if (texto === perguntas[1].pergunta) {
+            content.innerHTML = texto.replace(/\n/g, '<br>');
+        } else {
+            content.textContent = texto;
+        }
+        div.appendChild(content);
+        chat.appendChild(div);
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    // Avatar do usuário fora do balão, à direita
+    if (remetente === 'user') {
+        const avatar = document.createElement('img');
+        avatar.className = 'chat-avatar user-avatar';
+        avatar.src = 'assets/avatar-boy.png'; // personalize se quiser
+        avatar.alt = 'Você';
+        div.appendChild(avatar);
+    }
 }
 
 // -------- PREVIEW DO CURRÍCULO --------

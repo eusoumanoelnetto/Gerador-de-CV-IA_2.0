@@ -161,6 +161,28 @@ def upload_foto():
     return jsonify({'foto_url': url})
 
 # ====================
+# 👤 Inferência de Gênero Simples
+# ====================
+def inferir_genero_nome(nome):
+    if not nome or not isinstance(nome, str):
+        return "unknown"
+    nome = nome.strip().lower()
+    if len(nome) == 0:
+        return "unknown"
+    if nome[-1] == 'a':
+        return "female"
+    if nome[-1] == 'o':
+        return "male"
+    return "unknown"
+
+@app.route('/inferir-genero', methods=['POST'])
+def inferir_genero():
+    data = request.json
+    nome = data.get('nome', '')
+    genero = inferir_genero_nome(nome)
+    return jsonify({'genero': genero})
+
+# ====================
 # 🖥️ Modo Terminal Local
 # ====================
 
