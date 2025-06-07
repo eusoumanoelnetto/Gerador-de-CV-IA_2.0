@@ -50,7 +50,6 @@ if (btnEnviar) {
 
 window.onload = () => {
     adicionarMensagem('bot', '🧠 Olá! Eu sou o Gerador de Currículo IA. Bora montar seu currículo juntos!');
-    fazerPergunta();
     // Esconde tudo ao iniciar ou reiniciar
     tituloCV.style.display = 'none';
     previewContainer.style.display = 'none';
@@ -159,7 +158,11 @@ function handleUserInput() {
             })
             .then(r => r.json())
             .then(data => {
-                dadosCurriculo.foto_url = data.foto_url;
+                let fotoUrl = data.foto_url;
+                if (fotoUrl && fotoUrl.startsWith('/assets/')) {
+                    fotoUrl = 'https://gerador-de-cv-ia-2-0.onrender.com' + fotoUrl;
+                }
+                dadosCurriculo.foto_url = fotoUrl;
                 console.log('URL da foto recebida:', dadosCurriculo.foto_url);
                 adicionarMensagem('bot', '📥 Foto de perfil encontrada!');
                 indexPergunta++;
