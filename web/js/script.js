@@ -197,7 +197,7 @@ function handleUserInput() {
             })
             .catch(err => {
                 adicionarMensagem('bot', '❌ Erro ao obter foto. Usando avatar padrão.');
-                dadosCurriculo.foto_url = 'assets/default-avatar.jpg';
+                dadosCurriculo.foto_url = 'assets/avatar-unknown.png';
                 gerarCurriculoPreview(dadosCurriculo);
                 indexPergunta++;
                 fazerPergunta();
