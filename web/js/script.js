@@ -26,7 +26,7 @@ const perguntas = [
     { chave: 'nome', pergunta: '🧠 Qual seu nome completo?' },
     { 
         chave: 'foto', 
-        pergunta: '📸 De onde vem sua foto?\n(Digite 1, 2, 3 ou 4)\n\n1️⃣ Instagram\n2️⃣ Facebook\n3️⃣ LinkedIn\n4️⃣ Enviar Foto do Computador' 
+        pergunta: '📸 De onde vem sua foto?\n(Digite 1, 2, 3 ou 4)\n\n1️⃣ Instagram\n2️⃣ Facebook\n3️⃣ LinkedIn\n4️⃣ Enviar Foto' 
     },
     { chave: 'foto_username', pergunta: '🔗 Informe seu nome de usuário (sem @) ou cole o link se escolheu opção 4.' },
     { chave: 'cargo', pergunta: '💼 Qual seu cargo ou profissão?' },
@@ -174,12 +174,23 @@ function handleUserInput() {
             .then(r => r.json())
             .then(data => {
                 let fotoUrl = data.foto_url;
-                if (fotoUrl && fotoUrl.startsWith('/assets/')) {
+                // Garante URL absoluta
+                if (fotoUrl && !fotoUrl.startsWith('http')) {
                     fotoUrl = 'https://gerador-de-cv-ia-2-0.onrender.com' + fotoUrl;
                 }
+                // Atualiza estado global
                 dadosCurriculo.foto_url = fotoUrl;
+                // Atualiza localStorage para preview.html
+                localStorage.setItem('dadosCurriculo', JSON.stringify(dadosCurriculo));
                 // Atualiza a imagem do preview imediatamente
                 gerarCurriculoPreview(dadosCurriculo);
+                // Atualiza diretamente o src da imagem do preview, se já existir
+                const previewImgTag = document.querySelector('.w3-display-container img');
+                if (previewImgTag && fotoUrl) {
+                    previewImgTag.src = fotoUrl;
+                }
+                // Garante que o PDF será gerado com a foto correta
+                window.dadosCurriculo = dadosCurriculo;
                 adicionarMensagem('bot', '📥 Foto de perfil encontrada!');
                 indexPergunta++;
                 fazerPergunta();
@@ -332,3 +343,11 @@ function reiniciarChat() {
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
 }
+
+// Função utilitária para atualizar o preview da foto dinamicamente
+function atualizarFotoPreview(caminhoFoto) {
+  const img = document.querySelector('.w3-display-container img');
+  if (img) img.src = caminhoFoto;
+}
+
+// Chame atualizarFotoPreview(fotoUrl) sempre que a foto for baixada!

@@ -25,7 +25,8 @@ if not os.path.exists('assets'):
 def gerar_html(dados):
     with open('templates/curriculo.html', 'r', encoding='utf-8') as file:
         template = file.read()
-    html = template
+    foto_path = dados.get('foto_url', 'assets/default-avatar.jpg')
+    html = template.replace('{{foto_path}}', foto_path)
     for key, value in dados.items():
         html = html.replace(f'{{{{{key}}}}}', value)
     return html
@@ -35,23 +36,24 @@ def gerar_pdf(html_content, output_file):
     pdfkit.from_string(html_content, output_file, configuration=config)
 
 def baixar_perfil_instagram(username):
+    import uuid
     L = instaloader.Instaloader(dirname_pattern="assets", save_metadata=False, download_videos=False)
     profile = instaloader.Profile.from_username(L.context, username)
-    foto_path = f"assets/{username}.jpg"
+    # Gera nome único
+    unique_id = uuid.uuid4().hex[:8]
+    img_path = f"assets/avatar_{username}_{unique_id}.jpg"
     # Baixa a foto de perfil (pode vir como .jpg ou .png)
     L.download_profilepic(profile)
     # Descobre o nome real do arquivo baixado (pode ter extensão .png)
     for file in os.listdir('assets'):
         if file.startswith(username) and (file.endswith('.jpg') or file.endswith('.png')):
             real_path = f"assets/{file}"
-            # Se não for jpg, converte
-            if not file.endswith('.jpg'):
-                from PIL import Image
-                im = Image.open(real_path).convert('RGB')
-                im.save(f"assets/{username}.jpg", "JPEG")
-                os.remove(real_path)
+            from PIL import Image
+            im = Image.open(real_path).convert('RGB')
+            im.save(img_path, "JPEG")
+            os.remove(real_path)
             break
-    return f"/assets/{username}.jpg"
+    return f"/assets/{os.path.basename(img_path)}"
 
 # ====================
 # 🚀 API Endpoint
@@ -80,7 +82,8 @@ def gerar_curriculo():
         'hard': data['hard'],
         'soft': data['soft'],
         'idiomas': data['idiomas'],
-        'foto_url': data['foto_url']
+        'foto_url': data['foto_url'] or 'assets/default-avatar.jpg',
+        'foto_path': data['foto_url'] or 'assets/default-avatar.jpg'
     }
 
     html_content = gerar_html(dados)
@@ -112,7 +115,8 @@ def gerar_pdf_endpoint():
         'hard': data['hard'],
         'soft': data['soft'],
         'idiomas': data['idiomas'],
-        'foto_url': data['foto_url']
+        'foto_url': data['foto_url'] or 'assets/default-avatar.jpg',
+        'foto_path': data['foto_url'] or 'assets/default-avatar.jpg'
     }
 
     html_content = gerar_html(dados)
