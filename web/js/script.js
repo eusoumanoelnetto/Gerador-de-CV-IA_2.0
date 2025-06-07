@@ -332,20 +332,3 @@ function reiniciarChat() {
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
 }
-
-// Novas rotas para upload de foto
-from flask import request, jsonify
-import os
-
-@app.route('/upload-foto', methods=['POST'])
-def upload_foto():
-    if 'foto' not in request.files:
-        return jsonify({'error': 'Nenhum arquivo enviado'}), 400
-    file = request.files['foto']
-    if file.filename == '':
-        return jsonify({'error': 'Nome de arquivo vazio'}), 400
-    filename = file.filename
-    save_path = os.path.join('assets', filename)
-    file.save(save_path)
-    url = f"https://gerador-de-cv-ia-2-0.onrender.com/assets/{filename}"
-    return jsonify({'foto_url': url})
