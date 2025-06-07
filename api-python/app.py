@@ -143,6 +143,19 @@ def foto_perfil():
 def serve_foto(filename):
     return send_from_directory('assets', filename)
 
+@app.route('/upload-foto', methods=['POST'])
+def upload_foto():
+    if 'foto' not in request.files:
+        return jsonify({'error': 'Nenhum arquivo enviado'}), 400
+    file = request.files['foto']
+    if file.filename == '':
+        return jsonify({'error': 'Nome de arquivo vazio'}), 400
+    filename = file.filename
+    save_path = os.path.join('assets', filename)
+    file.save(save_path)
+    url = f"https://gerador-de-cv-ia-2-0.onrender.com/assets/{filename}"
+    return jsonify({'foto_url': url})
+
 # ====================
 # 🖥️ Modo Terminal Local
 # ====================

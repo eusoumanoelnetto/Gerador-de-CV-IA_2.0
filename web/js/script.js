@@ -99,12 +99,24 @@ function mostrarInputUploadNoChat() {
     fileInput.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewImg.src = e.target.result;
+            const formData = new FormData();
+            formData.append('foto', file);
+
+            fetch('https://gerador-de-cv-ia-2-0.onrender.com/upload-foto', {
+                method: 'POST',
+                body: formData
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.foto_url) {
+                    dadosCurriculo['foto_url'] = data.foto_url;
+                } else {
+                    alert('Falha ao enviar a foto. Usando avatar padrão.');
+                    dadosCurriculo['foto_url'] = 'https://eusoumanoelnetto.github.io/Gerador-de-CV-IA_2.0/web/assets/default-avatar.jpg';
+                }
+                previewImg.src = dadosCurriculo['foto_url'];
                 previewImgWrapper.style.display = 'flex';
                 previewImg.style.display = 'block';
-                dadosCurriculo['foto_url'] = e.target.result;
 
                 uploadBtn.style.display = "none";
                 uploadSuccess.style.display = "flex";
@@ -114,8 +126,11 @@ function mostrarInputUploadNoChat() {
                     indexPergunta += 2;
                     fazerPergunta();
                 }, 1200);
-            }
-            reader.readAsDataURL(file);
+            })
+            .catch(() => {
+                alert('Erro ao enviar a foto. Usando avatar padrão.');
+                dadosCurriculo['foto_url'] = 'https://eusoumanoelnetto.github.io/Gerador-de-CV-IA_2.0/web/assets/default-avatar.jpg';
+            });
         }
     });
 }
@@ -163,7 +178,8 @@ function handleUserInput() {
                     fotoUrl = 'https://gerador-de-cv-ia-2-0.onrender.com' + fotoUrl;
                 }
                 dadosCurriculo.foto_url = fotoUrl;
-                console.log('URL da foto recebida:', dadosCurriculo.foto_url);
+                // Atualiza a imagem do preview imediatamente
+                gerarCurriculoPreview(dadosCurriculo);
                 adicionarMensagem('bot', '📥 Foto de perfil encontrada!');
                 indexPergunta++;
                 fazerPergunta();
@@ -171,6 +187,7 @@ function handleUserInput() {
             .catch(err => {
                 adicionarMensagem('bot', '❌ Erro ao obter foto. Usando avatar padrão.');
                 dadosCurriculo.foto_url = 'assets/default-avatar.jpg';
+                gerarCurriculoPreview(dadosCurriculo);
                 indexPergunta++;
                 fazerPergunta();
             });
@@ -261,6 +278,9 @@ function gerarCurriculoPreview(dadosCurriculo) {
 }
 
 async function baixarPDF() {
+    if (!dadosCurriculo.foto_url || dadosCurriculo.foto_url === 'undefined') {
+        dadosCurriculo.foto_url = 'https://eusoumanoelnetto.github.io/Gerador-de-CV-IA_2.0/web/assets/default-avatar.jpg';
+    }
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -312,3 +332,20 @@ function reiniciarChat() {
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
 }
+
+// Novas rotas para upload de foto
+from flask import request, jsonify
+import os
+
+@app.route('/upload-foto', methods=['POST'])
+def upload_foto():
+    if 'foto' not in request.files:
+        return jsonify({'error': 'Nenhum arquivo enviado'}), 400
+    file = request.files['foto']
+    if file.filename == '':
+        return jsonify({'error': 'Nome de arquivo vazio'}), 400
+    filename = file.filename
+    save_path = os.path.join('assets', filename)
+    file.save(save_path)
+    url = f"https://gerador-de-cv-ia-2-0.onrender.com/assets/{filename}"
+    return jsonify({'foto_url': url})
