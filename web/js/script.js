@@ -1,5 +1,10 @@
 const API_URL = 'https://gerador-de-cv-ia-2-0.onrender.com/gerar-curriculo';
 
+// Troque a URL de produção pela local automaticamente se estiver rodando local
+const API_BASE = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+    ? "http://127.0.0.1:10000"
+    : "https://gerador-de-cv-ia-2-0.onrender.com";
+
 const chat = document.getElementById('chat');
 const userInput = document.getElementById('userInput');
 const previewContainer = document.getElementById('preview-container');
@@ -26,9 +31,9 @@ const perguntas = [
     { chave: 'nome', pergunta: '🧠 Qual seu nome completo?' },
     { 
         chave: 'foto', 
-        pergunta: '📸 De onde vem sua foto?\n(Digite 1, 2, 3 ou 4)\n\n1️⃣ Instagram\n2️⃣ Facebook\n3️⃣ LinkedIn\n4️⃣ Enviar Foto' 
+        pergunta: '📸 De onde vem sua foto?\n(Digite 1, 2, 3 ou 4)\n\n1️⃣ Instagram\n2️⃣ Facebook\n3️⃣ LinkedIn\n4️⃣ Enviar Foto'
     },
-    { chave: 'foto_username', pergunta: '🔗 Informe seu nome de usuário (sem @)' },
+    { chave: 'foto_username', pergunta: '🔗 Informe seu nome de usuário (sem @) ou cole o link se escolheu opção 4.' },
     { chave: 'cargo', pergunta: '💼 Qual seu cargo ou profissão?' },
     { chave: 'email', pergunta: '📧 Qual seu email?' },
     { chave: 'telefone', pergunta: '📱 Qual seu telefone?' },
@@ -41,7 +46,6 @@ const perguntas = [
 
 let indexPergunta = 0;
 
-// ONSUBMIT DO BOTÃO
 window.handleUserInput = handleUserInput;
 
 if (btnEnviar) {
@@ -62,9 +66,9 @@ function fazerPergunta() {
     } else {
         adicionarMensagem('bot', 'Perfeito! Gerando preview do seu currículo... ⏳');
         gerarCurriculoPreview(dadosCurriculo);
-        document.getElementById('preview-container').style.display = 'block';
-        document.getElementById('cv-title').style.display = 'block';
-        document.getElementById('baixarPDF').style.display = 'block';
+        previewContainer.style.display = 'block';
+        tituloCV.style.display = 'block';
+        btnBaixarPDF.style.display = 'block';
     }
 }
 
@@ -102,7 +106,7 @@ function mostrarInputUploadNoChat() {
             const formData = new FormData();
             formData.append('foto', file);
 
-            fetch('https://gerador-de-cv-ia-2-0.onrender.com/upload-foto', {
+            fetch(`${API_BASE}/upload-foto`, {
                 method: 'POST',
                 body: formData
             })
@@ -112,7 +116,7 @@ function mostrarInputUploadNoChat() {
                     dadosCurriculo['foto_url'] = data.foto_url;
                 } else {
                     alert('Falha ao enviar a foto. Usando avatar padrão.');
-                    dadosCurriculo['foto_url'] = 'https://eusoumanoelnetto.github.io/Gerador-de-CV-IA_2.0/web/assets/default-avatar.jpg';
+                    dadosCurriculo['foto_url'] = 'assets/default-avatar.jpg';
                 }
                 previewImg.src = dadosCurriculo['foto_url'];
                 previewImgWrapper.style.display = 'flex';
@@ -129,7 +133,7 @@ function mostrarInputUploadNoChat() {
             })
             .catch(() => {
                 alert('Erro ao enviar a foto. Usando avatar padrão.');
-                dadosCurriculo['foto_url'] = 'https://eusoumanoelnetto.github.io/Gerador-de-CV-IA_2.0/web/assets/default-avatar.jpg';
+                dadosCurriculo['foto_url'] = 'assets/default-avatar.jpg';
             });
         }
     });
@@ -177,11 +181,7 @@ function handleUserInput() {
                 if (!fotoUrl || data.privado) {
                     adicionarMensagem('bot', '❌ Não foi possível baixar a foto (perfil privado ou não encontrado). Por favor, envie a foto do seu computador.');
                     mostrarInputUploadNoChat();
-                    // Não avança para a próxima pergunta!
                     return;
-                }
-                if (fotoUrl && !fotoUrl.startsWith('http')) {
-                    fotoUrl = 'https://gerador-de-cv-ia-2-0.onrender.com' + fotoUrl;
                 }
                 dadosCurriculo.foto_url = fotoUrl;
                 localStorage.setItem('dadosCurriculo', JSON.stringify(dadosCurriculo));
@@ -228,7 +228,6 @@ function adicionarMensagem(remetente, texto) {
 
     // Conteúdo da mensagem
     const content = document.createElement('span');
-    // Efeito de digitação para o bot, exceto para o balão de opções de foto
     if (
         remetente === 'bot' &&
         typeof texto === 'string' &&
@@ -348,7 +347,7 @@ function gerarCurriculoPreview(dadosCurriculo) {
 
 async function baixarPDF() {
     if (!dadosCurriculo.foto_url || dadosCurriculo.foto_url === 'undefined') {
-        dadosCurriculo.foto_url = 'https://eusoumanoelnetto.github.io/Gerador-de-CV-IA_2.0/web/assets/default-avatar.jpg';
+        dadosCurriculo.foto_url = 'assets/default-avatar.jpg';
     }
     try {
         const response = await fetch(API_URL, {
@@ -360,7 +359,7 @@ async function baixarPDF() {
         if (!response.ok || !contentType.includes('pdf')) {
             const text = await response.text();
             alert('Erro ao gerar PDF:\n' + text);
-            return; // Não tenta baixar se deu erro!
+            return;
         }
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
@@ -402,10 +401,7 @@ function reiniciarChat() {
     fazerPergunta();
 }
 
-// Função utilitária para atualizar o preview da foto dinamicamente
 function atualizarFotoPreview(caminhoFoto) {
   const img = document.querySelector('.w3-display-container img');
   if (img) img.src = caminhoFoto;
 }
-
-// Chame atualizarFotoPreview(fotoUrl) sempre que a foto for baixada!
