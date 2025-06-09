@@ -12,6 +12,10 @@ CORS(app)  # Permite acesso de qualquer origem. Para produção, especifique o d
 UPLOAD_FOLDER = 'assets'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+@app.route('/')
+def index():
+    return 'API online! 🚀'
+
 @app.route('/upload-foto', methods=['POST'])
 def upload_foto():
     try:
