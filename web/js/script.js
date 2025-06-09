@@ -2,7 +2,7 @@ const API_URL = 'https://gerador-de-cv-ia-2-0.onrender.com/gerar-curriculo';
 
 // Troque a URL de produção pela local automaticamente se estiver rodando local
 const API_BASE = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
-    ? "http://127.0.0.1:10000"
+    ? "http://127.0.0.1:5000"
     : "https://gerador-de-cv-ia-2-0.onrender.com";
 
 const chat = document.getElementById('chat');
