@@ -21,7 +21,7 @@ const dadosCurriculo = {
     cargo: '',
     email: '',
     telefone: '',
-    foto_url: 'assets/default-avatar.jpg',
+    foto_url: 'assets/'default-avatar.jpg',
     experiencias: '',
     formacoes: '',
     hard: '',
