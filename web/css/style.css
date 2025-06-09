@@ -2454,3 +2454,139 @@ ul {
   max-width: 80%;
   word-break: break-word;
 }
+.main-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 48px;
+  min-height: 100vh;
+  transition: justify-content 0.4s;
+}
+
+.chat-container {
+  width: 380px;
+  min-width: 340px;
+  max-width: 420px;
+  background: #fffbe6;
+  border-radius: 24px;
+  margin: 36px 0 36px 0;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.12);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.preview-bloco {
+  min-width: 400px;
+  max-width: 700px;
+  display: none;
+  margin: 36px 0 36px 0;
+}
+
+.preview-bloco.ativo {
+  display: flex !important;
+  flex: 1;
+}
+
+.input-area {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: #fdfae8;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 1px 8px #c5c0b6a8;
+  gap: 12px;
+}
+
+#userInput {
+  flex: 1;
+  border-radius: 10px;
+  border: 1.5px solid #e6e2d4;
+  padding: 14px 18px;
+  font-size: 1.08em;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 2px 6px #ece8da25;
+}
+
+#btnEnviar {
+  background: #dbe7df;
+  color: #2e6758;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1.08em;
+  transition: background .18s, color .2s, box-shadow .2s;
+  box-shadow: 0 2px 8px #ece8da2a;
+}
+
+#btnEnviar:hover {
+  background: #b2dcc6;
+  color: #125e3e;
+  box-shadow: 0 2px 8px #c1e8e556;
+}
+
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    min-height: 100vh;
+    justify-content: center !important;
+  }
+  .chat-container,
+  .preview-bloco {
+    width: 99vw !important;
+    min-width: 0 !important;
+    max-width: 99vw !important;
+    margin: 0 auto;
+  }
+  .preview-bloco {
+    display: none !important;
+  }
+  .preview-bloco.ativo {
+    display: flex !important;
+    width: 99vw !important;
+    justify-content: center;
+  }
+}
+
+/* Esconde preview no mobile até ser gerado, então mostra centralizado */
+@media (max-width: 900px) {
+  .preview-bloco.ativo {
+    display: flex !important;
+    width: 99vw !important;
+    justify-content: center;
+  }
+}
+.main-layout {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  gap: 48px;
+  transition: justify-content 0.4s;
+}
+.preview-bloco {
+  display: none;
+}
+.preview-bloco.ativo {
+  display: flex !important;
+}
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center !important;
+    gap: 24px;
+  }
+  .preview-bloco,
+  .preview-bloco.ativo {
+    display: flex !important;
+    width: 99vw !important;
+    justify-content: center;
+    margin: 0 auto;
+  }
+}

@@ -48,6 +48,7 @@ const perguntas = [
 ];
 
 let indexPergunta = 0;
+let aguardandoConfirmacaoReinicio = false;
 
 window.handleUserInput = handleUserInput;
 
@@ -57,10 +58,11 @@ if (btnEnviar) {
 
 window.onload = () => {
     adicionarMensagem('bot', '🧠 Olá! Eu sou o Gerador de Currículo IA. Bora montar seu currículo juntos!');
-    // Esconde tudo ao iniciar ou reiniciar
     tituloCV.style.display = 'none';
     previewContainer.style.display = 'none';
     btnBaixarPDF.style.display = 'none';
+    document.getElementById('preview-bloco').classList.remove('ativo');
+    document.getElementById('main-layout').style.justifyContent = 'center';
 };
 
 // Teste automático de conexão com o backend ao abrir a página
@@ -154,11 +156,20 @@ function mostrarInputUploadNoChat() {
 }
 
 function handleUserInput() {
-    if (indexPergunta >= perguntas.length) {
-        return;
-    }
     const input = userInput.value.trim();
     if (!input) return;
+
+    if (aguardandoConfirmacaoReinicio) {
+        if (input.toLowerCase() === 'sim' || input.toLowerCase() === 's') {
+            aguardandoConfirmacaoReinicio = false;
+            reiniciarChat();
+        } else {
+            aguardandoConfirmacaoReinicio = false;
+            adicionarMensagem('bot', 'Ótimo! Continuando de onde paramos. 😉');
+        }
+        userInput.value = '';
+        return;
+    }
 
     adicionarMensagem('user', input);
 
@@ -348,11 +359,11 @@ function gerarCurriculoPreview(dadosCurriculo) {
     const container = document.getElementById('curriculo-container');
     if (container) {
         container.innerHTML = html;
+        document.getElementById('preview-bloco').classList.add('ativo');
+        document.getElementById('main-layout').style.justifyContent = 'flex-start';
         previewContainer.style.display = 'block';
         tituloCV.style.display = 'block';
         btnBaixarPDF.style.display = 'block';
-        document.getElementById('preview-bloco').style.display = 'flex';
-        document.getElementById('main-layout').style.justifyContent = 'flex-start';
     } else {
         console.error("Elemento 'curriculo-container' não encontrado!");
     }
@@ -396,9 +407,14 @@ function mostrarBotaoReiniciar() {
     const botao = document.createElement('button');
     botao.innerText = '🔄 Reiniciar Chat';
     botao.classList.add('restart-button');
-    botao.onclick = reiniciarChat;
+    botao.onclick = pedirConfirmacaoReinicio;
     chat.appendChild(botao);
     chat.scrollTop = chat.scrollHeight;
+}
+
+function pedirConfirmacaoReinicio() {
+    aguardandoConfirmacaoReinicio = true;
+    adicionarMensagem('bot', '⚠️ Você tem certeza que deseja reiniciar o chat?\nDigite **Sim** para reiniciar ou **Não** para continuar.');
 }
 
 function reiniciarChat() {
@@ -410,7 +426,7 @@ function reiniciarChat() {
     tituloCV.style.display = 'none';
     previewContainer.style.display = 'none';
     btnBaixarPDF.style.display = 'none';
-    document.getElementById('preview-bloco').style.display = 'none';
+    document.getElementById('preview-bloco').classList.remove('ativo');
     document.getElementById('main-layout').style.justifyContent = 'center';
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
