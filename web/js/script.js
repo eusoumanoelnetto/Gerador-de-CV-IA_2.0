@@ -154,6 +154,9 @@ function mostrarInputUploadNoChat() {
 }
 
 function handleUserInput() {
+    if (indexPergunta >= perguntas.length) {
+        return;
+    }
     const input = userInput.value.trim();
     if (!input) return;
 
@@ -348,6 +351,8 @@ function gerarCurriculoPreview(dadosCurriculo) {
         previewContainer.style.display = 'block';
         tituloCV.style.display = 'block';
         btnBaixarPDF.style.display = 'block';
+        document.getElementById('preview-bloco').style.display = 'flex';
+        document.getElementById('main-layout').style.justifyContent = 'flex-start';
     } else {
         console.error("Elemento 'curriculo-container' não encontrado!");
     }
@@ -405,6 +410,8 @@ function reiniciarChat() {
     tituloCV.style.display = 'none';
     previewContainer.style.display = 'none';
     btnBaixarPDF.style.display = 'none';
+    document.getElementById('preview-bloco').style.display = 'none';
+    document.getElementById('main-layout').style.justifyContent = 'center';
     adicionarMensagem('bot', '🧠 Olá! Vamos começar novamente.');
     fazerPergunta();
 }

@@ -3,26 +3,57 @@
   justify-content: center;
   align-items: flex-start;
   min-height: 100vh;
+  transition: justify-content 0.4s;
 }
 
 .chat-container {
   width: 350px;
   margin: 24px;
+  transition: margin 0.4s;
 }
 
 .preview-bloco {
   flex: 1;
+  min-width: 430px;
+  max-width: 600px;
+  margin: 24px;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-width: 450px;
-  min-height: 100px;
+  justify-content: flex-start;
 }
 
 #preview-container {
-  min-width: 430px;
-  max-width: 520px;
-  margin: 24px auto;
+  width: 100%;
+}
+
+.input-area {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: #fdfae8;
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 1px 8px #c5c0b6a8;
+  gap: 8px;
+}
+#userInput {
+  flex: 1;
+  border-radius: 8px;
+  border: 1px solid #e5e5d4;
+  padding: 10px;
+  font-size: 1em;
+}
+#btnEnviar {
+  background: #dbe7df;
+  color: #33665d;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background .18s;
+}
+#btnEnviar:hover {
+  background: #b2dcc6;
 }
 
 @media (max-width: 900px) {
