@@ -309,14 +309,9 @@ function adicionarMensagem(remetente, texto) {
 
 // -------- PREVIEW DO CURRÍCULO --------
 function gerarCurriculoPreview(dadosCurriculo) {
-    console.log("Prévia do currículo:", dadosCurriculo);
-    let html = `
-      <h3>Preview Teste</h3>
-      <pre>${JSON.stringify(dadosCurriculo, null, 2)}</pre>
-    `;
     const container = document.getElementById('curriculo-container');
     if (container) {
-        container.innerHTML = html;
+        container.innerHTML = "<h1>FUNCIONANDO!</h1><pre>" + JSON.stringify(dadosCurriculo, null, 2) + "</pre>";
         document.getElementById('preview-bloco').classList.add('ativo');
         document.getElementById('main-layout').style.justifyContent = 'flex-start';
         previewContainer.style.display = 'block';
