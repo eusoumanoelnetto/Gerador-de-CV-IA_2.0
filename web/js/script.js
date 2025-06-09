@@ -43,8 +43,7 @@ const perguntas = [
     { chave: 'telefone', pergunta: '📱 Qual seu telefone?' },
     { chave: 'experiencias', pergunta: '🧰 Descreva suas experiências profissionais (use ";" para separar).' },
     { chave: 'formacoes', pergunta: '🎓 Descreva sua formação acadêmica (use ";" para separar).' },
-    { chave: 'hard', pergunta: '💪 Quais são suas Hard Skills? (separadas por vírgula)' },
-    { chave: 'soft', pergunta: '🧠 Quais são suas Soft Skills? (separadas por vírgula)' },
+    { chave: 'hard', pergunta: '💪 Quais são suas habilidades? (separadas por vírgula)' },
     { chave: 'idiomas', pergunta: '🌎 Quais idiomas você fala? (separados por vírgula)' }
 ];
 
@@ -314,8 +313,6 @@ function gerarCurriculoPreview(dadosCurriculo) {
               <hr>
               <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Hard Skills</b></p>
               <p>${dadosCurriculo.hard || ''}</p>
-              <p class="w3-large"><b><i class="fa fa-user fa-fw w3-margin-right w3-large w3-text-teal"></i>Soft Skills</b></p>
-              <p>${dadosCurriculo.soft || ''}</p>
               <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-large w3-text-teal"></i>Idiomas</b></p>
               <p>${dadosCurriculo.idiomas || ''}</p>
               <br>

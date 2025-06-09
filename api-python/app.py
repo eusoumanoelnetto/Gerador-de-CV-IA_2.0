@@ -24,7 +24,7 @@ def upload_foto():
         filename = secure_filename(file.filename.replace(' ', '_'))
         filepath = os.path.join(UPLOAD_FOLDER, filename)
         file.save(filepath)
-        url = f'/assets/{filename}'
+        url = request.url_root.rstrip('/') + '/assets/' + filename
         return jsonify({'foto_url': url}), 200
     except Exception as e:
         import traceback
