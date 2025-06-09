@@ -1,9 +1,13 @@
-const API_URL = 'https://gerador-de-cv-ia-2-0.onrender.com/gerar-curriculo';
+const API_URL = getApiBaseUrl() + '/gerar-curriculo';
 
-// Troque a URL de produção pela local automaticamente se estiver rodando local
-const API_BASE = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
-    ? "http://127.0.0.1:5000"
-    : "https://gerador-de-cv-ia-2-0.onrender.com";
+function getApiBaseUrl() {
+    if (window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost") {
+        return "http://127.0.0.1:5000";
+    }
+    return "https://gerador-de-cv-ia-2-0.onrender.com";
+}
+
+const API_BASE = getApiBaseUrl();
 
 const chat = document.getElementById('chat');
 const userInput = document.getElementById('userInput');
@@ -60,6 +64,17 @@ window.onload = () => {
     btnBaixarPDF.style.display = 'none';
 };
 
+// Teste automático de conexão com o backend ao abrir a página
+window.addEventListener('DOMContentLoaded', () => {
+    fetch(getApiBaseUrl() + '/ping')
+      .then(res => {
+          if (!res.ok) throw new Error();
+      })
+      .catch(() => {
+          alert('Servidor da API não encontrado! Verifique se está rodando.');
+      });
+});
+
 function fazerPergunta() {
     if (indexPergunta < perguntas.length) {
         adicionarMensagem('bot', perguntas[indexPergunta].pergunta);
@@ -106,7 +121,7 @@ function mostrarInputUploadNoChat() {
             const formData = new FormData();
             formData.append('foto', file);
 
-            fetch(`${API_BASE}/upload-foto`, {
+            fetch(getApiBaseUrl() + '/upload-foto', {
                 method: 'POST',
                 body: formData
             })
@@ -132,7 +147,7 @@ function mostrarInputUploadNoChat() {
                 }, 1200);
             })
             .catch(() => {
-                alert('Erro ao enviar a foto. Usando avatar padrão.');
+                alert('Erro ao enviar a foto! Verifique se a API está rodando e a porta está correta.');
                 dadosCurriculo['foto_url'] = 'assets/default-avatar.jpg';
             });
         }
@@ -170,7 +185,7 @@ function handleUserInput() {
             return;
         } else {
             adicionarMensagem('bot', '⏳ Baixando sua foto de perfil...');
-            fetch('https://gerador-de-cv-ia-2-0.onrender.com/foto-perfil', {
+            fetch(getApiBaseUrl() + '/foto-perfil', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username: input })
@@ -196,11 +211,7 @@ function handleUserInput() {
                 fazerPergunta();
             })
             .catch(err => {
-                adicionarMensagem('bot', '❌ Erro ao obter foto. Usando avatar padrão.');
-                dadosCurriculo.foto_url = 'assets/avatar-unknown.png';
-                gerarCurriculoPreview(dadosCurriculo);
-                indexPergunta++;
-                fazerPergunta();
+                alert('Erro ao conectar com o servidor! Verifique se a API está rodando e a porta está correta.');
             });
             userInput.value = '';
             return;

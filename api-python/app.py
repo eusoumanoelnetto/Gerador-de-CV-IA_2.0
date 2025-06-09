@@ -35,5 +35,10 @@ def upload_foto():
 def serve_foto(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
+@app.route('/ping')
+def ping():
+    return 'pong', 200
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=10000, debug=False)
+    # Para rodar sempre na porta 5000 localmente
+    app.run(host='127.0.0.1', port=5000, debug=True)
