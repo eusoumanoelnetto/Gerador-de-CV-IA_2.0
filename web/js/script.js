@@ -309,52 +309,10 @@ function adicionarMensagem(remetente, texto) {
 
 // -------- PREVIEW DO CURRÍCULO --------
 function gerarCurriculoPreview(dadosCurriculo) {
+    console.log("Prévia do currículo:", dadosCurriculo);
     let html = `
-    <div class="w3-content w3-margin-top" style="max-width:1400px;">
-      <div class="w3-row-padding">
-        <div class="w3-third">
-          <div class="w3-white w3-text-grey w3-card-4">
-            <div class="w3-display-container">
-              <img src="${dadosCurriculo.foto_url || 'assets/default-avatar.jpg'}" style="width:100%;object-fit:cover;min-height:180px;max-height:220px;" alt="Avatar">
-              <div class="w3-display-bottomleft w3-container w3-text-white">
-                <h2 class="nome-bg">${dadosCurriculo.nome || ''}</h2>
-              </div>
-            </div>
-            <div class="w3-container">
-              <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>${dadosCurriculo.cargo || ''}</p>
-              <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>${dadosCurriculo.email || ''}</p>
-              <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>${dadosCurriculo.telefone || ''}</p>
-              <hr>
-              <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Hard Skills</b></p>
-              <p>${dadosCurriculo.hard || ''}</p>
-              <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-large w3-text-teal"></i>Idiomas</b></p>
-              <p>${dadosCurriculo.idiomas || ''}</p>
-              <br>
-            </div>
-          </div>
-        </div>
-        <div class="w3-twothird">
-          <div class="w3-container w3-card w3-white w3-margin-bottom">
-            <h2 class="w3-text-grey w3-padding-16">
-              <i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Experiência Profissional
-            </h2>
-            ${(dadosCurriculo.experiencias || '')
-                .split(';')
-                .filter(Boolean)
-                .map(exp => `<div class="w3-container"><p>${exp.trim()}</p><hr></div>`).join('')}
-          </div>
-          <div class="w3-container w3-card w3-white">
-            <h2 class="w3-text-grey w3-padding-16">
-              <i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Formação
-            </h2>
-            ${(dadosCurriculo.formacoes || '')
-                .split(';')
-                .filter(Boolean)
-                .map(form => `<div class="w3-container"><p>${form.trim()}</p><hr></div>`).join('')}
-          </div>
-        </div>
-      </div>
-    </div>
+      <h3>Preview Teste</h3>
+      <pre>${JSON.stringify(dadosCurriculo, null, 2)}</pre>
     `;
     const container = document.getElementById('curriculo-container');
     if (container) {
