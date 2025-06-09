@@ -16,13 +16,13 @@
   justify-content: center;
   align-items: flex-start;
   min-width: 450px;
+  min-height: 100px;
 }
 
 #preview-container {
   min-width: 430px;
   max-width: 520px;
   margin: 24px auto;
-  display: none;
 }
 
 @media (max-width: 900px) {
