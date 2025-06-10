@@ -67,12 +67,41 @@ window.onload = () => {
 
 // Teste automático de conexão com o backend ao abrir a página
 window.addEventListener('DOMContentLoaded', () => {
+    // Mostra loader.gif e mensagem divertida enquanto testa conexão
+    const divLoader = document.createElement('div');
+    divLoader.className = 'message bot stark-loader';
+    divLoader.style.display = 'flex';
+    divLoader.style.flexDirection = 'column';
+    divLoader.style.alignItems = 'center';
+    divLoader.innerHTML = `
+        <img src="assets/loader.gif" alt="Loader" style="width:200px;height:159px;margin-bottom:10px;"> 
+        <span style="font-weight:bold;font-size:1.1em;text-align:center;">Testando conexão com a IA... Jarvis está acordando! 🤖</span>
+    `;
+    chat.appendChild(divLoader);
+    chat.scrollTop = chat.scrollHeight;
+
     fetch(getApiBaseUrl() + '/ping')
       .then(res => {
-          if (!res.ok) throw new Error();
+          setTimeout(() => {
+              divLoader.remove();
+              if (!res.ok) throw new Error();
+          }, 900);
       })
       .catch(() => {
-          alert('Servidor da API não encontrado! Verifique se está rodando.');
+          setTimeout(() => {
+              divLoader.remove();
+              const divMeme = document.createElement('div');
+              divMeme.className = 'message bot stark-meme';
+              divMeme.style.display = 'flex';
+              divMeme.style.flexDirection = 'column';
+              divMeme.style.alignItems = 'center';
+              divMeme.innerHTML = `
+                <img src="assets/meme.gif" alt="Meme" style="width:200px;height:159px;margin-bottom:10px;"> 
+                <span style="font-weight:bold;font-size:small;text-align:center;display:block;">Não consegui conectar à API.<br>Verifique se o servidor está online ou tente de novo!</span>
+              `;
+              chat.appendChild(divMeme);
+              chat.scrollTop = chat.scrollHeight;
+          }, 900);
       });
 });
 
@@ -80,11 +109,13 @@ function fazerPergunta() {
     if (indexPergunta < perguntas.length) {
         adicionarMensagem('bot', perguntas[indexPergunta].pergunta);
     } else {
-        adicionarMensagem('bot', 'Perfeito! Gerando preview do seu currículo... ⏳');
-        gerarCurriculoPreview(dadosCurriculo);
-        previewContainer.style.display = 'block';
-        tituloCV.style.display = 'block';
-        btnBaixarPDF.style.display = 'block';
+        setTimeout(() => {
+            adicionarMensagem('bot', 'Perfeito! Gerando preview do seu currículo... ⏳');
+            gerarCurriculoPreview(dadosCurriculo);
+            previewContainer.style.display = 'block';
+            tituloCV.style.display = 'block';
+            btnBaixarPDF.style.display = 'block';
+        }, 600); // Delay de 600ms antes da mensagem final
     }
 }
 

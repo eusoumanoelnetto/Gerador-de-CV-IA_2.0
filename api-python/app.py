@@ -7,7 +7,10 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)  # Permite acesso de qualquer origem. Para produção, especifique o domínio.
+CORS(app, origins=[
+    "https://eusoumanoelnetto.github.io",
+    "https://eusoumanoelnetto.github.io/Gerador-de-CV-IA_2.0"
+], supports_credentials=True)
 
 UPLOAD_FOLDER = 'assets'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -16,8 +19,10 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def index():
     return 'API online! 🚀'
 
-@app.route('/upload-foto', methods=['POST'])
+@app.route('/upload-foto', methods=['POST', 'OPTIONS'])
 def upload_foto():
+    if request.method == "OPTIONS":
+        return '', 200
     try:
         if 'foto' not in request.files:
             return jsonify({'error': 'No file'}), 400
@@ -42,6 +47,22 @@ def serve_foto(filename):
 @app.route('/ping')
 def ping():
     return 'pong', 200
+
+@app.route('/foto-perfil', methods=['POST', 'OPTIONS'])
+def foto_perfil():
+    if request.method == "OPTIONS":
+        return '', 200
+    # Coloque aqui apenas o código que deve rodar para POST
+    # Exemplo seguro:
+    # if request.method == "POST":
+    #     ...seu código de upload/consulta...
+    #     return jsonify(...)
+    # return '', 405
+
+@app.before_request
+def handle_options():
+    if request.method == 'OPTIONS':
+        return '', 200
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
