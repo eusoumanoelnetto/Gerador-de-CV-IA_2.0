@@ -26,9 +26,10 @@ def upload_foto():
     if request.method == "OPTIONS":
         return '', 200
     try:
-        if 'foto' not in request.files:
+        # Aceita tanto 'foto' quanto 'file' para compatibilidade
+        file = request.files.get('foto') or request.files.get('file')
+        if not file:
             return jsonify({'error': 'No file'}), 400
-        file = request.files['foto']
         if file.filename == '':
             return jsonify({'error': 'No selected file'}), 400
         from werkzeug.utils import secure_filename

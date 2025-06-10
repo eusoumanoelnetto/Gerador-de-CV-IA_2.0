@@ -151,7 +151,7 @@ function mostrarInputUploadNoChat() {
         const file = event.target.files[0];
         if (file) {
             const formData = new FormData();
-            formData.append('foto', file);
+            formData.append('file', file); // Corrigido de 'foto' para 'file'
 
             fetch(getApiBaseUrl() + '/upload-foto', {
                 method: 'POST',
@@ -174,7 +174,7 @@ function mostrarInputUploadNoChat() {
                 uploadSuccess.innerHTML = `<span class="success-upload"><span class="success-icon">✅</span> Foto enviada!</span>`;
 
                 setTimeout(() => {
-                    indexPergunta += 2;
+                    indexPergunta++;
                     fazerPergunta();
                 }, 1200);
             })
@@ -393,6 +393,7 @@ function gerarCurriculoPreview(dadosCurriculo) {
         `;
         container.innerHTML = html;
         document.getElementById('preview-bloco').classList.add('ativo');
+        document.getElementById('preview-bloco').style.display = 'flex'; // Garante que o preview aparece
         document.getElementById('main-layout').style.justifyContent = 'flex-start';
         previewContainer.style.display = 'block';
         tituloCV.style.display = 'block';
