@@ -14,6 +14,8 @@ CORS(app, origins=[
 
 UPLOAD_FOLDER = 'assets'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["MAX_CONTENT_LENGTH"] = 4 * 1024 * 1024  # 4MB
 
 @app.route('/')
 def index():
@@ -50,14 +52,25 @@ def ping():
 
 @app.route('/foto-perfil', methods=['POST', 'OPTIONS'])
 def foto_perfil():
-    if request.method == "OPTIONS":
+    if request.method == 'OPTIONS':
         return '', 200
-    # Coloque aqui apenas o código que deve rodar para POST
-    # Exemplo seguro:
-    # if request.method == "POST":
-    #     ...seu código de upload/consulta...
-    #     return jsonify(...)
-    # return '', 405
+
+    # Verifica se arquivo foi enviado
+    if 'file' not in request.files:
+        return jsonify({'erro': 'Nenhum arquivo enviado'}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'erro': 'Nome do arquivo vazio'}), 400
+
+    try:
+        filename = file.filename.replace(" ", "_")
+        path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(path)
+        url = f"https://gerador-de-cv-ia-2-0.onrender.com/assets/{filename}"
+        return jsonify({'foto_url': url}), 200
+    except Exception as e:
+        return jsonify({'erro': f'Erro ao salvar: {str(e)}'}), 500
 
 @app.before_request
 def handle_options():
